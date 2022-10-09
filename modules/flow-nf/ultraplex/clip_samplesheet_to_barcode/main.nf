@@ -1,96 +1,23 @@
-
-
-
-
 process CLIP_SAMPLESHEET_TO_BARCODE {
-    tag "$annotation"
-    label "process_low"
+    tag "$samplesheet"
+    label "process_single"
 
     container "quay.io/biocontainers/pandas:1.1.5"
+    conda (params.enable_conda ? "conda-forge::pandas=1.1.5" : null)
+    container "${ workflow.containerEngine == 'singularity' && !task.ext.singularity_pull_docker_container ?
+        'https://depot.galaxyproject.org/singularity/pandas:1.1.5':
+        'quay.io/biocontainers/pandas:1.1.5' }"
 
     input:
-    path annotation
+    path samplesheet
 
     output:
-    path "barcode.csv", emit: csv
+    path "*.csv", emit: csv
+
+    when:
+    task.ext.when == null || task.ext.when
 
     script:
-    """
-    echo test
-    """
+    def args = task.ext.args ?: ''
+    template "clip_samplesheet_to_barcode.py"
 }
-
-
-
-
-
-
-
-
-
-// process CLIP_SAMPLESHEET_TO_BARCODE {
-//     tag "$annotation"
-//     label "process_low"
-
-//     container "quay.io/biocontainers/pandas:1.1.5"
-
-//     input:
-//     path annotation
-
-//     output:
-//     path "barcode.csv", emit: csv
-
-//     script:
-//     """
-//     #!/usr/bin/env python3
-//     from pandas import read_csv
-//     from sys import exit
-//     data = read_csv("$annotation", dtype=str, keep_default_na=False)
-//     five_prime = data["5' Barcode"]
-//     three_prime = data["3' Barcode (optional)"]
-//     sample_names = data["Sample Name"]
-//     barcode_dict = {}
-//     for idx in range(len(five_prime)):
-//         barcode_dict.setdefault(five_prime[idx], [])
-//         barcode_dict[five_prime[idx]].append(
-//             three_prime[idx] + ":" + sample_names[idx]
-//         )
-//     with open("barcode.csv", "w") as out_f:
-//         for five, threes in barcode_dict.items():
-//             if len(threes) > 1:
-//                 if any([three.startswith(":") for three in threes]):
-//                     exit("5' barcode ambiguity between samples")
-//                 out_f.write(",".join([five] + threes) + "\\n")
-//             else:
-//                 if not threes[0].startswith(":"):
-//                     threes[0] = "," + threes[0]
-//                 out_f.write(five + threes[0] + "\\n")
-//     """
-// }
-
-// name: csv_to_barcode
-// description: |
-//   Converts CSV describing samples and creates a barcodes spreadsheet that can be
-//   read by Ultraplex.
-// tools:
-//   - pandas:
-//       description: |
-//         Flexible and powerful data analysis / manipulation library for Python,
-//         providing labeled data structures similar to R data.frame objects,
-//         statistical functions, and much more.
-//       homepage: https://pandas.pydata.org/
-//       documentation: https://pandas.pydata.org/docs/
-//       licence: ["BSD-3"]
-// input:
-//   - annotation:
-//       type: file
-//       description: A samples CSV annotation file.
-// output:
-//   - csv:
-//       type: file
-//       description: Barcodes file.
-//       pattern: "*.csv"
-// authors:
-//   - "@CharlotteAnne"
-//   - "@alexharston"
-//   - "@samirelanduk"
