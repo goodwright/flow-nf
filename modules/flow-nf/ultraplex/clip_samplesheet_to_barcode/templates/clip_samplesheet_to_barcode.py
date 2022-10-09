@@ -2,24 +2,12 @@
 
 """Convert clip samplesheet into an input that ultraplex can read."""
 
-import argparse
 from sys import exit
 from pandas import read_csv
 
-Description = "Convert clip samplesheet into an input that ultraplex can read"
-Epilog = """Example usage: python clip_samplesheet_to_barcode.py <CLIP_SAMPLESHEET> """
-
-
 def main():
-    parser = argparse.ArgumentParser(description=Description, epilog=Epilog)
-
-    ## Define arguments and parse
-    parser.add_argument("--samplesheet", help="Clip samplesheet.", required=True)
-    parser.add_argument("--output", help="Output file path.", required=True)
-    args = parser.parse_args()
-
     # Read CSV file into dataframe
-    df_samplesheet = read_csv(args.samplesheet, dtype=str, keep_default_na=False)
+    df_samplesheet = read_csv("!{samplesheet}", dtype=str, keep_default_na=False)
 
     # Init for loop
     five_prime = df_samplesheet["5' Barcode"]
@@ -33,7 +21,7 @@ def main():
         barcode_dict[five_prime[idx]].append(three_prime[idx] + ":" + sample_names[idx])
 
     # Write to file with error checking
-    with open(args.output, "w") as out_f:
+    with open("!{output}", "w") as out_f:
         for five, threes in barcode_dict.items():
             if len(threes) > 1:
                 if any([three.startswith(":") for three in threes]):
