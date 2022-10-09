@@ -1,0 +1,3 @@
+ultraplex/clip_samplesheet_to_barcode:
+  - modules/ultraplex/clip_samplesheet_to_barcode/**
+  - tests/modules/flow-nf/ultraplex/clip_samplesheet_to_barcode/**
