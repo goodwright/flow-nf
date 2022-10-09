@@ -4,7 +4,7 @@ include { CLIP_SAMPLESHEET_TO_BARCODE } from '../../../../../modules/flow-nf/ult
 
 workflow test_samplesheettobardcode_two_samples {
     
-    input = file(params.test_data['sarscov2']['illumina']['test_single_end_bam'], checkIfExists: true)
+    input = file(params.goodwright_test_data['samplesheets']['clip_samplesheet'], checkIfExists: true)
 
     CLIP_SAMPLESHEET_TO_BARCODE ( input )
 }
