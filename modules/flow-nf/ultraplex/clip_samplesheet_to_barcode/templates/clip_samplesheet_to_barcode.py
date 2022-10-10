@@ -2,12 +2,13 @@
 
 """Convert clip samplesheet into an input that ultraplex can read."""
 
+import argparse
 from sys import exit
 from pandas import read_csv
 
-def main():
+def main(samplesheet, output):
     # Read CSV file into dataframe
-    df_samplesheet = read_csv("!{samplesheet}", dtype=str, keep_default_na=False)
+    df_samplesheet = read_csv(samplesheet, dtype=str, keep_default_na=False)
 
     # Init for loop
     five_prime = df_samplesheet["5' Barcode"]
@@ -21,7 +22,7 @@ def main():
         barcode_dict[five_prime[idx]].append(three_prime[idx] + ":" + sample_names[idx])
 
     # Write to file with error checking
-    with open("!{output}", "w") as out_f:
+    with open(output, "w") as out_f:
         for five, threes in barcode_dict.items():
             if len(threes) > 1:
                 if any([three.startswith(":") for three in threes]):
@@ -37,4 +38,11 @@ def main():
 
 
 if __name__ == "__main__":
-    main()
+
+    # Allows switching between nextflow templating and standalone python running using arguments
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--samplesheet", default="!{samplesheet}")
+    parser.add_argument("--output", default="!{output}")
+    args = parser.parse_args()
+
+    main(args.samplesheet, args.output)
