@@ -18,7 +18,7 @@ process CLIP_SAMPLESHEET_TO_BARCODE {
     task.ext.when == null || task.ext.when
 
     shell:
-    output = task.ext.output ?: 'barcode.csv'
+    output = task.ext.output ?: 'barcodes.csv'
     template 'clip_samplesheet_to_barcode.py'
 }
 

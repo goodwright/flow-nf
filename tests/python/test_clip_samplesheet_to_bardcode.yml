@@ -1,0 +1,10 @@
+- name: "test_clip_samplesheettobarcode_two_samples"
+  command: python modules/flow-nf/ultraplex/clip_samplesheet_to_barcode/templates/clip_samplesheet_to_barcode.py --samplesheet tests/data/samplesheets/clip-samplesheet.csv --output output/barcodes.csv
+  tags:
+    - "python"
+    - "ultraplex"
+    - "ultraplex/samplesheettobardcode"
+  files:
+    - path: "output/clip/barcodes.csv"
+      md5sum: 0c52fd94ff1773b4138d555fc40739f2
+
