@@ -1,0 +1,12 @@
+.nextflow*
+work/
+results/
+test_output/
+output/
+.DS_Store
+*.code-workspace
+.screenrc
+.*.sw?
+__pycache__
+*.pyo
+*.pyc
