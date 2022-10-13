@@ -7,11 +7,13 @@ import argparse
 from sys import exit
 import pandas as pd
 
+
 def dump_versions(process_name):
     with open("versions.yml", "w") as out_f:
         out_f.write(process_name + ":\n")
         out_f.write("    python: " + platform.python_version() + "\n")
         out_f.write("    pandas: " + pd.__version__ + "\n")
+
 
 def main(process_name, samplesheet, output):
     # Dump version file
