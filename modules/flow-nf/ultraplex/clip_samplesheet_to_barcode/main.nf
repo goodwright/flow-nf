@@ -23,4 +23,3 @@ process CLIP_SAMPLESHEET_TO_BARCODE {
     output       = task.ext.output ?: 'barcodes.csv'
     template 'clip_samplesheet_to_barcode.py'
 }
-
