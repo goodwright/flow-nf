@@ -12,13 +12,15 @@ process CLIP_SAMPLESHEET_TO_BARCODE {
     path samplesheet
 
     output:
-    path "*.csv", emit: csv
+    path "*.csv"         , emit: csv
+    path  "versions.yml" , emit: versions
 
     when:
     task.ext.when == null || task.ext.when
 
     shell:
-    output = task.ext.output ?: 'barcodes.csv'
+    process_name = task.process
+    output       = task.ext.output ?: 'barcodes.csv'
     template 'clip_samplesheet_to_barcode.py'
 }
 

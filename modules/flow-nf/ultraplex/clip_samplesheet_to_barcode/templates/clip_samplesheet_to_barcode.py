@@ -2,13 +2,23 @@
 
 """Convert clip samplesheet into an input that ultraplex can read."""
 
+import platform
 import argparse
 from sys import exit
-from pandas import read_csv
+import pandas as pd
 
-def main(samplesheet, output):
+def dump_versions(process_name):
+    with open("versions.yml", "w") as out_f:
+        out_f.write(process_name + ":\n")
+        out_f.write("    python: " + platform.python_version() + "\n")
+        out_f.write("    pandas: " + pd.__version__ + "\n")
+
+def main(process_name, samplesheet, output):
+    # Dump version file
+    dump_versions(process_name)
+
     # Read CSV file into dataframe
-    df_samplesheet = read_csv(samplesheet, dtype=str, keep_default_na=False)
+    df_samplesheet = pd.read_csv(samplesheet, dtype=str, keep_default_na=False)
 
     # Init for loop
     five_prime = df_samplesheet["5' Barcode"]
@@ -41,8 +51,9 @@ if __name__ == "__main__":
 
     # Allows switching between nextflow templating and standalone python running using arguments
     parser = argparse.ArgumentParser()
+    parser.add_argument("--process_name", default="!{process_name}")
     parser.add_argument("--samplesheet", default="!{samplesheet}")
     parser.add_argument("--output", default="!{output}")
     args = parser.parse_args()
 
-    main(args.samplesheet, args.output)
+    main(args.process_name, args.samplesheet, args.output)
