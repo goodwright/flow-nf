@@ -1,39 +1,12 @@
 process XLSX_TO_CSV {
     tag "$xlsx"
-    label "process_low"
+    label "process_single"
 
-    container "quay.io/biocontainers/pandas:1.1.5"
+    conda (params.enable_conda ? "conda-forge::pandas=1.5.0,conda-forge::openpyxl=3.0.10" : null)
+    container "quay.io/goodwright/mulled-v2-9f99278ff296588175d0d58987544943664a125d:8138e3cc65206377a94c0f6e31a69503ee4c7e97-0"
 
     input:
     path xlsx
-
-    output:
-    path "*.csv", emit: csv
-
-    script:
-    """
-    pip install openpyxl
-    python -c "import pandas as pd; data = pd.read_excel('$xlsx', engine='openpyxl'); data.to_csv('$xlsx' + '.csv', index=False)"
-    """
-}
-
-"mulled-v2-9f99278ff296588175d0d58987544943664a125d"
-
-
-
-
-process CLIP_SAMPLESHEET_TO_BARCODE {
-    tag "$samplesheet"
-    label "process_single"
-
-    container "quay.io/biocontainers/pandas:1.1.5"
-    conda (params.enable_conda ? "conda-forge::pandas=1.1.5" : null)
-    container "${ workflow.containerEngine == 'singularity' && !task.ext.singularity_pull_docker_container ?
-        'https://depot.galaxyproject.org/singularity/pandas:1.1.5':
-        'quay.io/biocontainers/pandas:1.1.5' }"
-
-    input:
-    path samplesheet
 
     output:
     path "*.csv"         , emit: csv
@@ -44,6 +17,6 @@ process CLIP_SAMPLESHEET_TO_BARCODE {
 
     shell:
     process_name = task.process
-    output       = task.ext.output ?: 'barcodes.csv'
-    template 'clip_samplesheet_to_barcode.py'
+    output       = task.ext.output ?: "${xlsx.simpleName}.csv"
+    template 'xlsx_to_csv.py'
 }
