@@ -1,0 +1,8 @@
+- name: "test_ultraplex_ultraplex"
+  command: nextflow run ./tests/modules/ultraplex/ultraplex -entry test_ultraplex -c ./tests/config/nextflow.config -c ./tests/modules/ultraplex/ultraplex/nextflow.config
+  tags:
+    - "modules"
+    - "ultraplex"
+  files:
+    - path: "output/ultraplex/ultraplex_demux_Sample1.fastq.gz"
+    - path: "output/ultraplex/ultraplex_demux_Sample2.fastq.gz"
