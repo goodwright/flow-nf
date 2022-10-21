@@ -18,7 +18,7 @@ jobs:
   ###      UNIT TESTS        ###
   ##############################
   module_tests:
-    name: ${{ matrix.NXF_VER }} ${{ matrix.tags }}
+    name: ${{ matrix.NXF_VER }} ${{ matrix.profile }} ${{ matrix.tags }}
     runs-on: ubuntu-20.04
     env:
       NXF_VER: ${{ matrix.NXF_VER }}
@@ -30,7 +30,9 @@ jobs:
         NXF_VER: ["21.10.3", ""]
         profile: ["docker"]
         tags:
-          - ultraplex
+          - ultraplex/samplesheettobardcode
+          - ultraplex/ultraplex
+          - xlsxtocsv
     steps:
       - name: Checkout Code
         uses: actions/checkout@v2

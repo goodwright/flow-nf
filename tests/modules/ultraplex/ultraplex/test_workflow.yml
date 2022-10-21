@@ -3,6 +3,7 @@
   tags:
     - "modules"
     - "ultraplex"
+    - "ultraplex/ultraplex"
   files:
     - path: "output/ultraplex/ultraplex_demux_Sample1.fastq.gz"
     - path: "output/ultraplex/ultraplex_demux_Sample2.fastq.gz"
