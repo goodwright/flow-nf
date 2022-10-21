@@ -8,6 +8,11 @@ on:
       - master
       - dev
 
+# Cancel if a newer run is started
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
 jobs:
   ##############################
   ###      UNIT TESTS        ###
@@ -23,6 +28,7 @@ jobs:
       fail-fast: false
       matrix:
         NXF_VER: ["21.10.3", ""]
+        profile: ["docker"]
         tags:
           - ultraplex
     steps:
@@ -58,11 +64,25 @@ jobs:
           wget -qO- get.nextflow.io | bash
           sudo mv nextflow /usr/local/bin/
 
+      # Test the module
       - name: Run pytest-workflow
-        run: PROFILE=docker pytest --tag ${{ matrix.tags }} --kwdof
+        # only use one thread for pytest-workflow to avoid race condition on conda cache.
+        run: TMPDIR=~ PROFILE=${{ matrix.profile }} pytest --tag ${{ matrix.tags }} --symlink --kwdof --git-aware --color=yes
 
-      # - name: Run pytest-workflow
-      #   uses: Wandalen/wretry.action@v1.0.11
-      #   with:
-      #     command: pytest --tag ${{ matrix.tags }} --kwdof
-      #     attempt_limit: 3
+      - name: Output log on failure
+        if: failure()
+        run: |
+          sudo apt install bat > /dev/null
+          batcat --decorations=always --color=always /home/runner/pytest_workflow_*/*/log.{out,err}
+      - name: Upload logs on failure
+        if: failure()
+        uses: actions/upload-artifact@v2
+        with:
+          name: logs-${{ matrix.profile }}
+          path: |
+            /home/runner/pytest_workflow_*/*/.nextflow.log
+            /home/runner/pytest_workflow_*/*/log.out
+            /home/runner/pytest_workflow_*/*/log.err
+            /home/runner/pytest_workflow_*/*/work
+            !/home/runner/pytest_workflow_*/*/work/conda
+            !/home/runner/pytest_workflow_*/*/work/singularity
