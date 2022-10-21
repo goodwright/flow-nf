@@ -14,7 +14,6 @@ jobs:
   ##############################
   module_tests:
     name: ${{ matrix.NXF_VER }} ${{ matrix.tags }}
-    if: ${{ github.event_name != 'push' }}
     runs-on: ubuntu-20.04
     env:
       NXF_VER: ${{ matrix.NXF_VER }}
@@ -60,7 +59,7 @@ jobs:
           sudo mv nextflow /usr/local/bin/
 
       - name: Run pytest-workflow
-        run: pytest --tag ${{ matrix.tags }} --kwdof
+        run: PROFILE=docker pytest --tag ${{ matrix.tags }} --kwdof
 
       # - name: Run pytest-workflow
       #   uses: Wandalen/wretry.action@v1.0.11
