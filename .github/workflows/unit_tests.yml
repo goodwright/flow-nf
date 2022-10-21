@@ -60,7 +60,10 @@ jobs:
           sudo mv nextflow /usr/local/bin/
 
       - name: Run pytest-workflow
-        uses: Wandalen/wretry.action@v1.0.11
-        with:
-          command: PROFILE=docker pytest --tag ${{ matrix.tags }} --kwdof
-          attempt_limit: 3
+        run: pytest --tag ${{ matrix.tags }} --kwdof
+
+      # - name: Run pytest-workflow
+      #   uses: Wandalen/wretry.action@v1.0.11
+      #   with:
+      #     command: pytest --tag ${{ matrix.tags }} --kwdof
+      #     attempt_limit: 3
