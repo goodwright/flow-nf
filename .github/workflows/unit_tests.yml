@@ -131,6 +131,8 @@ jobs:
           auto-update-conda: true
           channels: conda-forge,bioconda,defaults
           python-version: ${{ matrix.python-version }}
+          auto-activate-base: true
+          activate-environment: ""
 
       - name: Install conda packages
         run: |
@@ -139,7 +141,6 @@ jobs:
       - name: Run pytest-workflow
         # only use one thread for pytest-workflow to avoid race condition on conda cache.
         run: |
-          conda activate test
           TMPDIR=~ pytest --tag python --symlink --kwdof --git-aware --color=yes
 
       - name: Output log on failure
