@@ -139,7 +139,7 @@ jobs:
       - name: Run pytest-workflow
         # only use one thread for pytest-workflow to avoid race condition on conda cache.
         run: |
-          conda env list
+          /usr/share/miniconda/envs/test/bin/activate
           TMPDIR=~ pytest --tag python --symlink --kwdof --git-aware --color=yes
 
       - name: Output log on failure
