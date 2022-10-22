@@ -1,14 +1,14 @@
 - name: "test_xlsxtocsv_script_xlsx"
-  command: python modules/flow-nf/xlsx_to_csv/templates/xlsx_to_csv.py --process_name test --xlsx tests/data/small_excel.xlsx --output output/xlsxtocsv_test.csv
+  command: python modules/flow-nf/xlsx_to_csv/templates/xlsx_to_csv.py --process_name test --xlsx tests/data/small_excel.xlsx --output xlsxtocsv_test.csv
   tags:
     - "python"
     # - "xlsxtocsv"
   files:
-    - path: "output/xlsxtocsv_test.csv"
+    - path: "xlsxtocsv_test.csv"
       md5sum: 437b1687474b3bd3053153a21108e22a
 
 - name: "test_xlsxtocsv_script_xls"
-  command: python modules/flow-nf/xlsx_to_csv/templates/xlsx_to_csv.py --process_name test --xlsx tests/data/small_excel.xls --output output/xlsxtocsv_test.csv
+  command: python modules/flow-nf/xlsx_to_csv/templates/xlsx_to_csv.py --process_name test --xlsx tests/data/small_excel.xls --output xlsxtocsv_test.csv
   tags:
     - "python"
     # - "xlsxtocsv"

@@ -1,11 +1,11 @@
 - name: "test_ultraplex_samplesheettobardcode_script_twosamples"
-  command: python modules/flow-nf/ultraplex/clip_samplesheet_to_barcode/templates/clip_samplesheet_to_barcode.py --process_name test --samplesheet tests/data/samplesheets/clip-samplesheet.csv --output output/barcodes.csv
+  command: python modules/flow-nf/ultraplex/clip_samplesheet_to_barcode/templates/clip_samplesheet_to_barcode.py --process_name test --samplesheet tests/data/samplesheets/clip-samplesheet.csv --output barcodes.csv
   tags:
-    - "scripts"
-    - "ultraplex"
-    - "ultraplex/samplesheettobardcode"
+    - "python"
+    # - "ultraplex"
+    # - "ultraplex/samplesheettobardcode"
   files:
-    - path: "output/clip/barcodes.csv"
+    - path: "barcodes.csv"
       contains:
         - "NNNGGCGNN:Sample1"
         - "NNNTTGTNN:Sample2"
