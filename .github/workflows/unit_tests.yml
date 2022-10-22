@@ -27,7 +27,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        NXF_VER: ["21.10.3", ""]
+        NXF_VER: ["22.04.0", ""]
         profile: ["docker"]
         tags:
           - ultraplex/samplesheettobardcode
