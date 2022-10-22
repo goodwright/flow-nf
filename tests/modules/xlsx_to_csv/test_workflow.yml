@@ -1,0 +1,8 @@
+- name: "test_xlsxtocsv_xlsx"
+  command: nextflow run ./tests/modules/xlsx_to_csv/main.nf -entry test_xlsxtocsv_xlsx -c ./tests/config/nextflow.config -c ./tests/modules/xlsx_to_csv/nextflow.config
+  tags:
+    - "modules"
+    - "xlsxtocsv"
+  files:
+    - path: "output/xlsx/small_excel.csv"
+      md5sum: 437b1687474b3bd3053153a21108e22a
