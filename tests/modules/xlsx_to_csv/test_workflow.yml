@@ -1,7 +1,7 @@
 - name: "test_xlsxtocsv_xlsx"
   command: nextflow run ./tests/modules/xlsx_to_csv/main.nf -entry test_xlsxtocsv_xlsx -c ./tests/config/nextflow.config -c ./tests/modules/xlsx_to_csv/nextflow.config
   tags:
-    - "python"
+    - "modules"
     - "xlsxtocsv"
   files:
     - path: "output/xlsx/small_excel.csv"
