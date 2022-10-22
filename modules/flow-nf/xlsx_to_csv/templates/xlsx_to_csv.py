@@ -19,7 +19,7 @@ def main(process_name, xlsx, output):
     dump_versions(process_name)
 
     # Convert excel file
-    data = pd.read_excel(xlsx, engine='openpyxl')
+    data = pd.read_excel(xlsx, engine="openpyxl")
     data.to_csv(output, index=False)
 
 
