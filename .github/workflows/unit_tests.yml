@@ -15,7 +15,7 @@ concurrency:
 
 jobs:
   ##############################
-  ###      UNIT TESTS        ###
+  ###   NEXTFLOW UNIT TESTS  ###
   ##############################
   module_tests:
     name: ${{ matrix.NXF_VER }} ${{ matrix.profile }} ${{ matrix.tags }}
@@ -33,7 +33,6 @@ jobs:
           - ultraplex/samplesheettobardcode
           - ultraplex/ultraplex
           - xlsxtocsv
-          - python
     steps:
       - name: Checkout Code
         uses: actions/checkout@v2
@@ -75,8 +74,62 @@ jobs:
         with:
           singularity-version: 3.7.1
 
+      - name: Run pytest-workflow
+        # only use one thread for pytest-workflow to avoid race condition on conda cache.
+        run: TMPDIR=~ PROFILE=${{ matrix.profile }} pytest --tag ${{ matrix.tags }} --symlink --kwdof --git-aware --color=yes
+
+      - name: Output log on failure
+        if: failure()
+        run: |
+          sudo apt install bat > /dev/null
+          batcat --decorations=always --color=always /home/runner/pytest_workflow_*/*/log.{out,err}
+      - name: Upload logs on failure
+        if: failure()
+        uses: actions/upload-artifact@v2
+        with:
+          name: logs-${{ matrix.profile }}
+          path: |
+            /home/runner/pytest_workflow_*/*/.nextflow.log
+            /home/runner/pytest_workflow_*/*/log.out
+            /home/runner/pytest_workflow_*/*/log.err
+            /home/runner/pytest_workflow_*/*/work
+            !/home/runner/pytest_workflow_*/*/work/conda
+            !/home/runner/pytest_workflow_*/*/work/singularity
+
+  ##############################
+  ###  PYTHON SCRIPT TESTS   ###
+  ##############################
+  python_tests:
+    name: python-script-tests
+    runs-on: ubuntu-20.04
+    env:
+      NXF_ANSI_LOG: false
+      CAPSULE_LOG: none
+    strategy:
+      fail-fast: false
+        tags:
+          - python
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v2
+
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: "3.x"
+
+      - name: Setup Pip Cache
+        uses: actions/cache@v2
+        with:
+          path: ~/.cache/pip
+          key: ${{ runner.os }}-pip-${{ hashFiles('**/requirements.txt') }}
+          restore-keys: |
+            ${{ runner.os }}-pip-
+
+      - name: Install Python dependencies
+        run: python -m pip install --upgrade pip pytest-workflow
+
       - name: Set up miniconda
-        if: matrix.profile == 'conda' || matrix.tags == 'python'
         uses: conda-incubator/setup-miniconda@v2
         with:
           auto-update-conda: true
@@ -84,17 +137,15 @@ jobs:
           python-version: ${{ matrix.python-version }}
 
       - name: Conda clean
-        if: matrix.profile == 'conda' || matrix.tags == 'python'
         run: conda clean -a
 
       - name: Install conda packages
-        if: matrix.tags == 'python'
         run: |
           conda install pandas=1.5.0 openpyxl=3.0.10
 
       - name: Run pytest-workflow
         # only use one thread for pytest-workflow to avoid race condition on conda cache.
-        run: TMPDIR=~ PROFILE=${{ matrix.profile }} pytest --tag ${{ matrix.tags }} --symlink --kwdof --git-aware --color=yes
+        run: TMPDIR=~ pytest --tag ${{ matrix.tags }} --symlink --kwdof --git-aware --color=yes
 
       - name: Output log on failure
         if: failure()
