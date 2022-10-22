@@ -7,11 +7,11 @@ on:
     workflows: ["linting"]
 
 jobs:
-  test:
+  pr_commenter:
     runs-on: ubuntu-latest
     steps:
       - name: Download lint results
-        uses: dawidd6/action-download-artifact@v3
+        uses: dawidd6/action-download-artifact@v2
         with:
           workflow: linting.yml
           workflow_conclusion: completed
@@ -21,7 +21,7 @@ jobs:
         run: echo "::set-output name=pr_number::$(cat linting-logs/PR_number.txt)"
 
       - name: Post PR comment
-        uses: marocchino/sticky-pull-request-comment@v3
+        uses: marocchino/sticky-pull-request-comment@v2
         with:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           number: ${{ steps.pr_number.outputs.pr_number }}
