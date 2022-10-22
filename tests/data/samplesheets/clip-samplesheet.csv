@@ -1,3 +1,3 @@
-Sample Name,5' Barcode,3' Barcode (optional),3' Adapter Sequence,3' Adapter Name (Optional)
+id,5prime_barcode,3prime_barcode,adapter_sequence,adapter_name
 Sample1,NNNGGCGNN,,AGATCGGAAGAGCGGTTCAG,
 Sample2,NNNTTGTNN,,AGATCGGAAGAGCGGTTCAG,
