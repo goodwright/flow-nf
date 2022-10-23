@@ -1,0 +1,25 @@
+{
+    "inputs": {
+        "file_options": {
+            "name": "File options",
+            "description": "Files needed to run the module.",
+            "properties": {
+                "fastqc": {
+                    "name": "FASTQ",
+                    "type": "file",
+                    "pattern": "fq\\.gz|fastq\\.gz",
+                    "required": true,
+                    "description": "A multiplexed FASTQ file to demultiplex."
+                },
+                "index": {
+                    "name": "BARCODES",
+                    "type": "file",
+                    "pattern": "csv",
+                    "required": true,
+                    "description": "A file describing the barcodes of the samples to demultiplex"
+                }
+            }
+        }
+    },
+    "outputs": []
+}
