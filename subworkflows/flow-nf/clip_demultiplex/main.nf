@@ -16,13 +16,13 @@ workflow CLIP_DEMULTIPLEX {
     ch_versions = Channel.empty()
 
     // Convert xlsx to csv if required
-    ch_csv = Channel.from( file(samplesheet) )
-    if (samplesheet.endsWith(".xlsx")) {
+    ch_csv = Channel.from( samplesheet )
+    if (samplesheet.toString().endsWith(".xlsx")) {
         /*
         * MODULE: Converts xlsx to csv
         */
         XLSX_TO_CSV ( 
-            samplesheet
+            ch_csv
         )
         ch_versions = ch_versions.mix(XLSX_TO_CSV.out.versions)
         ch_csv      = XLSX_TO_CSV.out.csv
@@ -57,6 +57,7 @@ workflow CLIP_DEMULTIPLEX {
             [ row[0], match ]
          }
         .set { ch_meta_fastq }
+    //ch_meta_fastq | view
 
     emit:
     fastq    = ch_meta_fastq  // channel: [ val(meta), [ fastq ] ]
