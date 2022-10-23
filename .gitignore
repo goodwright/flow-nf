@@ -3,6 +3,7 @@ work/
 results/
 test_output/
 output/
+modules/nf-core/
 .DS_Store
 *.code-workspace
 .screenrc
