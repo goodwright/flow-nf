@@ -30,9 +30,12 @@ jobs:
         NXF_VER: ["22.04.0", ""]
         profile: ["docker"]
         tags:
+        # Modules
           - ultraplex/samplesheettobardcode
           - ultraplex/ultraplex
           - xlsxtocsv
+        # Subworkflows
+          - clip_demultiplex
     steps:
       - name: Checkout Code
         uses: actions/checkout@v3
