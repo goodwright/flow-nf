@@ -17,6 +17,27 @@ workflow test_compressed {
     )
 }
 
-// uncompressed
+workflow test_uncompressed {
 
-// non existant
+    fasta     = file(params.test_data['sarscov2']['genome']['genome_fasta'], checkIfExists: true)
+    gtf       = file(params.test_data['sarscov2']['genome']['genome_gff3'], checkIfExists: true)
+    bed       = file(params.test_data['sarscov2']['genome']['test_bed'], checkIfExists: true)
+    blacklist = file(params.goodwright_test_data['genome']['mm10_blacklist'], checkIfExists: true)
+
+    PREPARE_REF (
+        fasta,
+        gtf,
+        bed,
+        blacklist
+    )
+}
+
+workflow test_nullparams {
+
+    PREPARE_REF (
+        [],
+        [],
+        [],
+        []
+    )
+}
