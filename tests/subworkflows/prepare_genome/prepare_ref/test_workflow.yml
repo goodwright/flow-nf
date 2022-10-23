@@ -3,7 +3,7 @@
   tags:
     - "subworkflows"
     - "prepare_genome"
-    - "prepare_ref"
+    - "prepare_genome/prepare_ref"
   files:
     - path: "output/gunzip/genome.fasta"
       md5sum: 6e9fe4042a72f2345f644f239272b7e6
@@ -23,7 +23,7 @@
   tags:
     - "subworkflows"
     - "prepare_genome"
-    - "prepare_ref"
+    - "prepare_genome/prepare_ref"
   files:
     - path: "output/custom/genome.fasta.fai"
       md5sum: 9da2a56e2853dc8c0b86a9e7229c9fe5
@@ -35,7 +35,7 @@
   tags:
     - "subworkflows"
     - "prepare_genome"
-    - "prepare_ref"
+    - "prepare_genome/prepare_ref"
   files:
     - path: "output/gunzip/genome.fasta"
       should_exist: false

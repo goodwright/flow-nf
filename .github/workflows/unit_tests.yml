@@ -36,6 +36,7 @@ jobs:
           - xlsxtocsv
           # Subworkflows
           - clip_demultiplex
+          - prepare_genome/prepare_ref
           # Wrappers
           - wrappers/ultraplex
     steps:
