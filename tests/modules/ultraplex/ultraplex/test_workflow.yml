@@ -1,5 +1,5 @@
 - name: "test_ultraplex_ultraplex"
-  command: nextflow run ./tests/modules/ultraplex/ultraplex -entry test_ultraplex -c ./tests/config/nextflow.config -c ./tests/modules/ultraplex/ultraplex/nextflow.config
+  command: nextflow run ./tests/modules/ultraplex/ultraplex -entry test_ultraplex -c ./tests/config/nextflow.config
   tags:
     - "modules"
     - "ultraplex"
