@@ -28,7 +28,7 @@ jobs:
       fail-fast: false
       matrix:
         NXF_VER: ["22.04.0", ""]
-        profile: ["docker, singularity"]
+        profile: ["docker", "singularity"]
         tags:
           # Modules
           - ultraplex/samplesheettobardcode
