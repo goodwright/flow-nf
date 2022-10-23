@@ -28,7 +28,7 @@ jobs:
       fail-fast: false
       matrix:
         NXF_VER: ["22.04.0", ""]
-        profile: ["docker"]
+        profile: ["docker, singularity"]
         tags:
         # Modules
           - ultraplex/samplesheettobardcode
@@ -36,6 +36,8 @@ jobs:
           - xlsxtocsv
         # Subworkflows
           - clip_demultiplex
+        # Wrappers
+          - wrappers/ultraplex
     steps:
       - name: Checkout Code
         uses: actions/checkout@v3
