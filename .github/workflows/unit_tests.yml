@@ -34,9 +34,11 @@ jobs:
           - ultraplex/samplesheettobardcode
           - ultraplex/ultraplex
           - xlsxtocsv
+          - clipseq/filter_gtf
           # Subworkflows
           - clip_demultiplex
           - prepare_genome/prepare_ref
+          - prepare_genome/prepare_aligner
           # Wrappers
           - wrappers/ultraplex
     steps:
