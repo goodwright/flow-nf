@@ -17,7 +17,7 @@ output:
   - gtf:
       type: file
       description: A filtered GTF annotation file
-      pattern: "*.csv"
+      pattern: "*.gtf"
   - versions:
       type: file
       description: File containing software versions
