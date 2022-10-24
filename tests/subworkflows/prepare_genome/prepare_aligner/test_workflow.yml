@@ -28,4 +28,3 @@
       should_exist: false
     - path: "output/star/star/SAindex"
       should_exist: false
-
