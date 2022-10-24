@@ -1,0 +1,51 @@
+- name: "test_sw_prepare_ref_testcompressed"
+  command: nextflow run ./tests/subworkflows/prepare_genome/prepare_ref/main.nf -entry test_compressed -c ./tests/config/nextflow.config
+  tags:
+    - "subworkflows"
+    - "prepare_genome"
+    - "prepare_genome/prepare_ref"
+  files:
+    - path: "output/gunzip/genome.fasta"
+      md5sum: 6e9fe4042a72f2345f644f239272b7e6
+    - path: "output/gunzip/genome.gff3"
+      md5sum: 357435a81a9981a0128e840ebe11051e
+    - path: "output/gunzip/mm10-blacklist.bed"
+      md5sum: 8acc6d39a281da5981a95be837ffb760
+    - path: "output/gunzip/test.bed"
+      md5sum: fe4053cf4de3aebbdfc3be2efb125a74
+    - path: "output/custom/genome.fasta.gz.fai"
+      md5sum: 9da2a56e2853dc8c0b86a9e7229c9fe5
+    - path: "output/custom/genome.fasta.gz.sizes"
+      md5sum: a57c401f27ae5133823fb09fb21c8a3c
+
+- name: "test_sw_prepare_ref_testuncompressed"
+  command: nextflow run ./tests/subworkflows/prepare_genome/prepare_ref/main.nf -entry test_uncompressed -c ./tests/config/nextflow.config
+  tags:
+    - "subworkflows"
+    - "prepare_genome"
+    - "prepare_genome/prepare_ref"
+  files:
+    - path: "output/custom/genome.fasta.fai"
+      md5sum: 9da2a56e2853dc8c0b86a9e7229c9fe5
+    - path: "output/custom/genome.fasta.sizes"
+      md5sum: a57c401f27ae5133823fb09fb21c8a3c
+
+- name: "test_sw_prepare_ref_nullparams"
+  command: nextflow run ./tests/subworkflows/prepare_genome/prepare_ref/main.nf -entry test_nullparams -c ./tests/config/nextflow.config
+  tags:
+    - "subworkflows"
+    - "prepare_genome"
+    - "prepare_genome/prepare_ref"
+  files:
+    - path: "output/gunzip/genome.fasta"
+      should_exist: false
+    - path: "output/gunzip/genome.gff3"
+      should_exist: false
+    - path: "output/gunzip/mm10-blacklist.bed"
+      should_exist: false
+    - path: "output/gunzip/test.bed"
+      should_exist: false
+    - path: "output/custom/genome.fasta.gz.fai"
+      should_exist: false
+    - path: "output/custom/genome.fasta.gz.sizes"
+      should_exist: false
