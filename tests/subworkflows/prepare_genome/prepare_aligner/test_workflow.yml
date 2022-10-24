@@ -1,0 +1,31 @@
+- name: "test_sw_prepare_aligner_testfasta"
+  command: nextflow run ./tests/subworkflows/prepare_genome/prepare_aligner/main.nf -entry test_fasta -c ./tests/config/nextflow.config
+  tags:
+    - "subworkflows"
+    - "prepare_genome"
+    - "prepare_genome/prepare_aligner"
+  files:
+    - path: "output/bowtie2/bowtie2/genome.1.bt2"
+      md5sum: 118f83ac94277f7058d1ecb79fb5acf9
+    - path: "output/star/star/SAindex"
+      md5sum: d0fbf2789ee1e9f60c352ba3655d9de4
+
+- name: "test_sw_prepare_aligner_testtar"
+  command: nextflow run ./tests/subworkflows/prepare_genome/prepare_aligner/main.nf -entry test_tar -c ./tests/config/nextflow.config
+  tags:
+    - "subworkflows"
+    - "prepare_genome"
+    - "prepare_genome/prepare_aligner"
+
+- name: "test_sw_prepare_aligner_nullparams"
+  command: nextflow run ./tests/subworkflows/prepare_genome/prepare_aligner/main.nf -entry test_nullparams -c ./tests/config/nextflow.config
+  tags:
+    - "subworkflows"
+    - "prepare_genome"
+    - "prepare_genome/prepare_aligner"
+  files:
+    - path: "output/bowtie2/bowtie2/genome.1.bt2"
+      should_exist: false
+    - path: "output/star/star/SAindex"
+      should_exist: false
+
