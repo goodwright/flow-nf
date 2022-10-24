@@ -1,4 +1,4 @@
-- name: "test_clipseq_filtergtf"
+- name: "test_clipseq_filtergtf_scripts"
   command: python modules/flow-nf/clipseq/filter_gtf/templates/filter_gtf.py --process_name test --gtf tests/data/genome/genome.gtf --output output.gtf
   tags:
     - "python"
