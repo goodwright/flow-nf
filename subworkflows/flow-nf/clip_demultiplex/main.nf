@@ -21,7 +21,7 @@ workflow CLIP_DEMULTIPLEX {
         /*
         * MODULE: Converts xlsx to csv
         */
-        XLSX_TO_CSV ( 
+        XLSX_TO_CSV (
             ch_csv
         )
         ch_versions = ch_versions.mix(XLSX_TO_CSV.out.versions)
