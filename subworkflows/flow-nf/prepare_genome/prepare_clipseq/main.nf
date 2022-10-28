@@ -102,7 +102,19 @@ workflow PREPARE_CLIPSEQ {
         ch_gtf,
         ch_fasta_fai.map{ it[1] }
     )
-    ch_versions    = ch_versions.mix(ICOUNT_SEG_GTF.out.versions)
+    ch_seg_gtf  = ICOUNT_SEG_GTF.out.gtf
+    ch_versions = ch_versions.mix(ICOUNT_SEG_GTF.out.versions)
+
+    /*
+    * MODULE: Segment the filtered GTF file using icount
+    */
+    ICOUNT_SEG_FILTGTF (
+        ch_gtf,
+        ch_fasta_fai.map{ it[1] }
+    )
+    ch_seg_filt_gtf  = ICOUNT_SEG_FILTGTF.out.gtf
+    ch_versions      = ch_versions.mix(ICOUNT_SEG_GTF.out.versions)
+
 
     emit:
     fasta              = ch_fasta              // channel: [ val(meta), [ fasta ] ]
@@ -114,5 +126,7 @@ workflow PREPARE_CLIPSEQ {
     smrna_fasta_fai    = ch_smrna_fasta_fai    // channel: [ val(meta), [ fai ] ]
     smrna_chrom_sizes  = ch_smrna_chrom_sizes  // channel: [ val(meta), [ txt ] ]
     longest_transcript = ch_longest_transcript // channel: [ val(meta), [ txt ] ]
+    seg_gtf            = ch_seg_gtf            // channel: [ val(meta), [ gtf ] ]
+    seg_filt_gtf       = ch_seg_filt_gtf       // channel: [ val(meta), [ gtf ] ]
     versions           = ch_versions           // channel: [ versions.yml ]
 }

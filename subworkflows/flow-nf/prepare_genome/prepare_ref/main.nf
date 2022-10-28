@@ -73,7 +73,7 @@ workflow PREPARE_REF {
     ch_fasta_fai   = Channel.empty()
     if (fasta) {
         CUSTOM_GETCHROMSIZES (
-            [ [:], fasta ]
+            ch_fasta
         )
         ch_chrom_sizes = CUSTOM_GETCHROMSIZES.out.sizes
         ch_fasta_fai   = CUSTOM_GETCHROMSIZES.out.fai
