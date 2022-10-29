@@ -1,5 +1,5 @@
 - name: "test_sw_prepare_clipseq_testnoindex"
-  command: nextflow run ./tests/subworkflows/prepare_genome/prepare_clipseq/main.nf -entry test_noindex -c ./tests/config/nextflow.config
+  command: nextflow run ./tests/subworkflows/prepare_genome/prepare_clipseq/main.nf -entry test_noindex -c ./tests/config/nextflow.config -c ./tests/subworkflows/prepare_genome/prepare_clipseq/nextflow.config
   tags:
     - "subworkflows"
     - "prepare_genome"
@@ -19,7 +19,7 @@
       md5sum: 23ac963f9904e4ee15b94e9e8159db08
 
 - name: "test_sw_prepare_clipseq_testwithindex"
-  command: nextflow run ./tests/subworkflows/prepare_genome/prepare_clipseq/main.nf -entry test_withindex -c ./tests/config/nextflow.config
+  command: nextflow run ./tests/subworkflows/prepare_genome/prepare_clipseq/main.nf -entry test_withindex -c ./tests/config/nextflow.config -c ./tests/subworkflows/prepare_genome/prepare_clipseq/nextflow.config
   tags:
     - "subworkflows"
     - "prepare_genome"

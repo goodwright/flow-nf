@@ -20,7 +20,7 @@ process ICOUNT_SEGMENT {
 
     script:
     def args   = task.ext.args ?: ''
-    def prefix = task.ext.prefix ?: "${gtf.simpleName}.seg"
+    def prefix = task.ext.prefix ? "${gtf.simpleName}${task.ext.prefix}" : "${gtf.simpleName}.seg"
     """
     iCount segment \\
         $gtf \\

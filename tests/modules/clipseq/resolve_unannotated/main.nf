@@ -14,7 +14,7 @@ workflow test_genic_false {
         filt_seg,
         gtf,
         fai,
-        "false"
+        false
     )
 }
 
@@ -30,6 +30,6 @@ workflow test_genic_true {
         filt_seg,
         gtf,
         fai,
-        "true"
+        true
     )
 }
