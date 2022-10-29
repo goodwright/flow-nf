@@ -13,9 +13,9 @@
       md5sum: 8acc6d39a281da5981a95be837ffb760
     - path: "output/gunzip/test.bed"
       md5sum: fe4053cf4de3aebbdfc3be2efb125a74
-    - path: "output/custom/genome.fasta.gz.fai"
+    - path: "output/custom/genome.fasta.fai"
       md5sum: 9da2a56e2853dc8c0b86a9e7229c9fe5
-    - path: "output/custom/genome.fasta.gz.sizes"
+    - path: "output/custom/genome.fasta.sizes"
       md5sum: a57c401f27ae5133823fb09fb21c8a3c
 
 - name: "test_sw_prepare_ref_testuncompressed"

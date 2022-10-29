@@ -83,7 +83,7 @@ workflow PREPARE_CLIPSEQ {
     */
     PREPARE_PRIMARY_INDEX (
         ["star"],
-        ch_fasta.map{ it[1] },
+        ch_fasta,
         ch_gtf.map{ it[1] },
         [],
         genome_index_path
