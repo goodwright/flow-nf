@@ -5,15 +5,15 @@ ResolveUnannotated.py annotates genome segments that are not annotated by iCount
 **Motivation**
 
 When performing iCount segmentation on GTF annotation, the whole genome is split into the following genomic regions: CDS, UTR3, UTR5, ncRNA, intron, intergenic.
-If  the segmentation is performed on filtered genomic annotation, some regions remain unnanotated. 
+If the segmentation is performed on filtered genomic annotation, some regions remain unnanotated.
 This is due to the fact that the annotation on a "gene" level covers all transcripts related to this gene, including transcripts with low transcript_support_level, which were removed by filtering. As a result, we get unannotated regions, which are covered by a gene, but lack transcripts that are required for segmentation.
 
 **How it works**
 
 ResolveUnannotated.py finds unannotated regions in the iCount genomic segment (regions.gtf), annotates them according to the corresponding gene, and adds them to the original segment under the feature "genic_other".
 
-
 **Dependencies**:
+
 ```
 python=3.7
 pandas
@@ -27,6 +27,7 @@ pybedtools=0.8.0
 ```
 
 **Usage**
+
 ```
 python3 ResolveUnnanotated.py [-h] -s SEGMENTATION -a ANNOTATION -fai FASTA_INDEX -o OUTPUTDIR
 required arguments:
@@ -43,4 +44,3 @@ required arguments:
 **Outputs**
 
 Gtf file with annotated "genic_other" regions.
-

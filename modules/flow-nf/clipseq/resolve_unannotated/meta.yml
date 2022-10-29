@@ -16,7 +16,7 @@ tools:
       documentation: https://daler.github.io/pybedtools/
   - plumbum:
       description: |
-         Plumbum is a small yet feature-rich library for shell script-like programs in Python.
+        Plumbum is a small yet feature-rich library for shell script-like programs in Python.
       homepage: https://plumbum.readthedocs.io/en/latest/
       documentation: https://plumbum.readthedocs.io/en/latest/
 input:
