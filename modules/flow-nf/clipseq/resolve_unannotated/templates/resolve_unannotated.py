@@ -56,7 +56,7 @@ def fai2bed(fai):
     bed_chr = pbt.BedTool.from_dataframe(df_chromosomes).sort()
     return(bed_chr)
 
-def main(process_name, segmentation, filt_segmentation, annotation, fai, output, genic_other=False):
+def main(process_name, segmentation, filt_segmentation, annotation, fai, output, genic_other):
     # Dump version file
     dump_versions(process_name)
 
@@ -86,8 +86,9 @@ def main(process_name, segmentation, filt_segmentation, annotation, fai, output,
     print(f'Found {len(bed_missing)} unannotated genomic regions.')
     # Use intersect to split unnanotated regions
     intersect = bed_missing.intersect(bed_unfiltered, s=True, nonamecheck=True).sort()
+
     print('Annotating regions with gene information...')
-    if not genic_other:
+    if genic_other == "false":
         # Intersect missing regions with unfiltered segment to get transcript region
         print('Annotating missing regions in iCount segment with transcript regions...')
         # Annotate with annotations (column 7) and feature (column 4)
@@ -126,7 +127,7 @@ def main(process_name, segmentation, filt_segmentation, annotation, fai, output,
     df_segment = pd.concat([df_segment, df_unnanotated], ignore_index=True)
     print('N segment entries:', len(df_segment))
     # Sort GTF segment and write it to file
-    if genic_other:
+    if genic_other == "true":
         identifier = 'genic_other'
     else:
         identifier = 'annotated'
@@ -147,7 +148,8 @@ if __name__ == "__main__":
     parser.add_argument("--filt_segmentation", default="!{filt_segmentation}")
     parser.add_argument("--annotation", default="!{annotation}")
     parser.add_argument("--fai", default="!{fai}")
+    parser.add_argument("--genic_other", default="!{genic_other}")
     parser.add_argument("--output", default="!{output}")
     args = parser.parse_args()
 
-    main(args.process_name, args.segmentation, args.filt_segmentation, args.annotation, args.fai, args.output)
+    main(args.process_name, args.segmentation, args.filt_segmentation, args.annotation, args.fai, args.output, args.genic_other)

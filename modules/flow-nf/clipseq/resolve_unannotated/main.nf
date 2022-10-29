@@ -10,6 +10,7 @@ process CLIPSEQ_RESOLVE_UNANNOTATED {
     path filt_segmentation
     path annotation
     path fai
+    val genic_other
 
     output:
     path "*.gtf"         , emit: gtf
@@ -19,7 +20,7 @@ process CLIPSEQ_RESOLVE_UNANNOTATED {
     task.ext.when == null || task.ext.when
 
     shell:
-    process_name = task.process
-    output       = task.ext.output ?: "${annotation.simpleName}.resolved.gtf"
+    process_name   = task.process
+    output         = task.ext.output ?: "${annotation.simpleName}.resolved.gtf"
     template 'resolve_unannotated.py'
 }
