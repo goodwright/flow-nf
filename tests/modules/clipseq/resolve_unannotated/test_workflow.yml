@@ -1,0 +1,9 @@
+- name: "test_clipseq_resolve_unannotated"
+  command: nextflow run ./tests/modules/clipseq/resolve_unannotated/main.nf -entry test -c ./tests/config/nextflow.config
+  tags:
+    - "modules"
+    - "clipseq"
+    - "clipseq/resolve_unannotated"
+  files:
+    - path: "output.csv"
+      md5sum: 84bd8c93f5b03222bf940bb79f2825b2
