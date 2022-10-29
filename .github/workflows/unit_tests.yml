@@ -35,10 +35,14 @@ jobs:
           - ultraplex/ultraplex
           - xlsxtocsv
           - clipseq/filter_gtf
+          - clipseq/find_longest_transcript
+          - clipseq/resolve_unannotated
+          - icount/segment
           # Subworkflows
           - clip_demultiplex
           - prepare_genome/prepare_ref
           - prepare_genome/prepare_aligner
+          - prepare_genome/prepare_clipseq
           # Wrappers
           - wrappers/ultraplex
     steps:
