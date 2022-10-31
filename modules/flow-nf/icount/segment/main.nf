@@ -26,7 +26,7 @@ process ICOUNT_SEGMENT {
         $gtf \\
         ${prefix}.gtf \\
         $fai
-    
+
     cat <<-END_VERSIONS > versions.yml
     "${task.process}":
         icount: \$(echo \$(iCount --v 2>&1)

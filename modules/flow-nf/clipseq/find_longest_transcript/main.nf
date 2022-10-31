@@ -27,7 +27,7 @@ process CLIPSEQ_FIND_LONGEST_TRANSCRIPT {
     tr -d "gene_id |transcript_id " |
     gawk -F "\\t" 'BEGIN { SUBSEP = OFS = FS } { s[\$1, \$2] += \$3 } END { for (i in s) { print i, s[i] } }' |
     sort -k1,1 -k3,3nr -k2,2 > cds_lengths.txt
-    
+
     #Table of transcript lengths for each protein coding transcript.
     cat ${gtf} | \
     gawk -F "\\t" '\$3 == "exon" { print \$0 }' |
