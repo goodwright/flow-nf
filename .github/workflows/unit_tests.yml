@@ -151,7 +151,7 @@ jobs:
         with:
           auto-update-conda: true
           channels: conda-forge,bioconda,defaults
-          python-version: "3.x"
+          python-version: "3.9"
 
       - name: Install Conda
         run: conda info
