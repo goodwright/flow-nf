@@ -146,6 +146,16 @@ jobs:
       - name: Install Script Python dependencies
         run: python -m pip install pandas==1.5.0 openpyxl==3.0.10 pybedtools==0.9.0 plumbum==1.8.0
 
+      - name: Set up miniconda
+        uses: conda-incubator/setup-miniconda@v2
+        with:
+          auto-update-conda: true
+          channels: conda-forge,bioconda,defaults
+          python-version: "3.x"
+
+      - name: Install Conda
+        run: conda info
+
       - name: Run pytest-workflow
         # only use one thread for pytest-workflow to avoid race condition on conda cache.
         run: TMPDIR=~ pytest --tag python --symlink --kwdof --color=yes
