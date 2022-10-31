@@ -1,4 +1,4 @@
-name: clipseq_filter_gtf
+name: clipseq_resolve_unannotated
 description: Annotates genome segments that are not annotated by iCount segmentation.
 tools:
   - pandas:

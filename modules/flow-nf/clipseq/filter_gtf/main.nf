@@ -11,8 +11,8 @@ process CLIPSEQ_FILTER_GTF {
     tuple val(meta), path(gtf)
 
     output:
-    path "*.gtf"         , emit: gtf
-    path  "versions.yml" , emit: versions
+    tuple val(meta), path("*.gtf"), emit: gtf
+    path  "versions.yml"          , emit: versions
 
     when:
     task.ext.when == null || task.ext.when
