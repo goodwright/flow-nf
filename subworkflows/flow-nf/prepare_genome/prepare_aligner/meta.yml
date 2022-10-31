@@ -26,7 +26,7 @@ input:
       type: file/folder
       description: pre-computed bowtie2 index folder
       pattern: "*.{tar.gz}"
-  - bt2_index_path:
+  - star_index_path:
       type: file/folder
       description: pre-computed star index folder
       pattern: "*.{tar.gz}"
@@ -40,7 +40,7 @@ output:
       type: folder
       description: pre-computed bowtie2 index folder
       pattern: ""
-  - bt2_index:
+  - star_index:
       type: folder
       description: pre-computed star index folder
       pattern: ""
