@@ -7,8 +7,6 @@
   files:
     - path: "output/gunzip/homosapien-hg37-chr21.fa"
       md5sum: e9ce36e75cd57d255ad64eb2ecca4dd0
-    - path: "output/gunzip/gencode.v35.chr21.gtf"
-      md5sum: 4ddd0812ada80b246ae998ac504d8582
     - path: "output/custom/genome.fasta.fai"
       md5sum: 3520cd30e1b100e55f578db9c855f685
     - path: "output/clipseq/gencode.filtered.gtf"
@@ -27,8 +25,6 @@
   files:
     - path: "output/gunzip/homosapien-hg37-chr21.fa"
       md5sum: e9ce36e75cd57d255ad64eb2ecca4dd0
-    - path: "output/gunzip/gencode.v35.chr21.gtf"
-      md5sum: 4ddd0812ada80b246ae998ac504d8582
     - path: "output/custom/genome.fasta.fai"
       md5sum: 3520cd30e1b100e55f578db9c855f685
     - path: "output/clipseq/gencode.filtered.gtf"
