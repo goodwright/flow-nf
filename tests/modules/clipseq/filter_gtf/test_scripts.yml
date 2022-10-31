@@ -1,7 +1,7 @@
 - name: "test_clipseq_filtergtf_scripts"
-  command: python modules/flow-nf/clipseq/filter_gtf/templates/filter_gtf.py --process_name test --gtf tests/data/genome/genome.gtf --output output.gtf
+  command: python modules/flow-nf/clipseq/filter_gtf/templates/filter_gtf.py --process_name test --gtf tests/data/genome/gencode.v35.chr21.gtf --output output.gtf
   tags:
     - "python"
   files:
     - path: "output.gtf"
-      md5sum: 31af002348b00a950b94dc9c2329b6c5
+      md5sum: d75e01b7e67b41ca253ee22413e8a0bc

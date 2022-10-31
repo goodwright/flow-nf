@@ -5,7 +5,7 @@ include { PREPARE_ALINGER as PREPARE_ALINGER_FOLDER } from '../../../../subworkf
 
 workflow test_fasta {
 
-    fasta = file(params.test_data['homo_sapiens']['genome']['genome_fasta'], checkIfExists: true)
+    fasta = [ [:], file(params.test_data['homo_sapiens']['genome']['genome_fasta'], checkIfExists: true) ]
     gtf   = file(params.test_data['homo_sapiens']['genome']['genome_gtf'], checkIfExists: true)
 
     // Test indexing with fasta file

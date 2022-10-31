@@ -4,14 +4,14 @@
             "name": "File options",
             "description": "Files needed to run the module.",
             "properties": {
-                "fastqc": {
+                "fastq": {
                     "name": "FASTQ",
                     "type": "file",
                     "pattern": "fq\\.gz|fastq\\.gz",
                     "required": true,
                     "description": "A multiplexed FASTQ file to demultiplex."
                 },
-                "index": {
+                "barcodes": {
                     "name": "BARCODES",
                     "type": "file",
                     "pattern": "csv",

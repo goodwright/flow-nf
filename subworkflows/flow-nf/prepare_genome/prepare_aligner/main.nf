@@ -31,7 +31,7 @@ workflow PREPARE_ALINGER {
         }
     }
     else if ("bowtie2" in aligners) {
-        ch_bt2_index = BOWTIE2_BUILD ( [ [:], fasta ] ).index
+        ch_bt2_index = BOWTIE2_BUILD ( fasta ).index
         ch_versions  = ch_versions.mix(BOWTIE2_BUILD.out.versions)
     }
 

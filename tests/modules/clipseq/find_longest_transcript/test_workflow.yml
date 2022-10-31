@@ -1,0 +1,6 @@
+- name: "test_clipseq_findlongesttranscript"
+  command: nextflow run ./tests/modules/clipseq/find_longest_transcript/main.nf -entry test_gtf -c ./tests/config/nextflow.config
+  tags:
+    - "modules"
+    - "clipseq"
+    - "clipseq/find_longest_transcript"

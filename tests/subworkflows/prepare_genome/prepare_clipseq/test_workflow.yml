@@ -1,0 +1,35 @@
+- name: "test_sw_prepare_clipseq_testnoindex"
+  command: nextflow run ./tests/subworkflows/prepare_genome/prepare_clipseq/main.nf -entry test_noindex -c ./tests/config/nextflow.config -c ./tests/subworkflows/prepare_genome/prepare_clipseq/nextflow.config
+  tags:
+    - "subworkflows"
+    - "prepare_genome"
+    - "prepare_genome/prepare_clipseq"
+  files:
+    - path: "output/gunzip/homosapien-hg37-chr21.fa"
+      md5sum: e9ce36e75cd57d255ad64eb2ecca4dd0
+    - path: "output/custom/genome.fasta.fai"
+      md5sum: 3520cd30e1b100e55f578db9c855f685
+    - path: "output/clipseq/gencode.filtered.gtf"
+      md5sum: d75e01b7e67b41ca253ee22413e8a0bc
+    - path: "output/custom/homosapien-hg37-chr21.fa.sizes"
+      md5sum: ffd90da532db7928daa1591d45dc26c4
+    - path: "output/icount/gencode.seg.gtf"
+      md5sum: 23ac963f9904e4ee15b94e9e8159db08
+
+- name: "test_sw_prepare_clipseq_testwithindex"
+  command: nextflow run ./tests/subworkflows/prepare_genome/prepare_clipseq/main.nf -entry test_withindex -c ./tests/config/nextflow.config -c ./tests/subworkflows/prepare_genome/prepare_clipseq/nextflow.config
+  tags:
+    - "subworkflows"
+    - "prepare_genome"
+    - "prepare_genome/prepare_clipseq"
+  files:
+    - path: "output/gunzip/homosapien-hg37-chr21.fa"
+      md5sum: e9ce36e75cd57d255ad64eb2ecca4dd0
+    - path: "output/custom/genome.fasta.fai"
+      md5sum: 3520cd30e1b100e55f578db9c855f685
+    - path: "output/clipseq/gencode.filtered.gtf"
+      md5sum: d75e01b7e67b41ca253ee22413e8a0bc
+    - path: "output/custom/homosapien-hg37-chr21.fa.sizes"
+      md5sum: ffd90da532db7928daa1591d45dc26c4
+    - path: "output/icount/gencode.seg.gtf"
+      md5sum: 23ac963f9904e4ee15b94e9e8159db08

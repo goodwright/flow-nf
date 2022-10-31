@@ -1,0 +1,7 @@
+- name: "test_clipseq_resolve_unannotated_scripts"
+  command: python modules/flow-nf/clipseq/resolve_unannotated/templates/resolve_unannotated.py --process_name test --output output.csv --segmentation tests/data/icount/gencode.seg.gtf --filt_segmentation tests/data/icount/gencode.seg.gtf --annotation tests/data/genome/gencode.v35.chr21.gtf --fai tests/data/genome/homosapien-hg37-chr21.fa.fai
+  tags:
+    - "python"
+  files:
+    - path: "output.csv"
+      md5sum: 84bd8c93f5b03222bf940bb79f2825b2

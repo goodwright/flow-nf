@@ -27,7 +27,7 @@ workflow PREPARE_REF {
         ch_versions = ch_versions.mix(GUNZIP_FASTA.out.versions)
     }
     else if (fasta) {
-        ch_fasta = Channel.from( [ [:], fasta ] )
+        ch_fasta = Channel.from( [ [ [:], fasta ] ] )
     }
 
     /*
@@ -39,7 +39,7 @@ workflow PREPARE_REF {
         ch_versions = ch_versions.mix(GUNZIP_GTF.out.versions)
     }
     else if (gtf) {
-        ch_gtf = Channel.from( [ [:], gtf ] )
+        ch_gtf = Channel.from( [ [ [:], gtf ] ] )
     }
 
     /*
@@ -51,7 +51,7 @@ workflow PREPARE_REF {
         ch_versions = ch_versions.mix(GUNZIP_BED.out.versions)
     }
     else if (bed) {
-        ch_bed = Channel.from( [ [:], bed ] )
+        ch_bed = Channel.from( [ [ [:], bed ] ] )
     }
 
     /*
@@ -63,7 +63,7 @@ workflow PREPARE_REF {
         ch_versions  = ch_versions.mix(GUNZIP_BLACKLIST.out.versions)
     }
     else if (blacklist) {
-        ch_blacklist = Channel.from( [ [:], blacklist ] )
+        ch_blacklist = Channel.from( [ [ [:], blacklist ] ] )
     }
 
     /*
@@ -73,7 +73,7 @@ workflow PREPARE_REF {
     ch_fasta_fai   = Channel.empty()
     if (fasta) {
         CUSTOM_GETCHROMSIZES (
-            [ [:], fasta ]
+            ch_fasta
         )
         ch_chrom_sizes = CUSTOM_GETCHROMSIZES.out.sizes
         ch_fasta_fai   = CUSTOM_GETCHROMSIZES.out.fai
