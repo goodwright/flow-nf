@@ -82,7 +82,7 @@ output:
       description: icount segmented gtf file based on the filtered gtf file
   - seg_resolved_gtf:
       type: file
-      description:  icount segmented gtf file with unannotated regons resolved
+      description: icount segmented gtf file with unannotated regons resolved
   - seg_resolved_gtf_genic:
       type: file
       description: icount segmented gtf file with unannotated regons resolved with genic other
