@@ -4,7 +4,7 @@ include { FASTQC_TRIMGALORE } from '../../../subworkflows/flow-nf/fastqc_trimgal
 
 workflow test_noskip_paired {
 
-    fastq = [ [id:"test"], [file(params.test_data['sarscov2']['illumina']['test_1_fastq_gz'], checkIfExists: true), file(params.test_data['sarscov2']['illumina']['test_2_fastq_gz'], checkIfExists: true)] ]
+    fastq = [ [id:"test", single_end:false], [file(params.test_data['sarscov2']['illumina']['test_1_fastq_gz'], checkIfExists: true), file(params.test_data['sarscov2']['illumina']['test_2_fastq_gz'], checkIfExists: true)] ]
 
     FASTQC_TRIMGALORE (
         fastq,
@@ -15,7 +15,7 @@ workflow test_noskip_paired {
 
 workflow test_noskip_single {
 
-    fastq = [ [id:"test"], [file(params.test_data['sarscov2']['illumina']['test_1_fastq_gz'], checkIfExists: true)] ]
+    fastq = [ [id:"test", single_end:true], [file(params.test_data['sarscov2']['illumina']['test_1_fastq_gz'], checkIfExists: true)] ]
 
     FASTQC_TRIMGALORE (
         fastq,
@@ -26,7 +26,7 @@ workflow test_noskip_single {
 
 workflow test_skip_fastqc {
 
-    fastq = [ [id:"test"], [file(params.test_data['sarscov2']['illumina']['test_1_fastq_gz'], checkIfExists: true)] ]
+    fastq = [ [id:"test", single_end:true], [file(params.test_data['sarscov2']['illumina']['test_1_fastq_gz'], checkIfExists: true)] ]
 
     FASTQC_TRIMGALORE (
         fastq,
@@ -37,7 +37,7 @@ workflow test_skip_fastqc {
 
 workflow test_skip_trim {
 
-    fastq = [ [id:"test"], [file(params.test_data['sarscov2']['illumina']['test_1_fastq_gz'], checkIfExists: true)] ]
+    fastq = [ [id:"test", single_end:true], [file(params.test_data['sarscov2']['illumina']['test_1_fastq_gz'], checkIfExists: true)] ]
 
     FASTQC_TRIMGALORE (
         fastq,
@@ -48,7 +48,7 @@ workflow test_skip_trim {
 
 workflow test_skip_all {
 
-    fastq = [ [id:"test"], [file(params.test_data['sarscov2']['illumina']['test_1_fastq_gz'], checkIfExists: true)] ]
+    fastq = [ [id:"test", single_end:true], [file(params.test_data['sarscov2']['illumina']['test_1_fastq_gz'], checkIfExists: true)] ]
 
     FASTQC_TRIMGALORE (
         fastq,
