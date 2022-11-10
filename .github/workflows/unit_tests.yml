@@ -43,6 +43,7 @@ jobs:
           - prepare_genome/prepare_ref
           - prepare_genome/prepare_aligner
           - prepare_genome/prepare_clipseq
+          - rna_align
           # Wrappers
           - wrappers/ultraplex
     steps:
