@@ -38,6 +38,7 @@ jobs:
           - clipseq/find_longest_transcript
           - clipseq/resolve_unannotated
           - icount/segment
+          - linux/command
           # Subworkflows
           - clip_demultiplex
           - prepare_genome/prepare_ref
