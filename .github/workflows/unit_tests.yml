@@ -39,6 +39,7 @@ jobs:
           - clipseq/resolve_unannotated
           - icount/segment
           - linux/command
+          - bedtools/shift
           # Subworkflows
           - clip_demultiplex
           - prepare_genome/prepare_ref
