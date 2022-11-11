@@ -1,0 +1,9 @@
+- name: "test_paraclu_cut"
+  command: nextflow run ./tests/modules/paraclu/cut/main.nf -c ./tests/config/nextflow.config -entry test
+  tags:
+    - "modules"
+    - "paraclu"
+    - "paraclu/cut"
+  files:
+    - path: "output/paraclu/test.peaks.tsv"
+      md5sum: 054f118584c0422b4d208edf090294eb

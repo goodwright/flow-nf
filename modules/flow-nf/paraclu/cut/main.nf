@@ -1,6 +1,6 @@
-process PARACLU_PARACLU {
+process PARACLU_CUT {
     tag "$meta.id"
-    label "process_low"
+    label "process_single"
 
     conda (params.enable_conda ? "bioconda::paraclu=10" : null)
     container "${ workflow.containerEngine == 'singularity' && !task.ext.singularity_pull_docker_container ?
@@ -8,22 +8,21 @@ process PARACLU_PARACLU {
         'quay.io/biocontainers/paraclu:10--h9a82719_1' }"
 
     input:
-    tuple val(meta), path(bed)
-    val min_value
+    tuple val(meta), path(tsv)
 
     output:
-    tuple val(meta), path("*.sigxls.tsv"), emit: tsv
-    path "versions.yml"                  , emit: versions
+    tuple val(meta), path("*.peaks.tsv"), emit: tsv
+    path "versions.yml"                 , emit: versions
 
     when:
     task.ext.when == null || task.ext.when
 
     script:
-    def args    = task.ext.args ? "$args" : "$min_value"
+    def args    = task.ext.args ?: ''
     def prefix  = task.ext.prefix ?: "${meta.id}"
     def VERSION = '10' // WARN: Version information not provided by tool on CLI. Please update this string when bumping container versions.
     """
-    paraclu $args $bed > ${prefix}.sigxls.tsv
+    paraclu-cut $args $tsv > ${prefix}.peaks.tsv
 
     cat <<-END_VERSIONS > versions.yml
     "${task.process}":

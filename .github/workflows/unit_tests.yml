@@ -41,6 +41,8 @@ jobs:
           - linux/command
           - bedtools/shift
           - clippy
+          - paraclu/paraclu
+          - paraclu/cut
           # Subworkflows
           - clip_demultiplex
           - prepare_genome/prepare_ref
