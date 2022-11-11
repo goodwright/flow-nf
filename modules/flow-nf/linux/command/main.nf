@@ -8,7 +8,9 @@ process LINUX_COMMAND {
         'ubuntu:20.04' }"
 
     input:
-    tuple val(meta), path(input)
+    tuple val(meta) , path(input)
+    path input2
+    val copy_input
 
     output:
     tuple val(meta), path("*.cmd.*"), emit: file
@@ -18,12 +20,17 @@ process LINUX_COMMAND {
     task.ext.when == null || task.ext.when
 
     script:
-    def args   = task.ext.args ?: 'echo "NO-ARGS"'
     def prefix = task.ext.suffix ? "${meta.id}${task.ext.suffix}" : "${meta.id}"
     def ext    = task.ext.ext ?: 'txt'
+    def cmd1   = task.ext.cmd1 ?: 'echo "NO-ARGS"'
+    def cmd2   = task.ext.cmd2 ? "CMD2=`cat $input2 | ${task.ext.cmd2}`" : ''
+    if(copy_input) {
+        cmd2 = task.ext.cmd2 ? "CMD2=`cat $input | ${task.ext.cmd2}`" : ''
+    }
 
     """
-    cat $input | $args > ${prefix}.cmd.${ext}
+    $cmd2
+    cat $input | $cmd1 > ${prefix}.cmd.${ext}
 
     cat <<-END_VERSIONS > versions.yml
     "${task.process}":
