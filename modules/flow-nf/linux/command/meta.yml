@@ -1,0 +1,24 @@
+name: linux_command
+description: |
+    Wrapper process that allows running of native linux commands where the input file 
+    is streamed to a pipe using cat and fed into whatever args are specified using ext.args
+keywords:
+  - linux
+input:
+  - input:
+      type: file
+      description: Any file
+      pattern: "*.*"
+
+output:
+  - file:
+      type: file
+      description: The altered output file
+      pattern: "*.*"
+  - versions:
+      type: file
+      description: File containing software versions
+      pattern: "versions.yml"
+
+authors:
+  - "@chris-cheshire"
