@@ -39,6 +39,7 @@ jobs:
           - clipseq/resolve_unannotated
           - icount/segment
           - icount/sigxls
+          - icount/summary
           - linux/command
           - bedtools/shift
           - clippy
