@@ -38,17 +38,18 @@ jobs:
           - clipseq/find_longest_transcript
           - clipseq/resolve_unannotated
           - icount/segment
+          - icount/sigxls
           - linux/command
           - bedtools/shift
           - clippy
           - paraclu/paraclu
           - paraclu/cut
           # Subworkflows
-          - clip_demultiplex
           - prepare_genome/prepare_ref
           - prepare_genome/prepare_aligner
           - prepare_genome/prepare_clipseq
           - rna_align
+          - clip_demultiplex
           - clip_calc_crosslinks
           - paraclu_analyse
           # Wrappers

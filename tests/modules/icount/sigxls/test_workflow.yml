@@ -1,0 +1,10 @@
+- name: "test_icount_sigxls"
+  command: nextflow run ./tests/modules/icount/sigxls/main.nf -c ./tests/config/nextflow.config -entry test
+  tags:
+    - "modules"
+    - "icount"
+    - "icount/sigxls"
+  files:
+    - path: "output/icount/test.scores.tsv"
+      md5sum: 1e24749b000a0519355971e62abd5e98
+    - path: "output/icount/test.sigxls.bed.gz"
