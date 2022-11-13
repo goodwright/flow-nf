@@ -1,0 +1,5 @@
+- name: "test_peka"
+  command: nextflow run ./tests/modules/peka/main.nf -c ./tests/config/nextflow.config -entry test
+  tags:
+    - "modules"
+    - "peka"
