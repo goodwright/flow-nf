@@ -9,10 +9,9 @@ process ICOUNT_PEAKS {
 
     input:
     tuple val(meta), path(bed), path(sigxls)
-    path segmentation
 
     output:
-    tuple val(meta), path("*.peaks.bed.gz"), emit: sigxls
+    tuple val(meta), path("*.peaks.bed.gz"), emit: peaks
     path "versions.yml"                    , emit: versions
 
     when:
