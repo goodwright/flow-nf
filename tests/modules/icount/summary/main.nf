@@ -5,8 +5,8 @@ include { GUNZIP         } from '../../../../modules/nf-core/gunzip/main.nf'
 
 workflow test {
 
-    bed = [ [id:'test'], file(params.goodwright_test_data['clip']['crosslinks'], checkIfExists: true) ]
-    gtf_gz = [ [id:'gtf'], file(params.goodwright_test_data['clip']['icount_seg_res_gtf_gz'], checkIfExists: true) ]
+    bed    = [ [id:'test'], file(params.goodwright_test_data['clip']['crosslinks'], checkIfExists: true) ]
+    gtf_gz = [ [id:'gtf'], file(params.goodwright_test_data['icount']['seg_res_gtf_gz'], checkIfExists: true) ]
 
     GUNZIP ( gtf_gz )
 
