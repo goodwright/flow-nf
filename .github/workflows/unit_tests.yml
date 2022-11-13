@@ -46,6 +46,7 @@ jobs:
           - clippy
           - paraclu/paraclu
           - paraclu/cut
+          - peka
           # Subworkflows
           - prepare_genome/prepare_ref
           - prepare_genome/prepare_aligner
@@ -54,6 +55,7 @@ jobs:
           - clip_demultiplex
           - clip_calc_crosslinks
           - paraclu_analyse
+          - icount_analyse
           # Wrappers
           - wrappers/ultraplex
     steps:
