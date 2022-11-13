@@ -9,13 +9,13 @@ keywords:
   - clipseq
   - icount
 modules:
-  - flow-nf/clipseq/find_longest_transcript
-  - flow-nf/clipseq/filter_gtf
-  - flow-nf/icount/segment
-  - flow-nf/clipseq/resolve_unannotated
+  - goodwright/clipseq/find_longest_transcript
+  - goodwright/clipseq/filter_gtf
+  - goodwright/icount/segment
+  - goodwright/clipseq/resolve_unannotated
 subworkflows:
-  - flow-nf/prepare-genome/prepare_ref
-  - flow-nf/prepare-genome/prepare_aligner
+  - goodwright/prepare-genome/prepare_ref
+  - goodwright/prepare-genome/prepare_aligner
 input:
   - fasta:
       type: file

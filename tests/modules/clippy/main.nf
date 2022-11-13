@@ -1,6 +1,6 @@
 #!/usr/bin/env nextflow
 
-include { CLIPPY } from '../../../modules/flow-nf/clippy/main.nf'
+include { CLIPPY } from '../../../modules/goodwright/clippy/main.nf'
 
 workflow test {
 

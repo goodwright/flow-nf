@@ -1,6 +1,6 @@
 #!/usr/bin/env nextflow
 
-include { ICOUNT_SEGMENT } from '../../../../modules/flow-nf/icount/segment/main.nf'
+include { ICOUNT_SEGMENT } from '../../../../modules/goodwright/icount/segment/main.nf'
 
 workflow test_gtf {
 

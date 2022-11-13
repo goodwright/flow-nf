@@ -1,6 +1,6 @@
 #!/usr/bin/env nextflow
 
-include { PEKA   } from '../../../modules/flow-nf/peka/main.nf'
+include { PEKA   } from '../../../modules/goodwright/peka/main.nf'
 include { GUNZIP } from '../../../modules/nf-core/gunzip/main.nf'
 
 workflow test {

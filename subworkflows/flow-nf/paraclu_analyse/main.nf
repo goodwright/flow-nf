@@ -5,10 +5,10 @@
 /*
 * MODULES
 */
-include { PARACLU_PARACLU                  } from '../../../modules/flow-nf/paraclu/paraclu/main.nf'
-include { PARACLU_CUT                      } from '../../../modules/flow-nf/paraclu/cut/main.nf'
-include { LINUX_COMMAND as PARACLU_PREPARE } from '../../../modules/flow-nf/linux/command/main.nf'
-include { LINUX_COMMAND as PARACLU_CONVERT } from '../../../modules/flow-nf/linux/command/main.nf'
+include { PARACLU_PARACLU                  } from '../../../modules/goodwright/paraclu/paraclu/main.nf'
+include { PARACLU_CUT                      } from '../../../modules/goodwright/paraclu/cut/main.nf'
+include { LINUX_COMMAND as PARACLU_PREPARE } from '../../../modules/goodwright/linux/command/main.nf'
+include { LINUX_COMMAND as PARACLU_CONVERT } from '../../../modules/goodwright/linux/command/main.nf'
 
 workflow PARACLU_ANALYSE {
     take:

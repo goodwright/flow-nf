@@ -1,6 +1,6 @@
 #!/usr/bin/env nextflow
 
-include { ICOUNT_PEAKS } from '../../../../modules/flow-nf/icount/peaks/main.nf'
+include { ICOUNT_PEAKS } from '../../../../modules/goodwright/icount/peaks/main.nf'
 
 workflow test {
 

@@ -1,6 +1,6 @@
 #!/usr/bin/env nextflow
 
-include { ULTRAPLEX } from '../../../modules/flow-nf/ultraplex/ultraplex/main.nf'
+include { ULTRAPLEX } from '../../../modules/goodwright/ultraplex/ultraplex/main.nf'
 
 workflow  {
 

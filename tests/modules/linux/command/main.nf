@@ -1,9 +1,9 @@
 #!/usr/bin/env nextflow
 
-include { LINUX_COMMAND as LINUX_COMMAND_DEFAULT    } from '../../../../modules/flow-nf/linux/command/main.nf'
-include { LINUX_COMMAND as LINUX_COMMAND_WITHPARAMS } from '../../../../modules/flow-nf/linux/command/main.nf'
-include { LINUX_COMMAND as LINUX_COMMAND_CMD2       } from '../../../../modules/flow-nf/linux/command/main.nf'
-include { LINUX_COMMAND as LINUX_COMMAND_CMD2CPY    } from '../../../../modules/flow-nf/linux/command/main.nf'
+include { LINUX_COMMAND as LINUX_COMMAND_DEFAULT    } from '../../../../modules/goodwright/linux/command/main.nf'
+include { LINUX_COMMAND as LINUX_COMMAND_WITHPARAMS } from '../../../../modules/goodwright/linux/command/main.nf'
+include { LINUX_COMMAND as LINUX_COMMAND_CMD2       } from '../../../../modules/goodwright/linux/command/main.nf'
+include { LINUX_COMMAND as LINUX_COMMAND_CMD2CPY    } from '../../../../modules/goodwright/linux/command/main.nf'
 
 workflow test_default {
 

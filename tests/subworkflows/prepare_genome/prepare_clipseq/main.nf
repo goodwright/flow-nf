@@ -1,6 +1,6 @@
 #!/usr/bin/env nextflow
 
-include { PREPARE_CLIPSEQ } from '../../../../subworkflows/flow-nf/prepare_genome/prepare_clipseq/main.nf'
+include { PREPARE_CLIPSEQ } from '../../../../subworkflows/goodwright/prepare_genome/prepare_clipseq/main.nf'
 
 workflow test_noindex {
 

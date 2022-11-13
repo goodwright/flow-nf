@@ -1,6 +1,6 @@
 #!/usr/bin/env nextflow
 
-include { FASTQC_TRIMGALORE } from '../../../subworkflows/flow-nf/fastqc_trimgalore/main.nf'
+include { FASTQC_TRIMGALORE } from '../../../subworkflows/goodwright/fastqc_trimgalore/main.nf'
 
 workflow test_noskip_paired {
 

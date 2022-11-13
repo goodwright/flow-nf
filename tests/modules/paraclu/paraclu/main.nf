@@ -1,6 +1,6 @@
 #!/usr/bin/env nextflow
 
-include { PARACLU_PARACLU } from '../../../../modules/flow-nf/paraclu/paraclu/main.nf'
+include { PARACLU_PARACLU } from '../../../../modules/goodwright/paraclu/paraclu/main.nf'
 
 workflow test {
 

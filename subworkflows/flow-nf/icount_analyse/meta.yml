@@ -7,10 +7,10 @@ keywords:
   - gtf
   - crosslinks
 modules:
-  - flow-nf/icount/summary
-  - flow-nf/icount/rnamaps
-  - flow-nf/icount/sigxls
-  - flow-nf/icount/peaks
+  - goodwright/icount/summary
+  - goodwright/icount/rnamaps
+  - goodwright/icount/sigxls
+  - goodwright/icount/peaks
   - nf-core/gunzip
 input:
   - meta:

@@ -5,12 +5,12 @@
 /*
 * MODULES
 */
-include { CLIPSEQ_FIND_LONGEST_TRANSCRIPT                                } from '../../../../modules/flow-nf/clipseq/find_longest_transcript/main.nf'
-include { CLIPSEQ_FILTER_GTF                                             } from '../../../../modules/flow-nf/clipseq/filter_gtf/main.nf'
-include { ICOUNT_SEGMENT as ICOUNT_SEG_GTF                               } from '../../../../modules/flow-nf/icount/segment/main.nf'
-include { ICOUNT_SEGMENT as ICOUNT_SEG_FILTGTF                           } from '../../../../modules/flow-nf/icount/segment/main.nf'
-include { CLIPSEQ_RESOLVE_UNANNOTATED as RESOLVE_UNANNOTATED             } from '../../../../modules/flow-nf/clipseq/resolve_unannotated/main.nf'
-include { CLIPSEQ_RESOLVE_UNANNOTATED as RESOLVE_UNANNOTATED_GENIC_OTHER } from '../../../../modules/flow-nf/clipseq/resolve_unannotated/main.nf'
+include { CLIPSEQ_FIND_LONGEST_TRANSCRIPT                                } from '../../../../modules/goodwright/clipseq/find_longest_transcript/main.nf'
+include { CLIPSEQ_FILTER_GTF                                             } from '../../../../modules/goodwright/clipseq/filter_gtf/main.nf'
+include { ICOUNT_SEGMENT as ICOUNT_SEG_GTF                               } from '../../../../modules/goodwright/icount/segment/main.nf'
+include { ICOUNT_SEGMENT as ICOUNT_SEG_FILTGTF                           } from '../../../../modules/goodwright/icount/segment/main.nf'
+include { CLIPSEQ_RESOLVE_UNANNOTATED as RESOLVE_UNANNOTATED             } from '../../../../modules/goodwright/clipseq/resolve_unannotated/main.nf'
+include { CLIPSEQ_RESOLVE_UNANNOTATED as RESOLVE_UNANNOTATED_GENIC_OTHER } from '../../../../modules/goodwright/clipseq/resolve_unannotated/main.nf'
 
 /*
 * SUBWORKFLOWS

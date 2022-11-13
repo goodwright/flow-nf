@@ -1,6 +1,6 @@
 #!/usr/bin/env nextflow
 
-include { ICOUNT_SIGXLS } from '../../../../modules/flow-nf/icount/sigxls/main.nf'
+include { ICOUNT_SIGXLS } from '../../../../modules/goodwright/icount/sigxls/main.nf'
 
 workflow test {
 

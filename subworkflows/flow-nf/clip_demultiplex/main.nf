@@ -3,9 +3,9 @@
 // Support for users submitting an xlsx file instead of csv
 //
 
-include { XLSX_TO_CSV                 } from '../../../modules/flow-nf/xlsx_to_csv/main'
-include { CLIP_SAMPLESHEET_TO_BARCODE } from '../../../modules/flow-nf/ultraplex/clip_samplesheet_to_barcode/main'
-include { ULTRAPLEX                   } from '../../../modules/flow-nf/ultraplex/ultraplex/main'
+include { XLSX_TO_CSV                 } from '../../../modules/goodwright/xlsx_to_csv/main'
+include { CLIP_SAMPLESHEET_TO_BARCODE } from '../../../modules/goodwright/ultraplex/clip_samplesheet_to_barcode/main'
+include { ULTRAPLEX                   } from '../../../modules/goodwright/ultraplex/ultraplex/main'
 
 workflow CLIP_DEMULTIPLEX {
     take:

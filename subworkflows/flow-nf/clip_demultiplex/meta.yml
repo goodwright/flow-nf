@@ -7,9 +7,9 @@ keywords:
   - csv
   - fastq
 modules:
-  - flow-nf/xlsx_to_csv
-  - flow-nf/ultraplex/clip_samplesheet_to_barcode
-  - flow-nf/ultraplex/ultraplex
+  - goodwright/xlsx_to_csv
+  - goodwright/ultraplex/clip_samplesheet_to_barcode
+  - goodwright/ultraplex/ultraplex
 input:
   - meta:
       type: map
