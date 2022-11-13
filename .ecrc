@@ -4,11 +4,11 @@
     "Exclude": ["tests/data", "\\.md$"],
     "SpacesAfterTabs": false,
     "Disable": {
-      "EndOfLine": false,
-      "Indentation": false,
-      "IndentSize": false,
-      "InsertFinalNewline": false,
-      "TrimTrailingWhitespace": false,
-      "MaxLineLength": false
+        "EndOfLine": false,
+        "Indentation": false,
+        "IndentSize": false,
+        "InsertFinalNewline": false,
+        "TrimTrailingWhitespace": false,
+        "MaxLineLength": false
     }
-  }
+}

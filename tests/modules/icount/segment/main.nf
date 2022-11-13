@@ -8,7 +8,7 @@ workflow test_gtf {
     fai = file(params.test_data['homo_sapiens']['genome']['genome_fasta_fai'], checkIfExists: true)
 
     ICOUNT_SEGMENT (
-        gtf, 
-        fai 
+        gtf,
+        fai
     )
 }
