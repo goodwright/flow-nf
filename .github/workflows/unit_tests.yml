@@ -40,6 +40,7 @@ jobs:
           - icount/segment
           - icount/sigxls
           - icount/summary
+          - icount/peaks
           - linux/command
           - bedtools/shift
           - clippy
