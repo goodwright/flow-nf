@@ -24,7 +24,7 @@ process ICOUNT_SUMMARY {
     def args   = task.ext.args ?: ''
     def prefix = task.ext.prefix ?: "${meta.id}"
     """
-     iCount-Mini summary \\
+    iCount-Mini summary \\
         $segmentation \\
         $bed \\
         . \\
