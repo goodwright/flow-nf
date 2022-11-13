@@ -64,4 +64,4 @@ jobs:
         run: nf-core modules list local
 
       - name: Run module linting
-        run: nf-core modules lint
+        run: nf-core modules lint --no-prompts
