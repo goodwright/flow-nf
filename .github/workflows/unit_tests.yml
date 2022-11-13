@@ -95,9 +95,9 @@ jobs:
 
       - name: Set up Singularity
         if: matrix.profile == 'singularity'
-        uses: eWaterCycle/setup-singularity@v5
+        uses: eWaterCycle/setup-singularity@v7
         with:
-          singularity-version: 3.7.1
+          singularity-version: 3.8.3
 
       - name: Install nf-core
         run: python -m pip install --upgrade git+https://github.com/goodwright/tools.git@dev
