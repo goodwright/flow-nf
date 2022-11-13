@@ -112,7 +112,8 @@ jobs:
       - name: Output log on failure
         if: failure()
         run: |
-          sudo apt install bat > /dev/null
+          sudo apt update
+          sudo apt install bat
           batcat --decorations=always --color=always /home/runner/pytest_workflow_*/*/log.{out,err}
       - name: Upload logs on failure
         if: failure()
