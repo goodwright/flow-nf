@@ -1,6 +1,6 @@
 #!/usr/bin/env nextflow
 
-include { PARACLU_CUT } from '../../../../modules/flow-nf/paraclu/cut/main.nf'
+include { PARACLU_CUT } from '../../../../modules/goodwright/paraclu/cut/main.nf'
 
 workflow test {
 

@@ -1,6 +1,6 @@
 #!/usr/bin/env nextflow
 
-include { PREPARE_REF } from '../../../../subworkflows/flow-nf/prepare_genome/prepare_ref/main.nf'
+include { PREPARE_REF } from '../../../../subworkflows/goodwright/prepare_genome/prepare_ref/main.nf'
 
 workflow test_compressed {
 

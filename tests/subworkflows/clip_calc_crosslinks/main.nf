@@ -1,6 +1,6 @@
 #!/usr/bin/env nextflow
 
-include { CLIP_CALC_CROSSLINKS } from '../../../subworkflows/flow-nf/clip_calc_crosslinks/main.nf'
+include { CLIP_CALC_CROSSLINKS } from '../../../subworkflows/goodwright/clip_calc_crosslinks/main.nf'
 
 workflow test {
 

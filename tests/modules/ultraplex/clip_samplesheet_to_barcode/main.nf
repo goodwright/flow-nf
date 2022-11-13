@@ -1,6 +1,6 @@
 #!/usr/bin/env nextflow
 
-include { CLIP_SAMPLESHEET_TO_BARCODE } from '../../../../modules/flow-nf/ultraplex/clip_samplesheet_to_barcode/main.nf'
+include { CLIP_SAMPLESHEET_TO_BARCODE } from '../../../../modules/goodwright/ultraplex/clip_samplesheet_to_barcode/main.nf'
 
 workflow test_samplesheettobardcode_two_samples {
 

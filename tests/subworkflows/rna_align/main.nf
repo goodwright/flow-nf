@@ -1,6 +1,6 @@
 #!/usr/bin/env nextflow
 
-include { RNA_ALIGN           } from '../../../subworkflows/flow-nf/rna_align/main.nf'
+include { RNA_ALIGN           } from '../../../subworkflows/goodwright/rna_align/main.nf'
 include { UNTAR as UNTAR_BT2  } from '../../../modules/nf-core/untar/main'
 include { UNTAR as UNTAR_STAR } from '../../../modules/nf-core/untar/main'
 

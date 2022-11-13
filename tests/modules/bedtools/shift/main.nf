@@ -1,7 +1,7 @@
 #!/usr/bin/env nextflow
 
-include { BEDTOOLS_SHIFT as BEDTOOLS_SHIFT_DEFAULT    } from '../../../../modules/flow-nf/bedtools/shift/main.nf'
-include { BEDTOOLS_SHIFT as BEDTOOLS_SHIFT_WITHPARAMS } from '../../../../modules/flow-nf/bedtools/shift/main.nf'
+include { BEDTOOLS_SHIFT as BEDTOOLS_SHIFT_DEFAULT    } from '../../../../modules/goodwright/bedtools/shift/main.nf'
+include { BEDTOOLS_SHIFT as BEDTOOLS_SHIFT_WITHPARAMS } from '../../../../modules/goodwright/bedtools/shift/main.nf'
 
 workflow test_default {
 

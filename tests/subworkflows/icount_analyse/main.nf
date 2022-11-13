@@ -1,6 +1,6 @@
 #!/usr/bin/env nextflow
 
-include { ICOUNT_ANALYSE } from '../../../subworkflows/flow-nf/icount_analyse/main.nf'
+include { ICOUNT_ANALYSE } from '../../../subworkflows/goodwright/icount_analyse/main.nf'
 include { GUNZIP         } from '../../../modules/nf-core/gunzip/main.nf'
 
 workflow test {

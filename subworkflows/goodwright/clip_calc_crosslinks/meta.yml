@@ -9,8 +9,8 @@ keywords:
   - fai
   - bam
 modules:
-  - flow-nf/linux/command
-  - flow-nf/bedtools/shift
+  - goodwright/linux/command
+  - goodwright/bedtools/shift
   - nf-core/bedtools/bamtobed
   - nf-core/bedtools/genomecov
 input:

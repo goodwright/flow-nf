@@ -1,6 +1,6 @@
 #!/usr/bin/env nextflow
 
-include { CLIPSEQ_RESOLVE_UNANNOTATED } from '../../../../modules/flow-nf/clipseq/resolve_unannotated/main.nf'
+include { CLIPSEQ_RESOLVE_UNANNOTATED } from '../../../../modules/goodwright/clipseq/resolve_unannotated/main.nf'
 
 workflow test_genic_false {
 

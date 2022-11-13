@@ -1,6 +1,6 @@
 #!/usr/bin/env nextflow
 
-include { ICOUNT_RNAMAPS } from '../../../../modules/flow-nf/icount/rnamaps/main.nf'
+include { ICOUNT_RNAMAPS } from '../../../../modules/goodwright/icount/rnamaps/main.nf'
 
 workflow test {
 

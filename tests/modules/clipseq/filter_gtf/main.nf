@@ -1,6 +1,6 @@
 #!/usr/bin/env nextflow
 
-include { CLIPSEQ_FILTER_GTF } from '../../../../modules/flow-nf/clipseq/filter_gtf/main.nf'
+include { CLIPSEQ_FILTER_GTF } from '../../../../modules/goodwright/clipseq/filter_gtf/main.nf'
 
 workflow test_gtf_filter {
 

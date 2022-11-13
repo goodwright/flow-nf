@@ -1,6 +1,6 @@
 #!/usr/bin/env nextflow
 
-include { CLIPSEQ_FIND_LONGEST_TRANSCRIPT } from '../../../../modules/flow-nf/clipseq/find_longest_transcript/main.nf'
+include { CLIPSEQ_FIND_LONGEST_TRANSCRIPT } from '../../../../modules/goodwright/clipseq/find_longest_transcript/main.nf'
 
 workflow test_gtf {
 

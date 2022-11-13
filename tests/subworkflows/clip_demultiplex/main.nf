@@ -1,6 +1,6 @@
 #!/usr/bin/env nextflow
 
-include { CLIP_DEMULTIPLEX } from '../../../subworkflows/flow-nf/clip_demultiplex/main.nf'
+include { CLIP_DEMULTIPLEX } from '../../../subworkflows/goodwright/clip_demultiplex/main.nf'
 
 workflow test_single_sample {
 

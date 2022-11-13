@@ -1,6 +1,6 @@
 #!/usr/bin/env nextflow
 
-include { PARACLU_ANALYSE } from '../../../subworkflows/flow-nf/paraclu_analyse/main.nf'
+include { PARACLU_ANALYSE } from '../../../subworkflows/goodwright/paraclu_analyse/main.nf'
 
 workflow test {
 

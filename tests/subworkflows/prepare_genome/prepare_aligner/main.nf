@@ -1,7 +1,7 @@
 #!/usr/bin/env nextflow
 
-include { PREPARE_ALINGER as PREPARE_ALINGER_FASTA  } from '../../../../subworkflows/flow-nf/prepare_genome/prepare_aligner/main.nf'
-include { PREPARE_ALINGER as PREPARE_ALINGER_FOLDER } from '../../../../subworkflows/flow-nf/prepare_genome/prepare_aligner/main.nf'
+include { PREPARE_ALINGER as PREPARE_ALINGER_FASTA  } from '../../../../subworkflows/goodwright/prepare_genome/prepare_aligner/main.nf'
+include { PREPARE_ALINGER as PREPARE_ALINGER_FOLDER } from '../../../../subworkflows/goodwright/prepare_genome/prepare_aligner/main.nf'
 
 workflow test_fasta {
 

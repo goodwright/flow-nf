@@ -1,5 +1,5 @@
 - name: "test_clipseq_filtergtf_scripts"
-  command: python modules/flow-nf/clipseq/filter_gtf/templates/filter_gtf.py --process_name test --gtf tests/data/genome/gencode.v35.chr21.gtf --output output.gtf
+  command: python modules/goodwright/clipseq/filter_gtf/templates/filter_gtf.py --process_name test --gtf tests/data/genome/gencode.v35.chr21.gtf --output output.gtf
   tags:
     - "python"
   files:

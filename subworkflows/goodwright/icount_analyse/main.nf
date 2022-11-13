@@ -5,10 +5,10 @@
 /*
 * MODULES
 */
-include { ICOUNT_SUMMARY          } from '../../../modules/flow-nf/icount/summary/main.nf'
-include { ICOUNT_RNAMAPS          } from '../../../modules/flow-nf/icount/rnamaps/main.nf'
-include { ICOUNT_SIGXLS           } from '../../../modules/flow-nf/icount/sigxls/main.nf'
-include { ICOUNT_PEAKS            } from '../../../modules/flow-nf/icount/peaks/main.nf'
+include { ICOUNT_SUMMARY          } from '../../../modules/goodwright/icount/summary/main.nf'
+include { ICOUNT_RNAMAPS          } from '../../../modules/goodwright/icount/rnamaps/main.nf'
+include { ICOUNT_SIGXLS           } from '../../../modules/goodwright/icount/sigxls/main.nf'
+include { ICOUNT_PEAKS            } from '../../../modules/goodwright/icount/peaks/main.nf'
 include { GUNZIP as GUNZIP_SIGXLS } from '../../../modules/nf-core/gunzip/main.nf'
 include { GUNZIP as GUNZIP_PEAKS  } from '../../../modules/nf-core/gunzip/main.nf'
 

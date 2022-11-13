@@ -1,5 +1,5 @@
 - name: "test_xlsxtocsv_script_xlsx"
-  command: python modules/flow-nf/xlsx_to_csv/templates/xlsx_to_csv.py --process_name test --xlsx tests/data/small_excel.xlsx --output xlsxtocsv_test.csv
+  command: python modules/goodwright/xlsx_to_csv/templates/xlsx_to_csv.py --process_name test --xlsx tests/data/small_excel.xlsx --output xlsxtocsv_test.csv
   tags:
     - "python"
     # - "xlsxtocsv"
@@ -8,7 +8,7 @@
       md5sum: 437b1687474b3bd3053153a21108e22a
 
 - name: "test_xlsxtocsv_script_xls"
-  command: python modules/flow-nf/xlsx_to_csv/templates/xlsx_to_csv.py --process_name test --xlsx tests/data/small_excel.xls --output xlsxtocsv_test.csv
+  command: python modules/goodwright/xlsx_to_csv/templates/xlsx_to_csv.py --process_name test --xlsx tests/data/small_excel.xls --output xlsxtocsv_test.csv
   tags:
     - "python"
     # - "xlsxtocsv"

@@ -1,6 +1,6 @@
 #!/usr/bin/env nextflow
 
-include { XLSX_TO_CSV } from '../../../modules/flow-nf/xlsx_to_csv/main.nf'
+include { XLSX_TO_CSV } from '../../../modules/goodwright/xlsx_to_csv/main.nf'
 
 workflow test_xlsxtocsv_xlsx {
 
