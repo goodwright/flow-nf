@@ -2,10 +2,10 @@ process CLIPPY {
     tag "$meta.id"
     label "process_medium"
 
-    conda (params.enable_conda ? "bioconda::clippy=1.5" : null)
+    conda (params.enable_conda ? "bioconda::clippy=1.5.0" : null)
     container "${ workflow.containerEngine == 'singularity' && !task.ext.singularity_pull_docker_container ?
-        'https://depot.galaxyproject.org/singularity/clippy:1.5--pyhdfd78af_1' :
-        'quay.io/biocontainers/clippy:1.5--pyhdfd78af_1' }"
+        'https://depot.galaxyproject.org/singularity/clippy:1.5.0--pyhdfd78af_1' :
+        'quay.io/biocontainers/clippy:1.5.0--pyhdfd78af_1' }"
 
     input:
     tuple val(meta), path(bed)
