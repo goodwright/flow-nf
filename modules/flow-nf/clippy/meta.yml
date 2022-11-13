@@ -12,8 +12,6 @@ tools:
       tool_dev_url: None
       doi: ""
       licence: ['GPL-3.0']
-
-
 input:
   - meta:
       type: map
