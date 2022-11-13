@@ -9,6 +9,13 @@ input:
       type: file
       description: Any file
       pattern: "*.*"
+  - input2:
+      type: file
+      description: A second file for operations where two files must be used in an operation
+      pattern: "*.*"
+  - copy_input:
+      type: boolean
+      description: A boolean value that determines whether in a dual-file operation, the first input is re-used instead of input2
 
 output:
   - file:
