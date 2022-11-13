@@ -1,0 +1,4 @@
+{
+  "Verbose": true,
+  "Exclude": ["tests/data"]
+}
