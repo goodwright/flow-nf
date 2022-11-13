@@ -1,7 +1,7 @@
 name: linux_command
 description: |
-    Wrapper process that allows running of native linux commands where the input file 
-    is streamed to a pipe using cat and fed into whatever args are specified using ext.args
+  Wrapper process that allows running of native linux commands where the input file 
+  is streamed to a pipe using cat and fed into whatever args are specified using ext.args
 keywords:
   - linux
 input:

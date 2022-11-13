@@ -1,7 +1,7 @@
 name: clip_calc_crosslinks
 description: |
-    Calculate clip crosslinks using an input BAM file and genome index file. Crosslinks are outputed as a BED file and additional 
-    coverage and normalised coverage tracks are calculated in BEDGRAPH format.
+  Calculate clip crosslinks using an input BAM file and genome index file. Crosslinks are outputed as a BED file and additional 
+  coverage and normalised coverage tracks are calculated in BEDGRAPH format.
 keywords:
   - bedtools
   - crosslinks

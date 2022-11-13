@@ -6,4 +6,3 @@
     - "icount/peaks"
   files:
     - path: "output/icount/test.peaks.bed.gz"
-

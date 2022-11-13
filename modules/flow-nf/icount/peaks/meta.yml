@@ -7,7 +7,7 @@ tools:
       description: Computational pipeline for analysis of iCLIP data
       homepage: https://icount.readthedocs.io/en/latest/
       documentation: https://icount.readthedocs.io/en/latest/
-      licence: ['MIT']
+      licence: ["MIT"]
 input:
   - meta:
       type: map
