@@ -4,8 +4,8 @@ process CLIPPY {
 
     conda (params.enable_conda ? "bioconda::clippy=1.5.0" : null)
     container "${ workflow.containerEngine == 'singularity' && !task.ext.singularity_pull_docker_container ?
-        'https://depot.galaxyproject.org/singularity/clippy:1.5.0--pyhdfd78af_1' :
-        'quay.io/biocontainers/clippy:1.5.0--pyhdfd78af_1' }"
+        'https://depot.galaxyproject.org/singularity/clippy:1.5.0--pyhdfd78af_0' :
+        'quay.io/biocontainers/clippy:1.5.0--pyhdfd78af_0' }"
 
     input:
     tuple val(meta), path(bed)
