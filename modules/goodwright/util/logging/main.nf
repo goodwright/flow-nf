@@ -10,6 +10,8 @@ def goodwright_logo() {
     c_cyan = params.monochrome_logs ? '' : "\033[0;36m";
     c_white = params.monochrome_logs ? '' : "\033[0;37m";
 
+    test = "test"
+
     return """  -${c_dim}----------------------------------------------------------------------${c_reset}-
     ${c_purple} __       __    __       _______. __          ___      .______ ${c_reset}
     ${c_purple}|  |     |  |  |  |     /       ||  |        /   \\     |   _  \\ ${c_reset}
