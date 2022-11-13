@@ -4,7 +4,7 @@
     - "modules"
     - "clippy"
   files:
-    - path: "output/clippy/test_rollmean10_stdev1_minGeneCount5_Peaks.bed"
+    - path: "test_rollmean10_minHeightAdjust1.0_minPromAdjust1.0_minGeneCount5_Peaks.bed"
       md5sum: d793b0bafe5478207bfe80dd635a215c
-    - path: "output/clippy/test_rollmean10_stdev1_minGeneCount5_Summits.bed"
+    - path: "test_rollmean10_minHeightAdjust1.0_minPromAdjust1.0_minGeneCount5_Summits.bed"
       md5sum: afc2143816a8ae91329d7e557a91eeba
