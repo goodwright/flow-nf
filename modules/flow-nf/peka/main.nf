@@ -2,10 +2,10 @@ process PEKA {
     tag "$meta.id"
     label "process_low"
 
-    conda (params.enable_conda ? "bioconda::peka=0.1.6" : null)
+    conda (params.enable_conda ? "bioconda::peka=1.0.0" : null)
     container "${ workflow.containerEngine == 'singularity' && !task.ext.singularity_pull_docker_container ?
-        'https://depot.galaxyproject.org/singularity/peka:0.1.6--pyhdfd78af_0' :
-        'quay.io/biocontainers/peka:0.1.6--pyhdfd78af_0' }"
+        'https://depot.galaxyproject.org/singularity/peka1.0.0--pyhdfd78af_0' :
+        'quay.io/biocontainers/peka:1.0.0--pyhdfd78af_0' }"
 
     input:
     tuple val(meta), path(peaks)
@@ -25,7 +25,7 @@ process PEKA {
 
     script:
     def args    = task.ext.args ?: ''
-    def VERSION = '0.1.6' // WARN: Version information not provided by tool on CLI. Please update this string when bumping container versions.
+    def VERSION = '1.0.0' // WARN: Version information not provided by tool on CLI. Please update this string when bumping container versions.
     """
     # If the modification date and time of the fai is before the fasta then
     # there will be an error. Touching the file first avoids that.
