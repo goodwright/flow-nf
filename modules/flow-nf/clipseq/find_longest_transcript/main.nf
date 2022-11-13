@@ -9,9 +9,9 @@ process CLIPSEQ_FIND_LONGEST_TRANSCRIPT {
     tuple val(meta), path(gtf)
 
     output:
-    path "longest_transcript.txt"    ,emit: longest_transcript
-    path "transcriptome_index.fa.fai",emit: transcriptome_index
-    path  "versions.yml"             , emit: versions
+    tuple val(meta), path("longest_transcript.txt"),emit: longest_transcript
+    path "transcriptome_index.fa.fai"              ,emit: transcriptome_index
+    path  "versions.yml"                           ,emit: versions
 
     when:
     task.ext.when == null || task.ext.when

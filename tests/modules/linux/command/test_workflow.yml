@@ -1,0 +1,39 @@
+- name: "test_linux_command_default"
+  command: nextflow run ./tests/modules/linux/command/main.nf -c ./tests/config/nextflow.config -c ./tests/modules/linux/command/nextflow.config -entry test_default
+  tags:
+    - "modules"
+    - "linux"
+    - "linux/command"
+  files:
+    - path: "output/linux/test.cmd.txt"
+      md5sum: 8433ebd477d8d10b60e442fc084ce7b4
+
+- name: "test_linux_command_withparams"
+  command: nextflow run ./tests/modules/linux/command/main.nf -c ./tests/config/nextflow.config -c ./tests/modules/linux/command/nextflow.config -entry test_withparams
+  tags:
+    - "modules"
+    - "linux"
+    - "linux/command"
+  files:
+    - path: "output/linux/test.sorted.cmd.bed"
+      md5sum: fe4053cf4de3aebbdfc3be2efb125a74
+
+- name: "test_linux_command_cmd2"
+  command: nextflow run ./tests/modules/linux/command/main.nf -c ./tests/config/nextflow.config -c ./tests/modules/linux/command/nextflow.config -entry test_cmd2
+  tags:
+    - "modules"
+    - "linux"
+    - "linux/command"
+  files:
+    - path: "output/linux/test.norm.cmd.bed"
+      md5sum: e91a99f7ea1712f4a3f38621881aae8b
+
+- name: "test_linux_command_cmd2cpy"
+  command: nextflow run ./tests/modules/linux/command/main.nf -c ./tests/config/nextflow.config -c ./tests/modules/linux/command/nextflow.config -entry test_cmd2cpy
+  tags:
+    - "modules"
+    - "linux"
+    - "linux/command"
+  files:
+    - path: "output/linux/test.normcpy.cmd.bed"
+      md5sum: 2cf6e3c53bf0763b6798bd6170355960

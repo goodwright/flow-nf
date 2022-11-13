@@ -1,0 +1,10 @@
+- name: "test_sw_paraclu_analyse"
+  command: nextflow run ./tests/subworkflows/paraclu_analyse/main.nf -c ./tests/config/nextflow.config -c ./tests/subworkflows/paraclu_analyse/nextflow.config -entry test
+  tags:
+    - "subworkflows"
+    - "paraclu_analyse"
+  files:
+    - path: "output/paraclu/test.peaks.tsv"
+      md5sum: "8a48f9f98a67e147c9651498dd960951"
+    - path: "output/paraclu/test.sigxls.tsv"
+      md5sum: "620fbd8d57ca6d412e62d07d97a5b67d"

@@ -1,0 +1,66 @@
+- name: "test_sw_fastqc_trimgalore_testnoskippaired"
+  command: nextflow run ./tests/subworkflows/fastqc_trimgalore/main.nf -entry test_noskip_paired -c ./tests/config/nextflow.config
+  tags:
+    - "subworkflows"
+    - "fastqc_trimgalore"
+  files:
+    - path: "output/fastqc/test_test_1_fastqc.html"
+      md5sum: 94e66227dbd8ec718dd48c80c71cf0de
+    - path: "output/fastqc/test_test_1_fastqc.zip"
+    - path: "output/fastqc/test_test_2_fastqc.html"
+      md5sum: 5cc96fb3259aa6fd911df23d468d06a7
+    - path: "output/fastqc/test_test_2_fastqc.zip"
+    - path: "output/trimgalore/test_1_val_1.fq.gz"
+      md5sum: e0a7516b8ea8d6467d6306acb2cd13c4
+    - path: "output/trimgalore/test_2_val_2.fq.gz"
+      md5sum: f3d61189e6d10202da7b8686f1dbb71b
+
+- name: "test_sw_fastqc_trimgalore_testnoskipsingle"
+  command: nextflow run ./tests/subworkflows/fastqc_trimgalore/main.nf -entry test_noskip_single -c ./tests/config/nextflow.config
+  tags:
+    - "subworkflows"
+    - "fastqc_trimgalore"
+  files:
+    - path: "output/fastqc/test_test_1_fastqc.html"
+      md5sum: 94e66227dbd8ec718dd48c80c71cf0de
+    - path: "output/fastqc/test_test_1_fastqc.zip"
+    - path: "output/trimgalore/test_trimmed.fq.gz"
+      md5sum: e0a7516b8ea8d6467d6306acb2cd13c4
+
+- name: "test_sw_fastqc_trimgalore_testnoskipfastqc"
+  command: nextflow run ./tests/subworkflows/fastqc_trimgalore/main.nf -entry test_skip_fastqc -c ./tests/config/nextflow.config
+  tags:
+    - "subworkflows"
+    - "fastqc_trimgalore"
+  files:
+    - path: "output/fastqc/test_test_1_fastqc.html"
+      should_exist: false
+    - path: "output/fastqc/test_test_1_fastqc.zip"
+      should_exist: false
+    - path: "output/trimgalore/test_trimmed.fq.gz"
+      md5sum: e0a7516b8ea8d6467d6306acb2cd13c4
+
+- name: "test_sw_fastqc_trimgalore_testnoskiptrim"
+  command: nextflow run ./tests/subworkflows/fastqc_trimgalore/main.nf -entry test_skip_trim -c ./tests/config/nextflow.config
+  tags:
+    - "subworkflows"
+    - "fastqc_trimgalore"
+  files:
+    - path: "output/fastqc/test_test_1_fastqc.html"
+      md5sum: 94e66227dbd8ec718dd48c80c71cf0de
+    - path: "output/fastqc/test_test_1_fastqc.zip"
+    - path: "output/trimgalore/test_trimmed.fq.gz"
+      should_exist: false
+
+- name: "test_sw_fastqc_trimgalore_testnoskipall"
+  command: nextflow run ./tests/subworkflows/fastqc_trimgalore/main.nf -entry test_skip_all -c ./tests/config/nextflow.config
+  tags:
+    - "subworkflows"
+    - "fastqc_trimgalore"
+  files:
+    - path: "output/fastqc/test_test_1_fastqc.html"
+      should_exist: false
+    - path: "output/fastqc/test_test_1_fastqc.zip"
+      should_exist: false
+    - path: "output/trimgalore/test_trimmed.fq.gz"
+      should_exist: false

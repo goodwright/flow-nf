@@ -1,0 +1,9 @@
+- name: "test_paraclu_paraclu"
+  command: nextflow run ./tests/modules/paraclu/paraclu/main.nf -c ./tests/config/nextflow.config -entry test
+  tags:
+    - "modules"
+    - "paraclu"
+    - "paraclu/paraclu"
+  files:
+    - path: "output/paraclu/test.sigxls.tsv"
+      md5sum: ad0d9c5f9ccfca49517fb3124666a198

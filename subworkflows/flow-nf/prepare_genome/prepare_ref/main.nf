@@ -87,5 +87,5 @@ workflow PREPARE_REF {
     blacklist   = ch_blacklist   // channel: [ val(meta), [ bed ] ]
     chrom_sizes = ch_chrom_sizes // channel: [ val(meta), [ txt ] ]
     fasta_fai   = ch_fasta_fai   // channel: [ val(meta), [ fai ] ]
-    versions = ch_versions       // channel: [ versions.yml ]
+    versions    = ch_versions    // channel: [ versions.yml ]
 }

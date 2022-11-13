@@ -38,11 +38,24 @@ jobs:
           - clipseq/find_longest_transcript
           - clipseq/resolve_unannotated
           - icount/segment
+          - icount/sigxls
+          - icount/summary
+          - icount/peaks
+          - linux/command
+          - bedtools/shift
+          - clippy
+          - paraclu/paraclu
+          - paraclu/cut
+          - peka
           # Subworkflows
-          - clip_demultiplex
           - prepare_genome/prepare_ref
           - prepare_genome/prepare_aligner
           - prepare_genome/prepare_clipseq
+          - rna_align
+          - clip_demultiplex
+          - clip_calc_crosslinks
+          - paraclu_analyse
+          - icount_analyse
           # Wrappers
           - wrappers/ultraplex
     steps:
@@ -82,9 +95,9 @@ jobs:
 
       - name: Set up Singularity
         if: matrix.profile == 'singularity'
-        uses: eWaterCycle/setup-singularity@v5
+        uses: eWaterCycle/setup-singularity@v7
         with:
-          singularity-version: 3.7.1
+          singularity-version: 3.8.3
 
       - name: Install nf-core
         run: python -m pip install --upgrade git+https://github.com/goodwright/tools.git@dev
@@ -92,15 +105,23 @@ jobs:
       - name: Restore nf-core packages
         run: nf-core modules list local
 
+      # - name: Run pytest-workflow
+      #   # only use one thread for pytest-workflow to avoid race condition on conda cache.
+      #   run: TMPDIR=~ PROFILE=${{ matrix.profile }} pytest --tag ${{ matrix.tags }} --symlink --kwdof --color=yes
+
       - name: Run pytest-workflow
-        # only use one thread for pytest-workflow to avoid race condition on conda cache.
-        run: TMPDIR=~ PROFILE=${{ matrix.profile }} pytest --tag ${{ matrix.tags }} --symlink --kwdof --color=yes
+        uses: Wandalen/wretry.action@v1.0.36
+        with:
+          command: TMPDIR=~ PROFILE=${{ matrix.profile }} pytest --tag ${{ matrix.tags }} --symlink --kwdof --color=yes
+          attempt_limit: 3
 
       - name: Output log on failure
         if: failure()
         run: |
-          sudo apt install bat > /dev/null
+          sudo apt update
+          sudo apt install bat
           batcat --decorations=always --color=always /home/runner/pytest_workflow_*/*/log.{out,err}
+
       - name: Upload logs on failure
         if: failure()
         uses: actions/upload-artifact@v3
@@ -110,9 +131,6 @@ jobs:
             /home/runner/pytest_workflow_*/*/.nextflow.log
             /home/runner/pytest_workflow_*/*/log.out
             /home/runner/pytest_workflow_*/*/log.err
-            /home/runner/pytest_workflow_*/*/work
-            !/home/runner/pytest_workflow_*/*/work/conda
-            !/home/runner/pytest_workflow_*/*/work/singularity
 
   ##############################
   ###  PYTHON SCRIPT TESTS   ###
@@ -150,15 +168,17 @@ jobs:
           channels: conda-forge,bioconda,defaults
           python-version: "3.9"
 
-      - name: Install Conda dependancies
-        run: conda install bedtools
+      - name: Install Conda dependencies
+        run: conda install --name test bedtools
 
       - name: Install Script Python dependencies
         run: /usr/share/miniconda/envs/test/bin/pip install pandas==1.5.0 openpyxl==3.0.10 pybedtools==0.9.0 plumbum==1.8.0
 
       - name: Run pytest-workflow
         # only use one thread for pytest-workflow to avoid race condition on conda cache.
-        run: TMPDIR=~ pytest --tag python --symlink --kwdof --color=yes
+        run: |
+          export PATH=/usr/share/miniconda/envs/test/bin:$PATH
+          TMPDIR=~ pytest --tag python --symlink --kwdof --color=yes
 
       - name: Output log on failure
         if: failure()

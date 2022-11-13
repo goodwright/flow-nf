@@ -1,0 +1,12 @@
+- name: "test_sw_clip_calc_crosslinks"
+  command: nextflow run ./tests/subworkflows/clip_calc_crosslinks/main.nf -c ./tests/config/nextflow.config -c ./tests/subworkflows/clip_calc_crosslinks/nextflow.config -entry test
+  tags:
+    - "subworkflows"
+    - "clip_calc_crosslinks"
+  files:
+    - path: "output/merge/test.sorted.cmd.bed"
+      md5sum: "b7456b09b6be117aca7922b0434c3015"
+    - path: "output/crosslink/test.sorted.cmd.bedgraph"
+      md5sum: "98aad683e3b0a90aa6820842715f9257"
+    - path: "output/crosslink/test.norm.sorted.cmd.bedgraph"
+      md5sum: "d41d8cd98f00b204e9800998ecf8427e"

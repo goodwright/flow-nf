@@ -1,0 +1,9 @@
+- name: "test_icount_rnamaps"
+  command: nextflow run ./tests/modules/icount/rnamaps/main.nf -c ./tests/config/nextflow.config -entry test
+  tags:
+    - "modules"
+    - "icount"
+    - "icount/rnamaps"
+  files:
+    - path: "output/icount/rnamaps_clippy/clippy_plot_data.tsv"
+      md5sum: 63032c9e159e81f617e30bcb1c3c8509

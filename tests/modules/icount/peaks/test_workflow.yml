@@ -1,0 +1,8 @@
+- name: "test_icount_peaks"
+  command: nextflow run ./tests/modules/icount/peaks/main.nf -c ./tests/config/nextflow.config -entry test
+  tags:
+    - "modules"
+    - "icount"
+    - "icount/peaks"
+  files:
+    - path: "output/icount/test.peaks.bed.gz"
