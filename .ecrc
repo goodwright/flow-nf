@@ -1,4 +1,14 @@
 {
-  "Verbose": true,
-  "Exclude": ["tests/data"]
-}
+    "Verbose": false,
+    "IgnoreDefaults": false,
+    "Exclude": ["tests/data", "\\.md$"],
+    "SpacesAfterTabs": false,
+    "Disable": {
+      "EndOfLine": false,
+      "Indentation": false,
+      "IndentSize": false,
+      "InsertFinalNewline": false,
+      "TrimTrailingWhitespace": false,
+      "MaxLineLength": false
+    }
+  }
