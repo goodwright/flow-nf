@@ -168,8 +168,8 @@ jobs:
           channels: conda-forge,bioconda,defaults
           python-version: "3.9"
 
-      - name: Install Conda dependancies
-        run: conda install bedtools
+      - name: Install Conda dependencies
+        run: conda install --name test bedtools
 
       - name: Install Script Python dependencies
         run: /usr/share/miniconda/envs/test/bin/pip install pandas==1.5.0 openpyxl==3.0.10 pybedtools==0.9.0 plumbum==1.8.0
