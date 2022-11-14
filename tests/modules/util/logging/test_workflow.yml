@@ -1,0 +1,13 @@
+- name: "test_util_logging_nodebug"
+  command: nextflow run ./tests/modules/util/logging/main.nf -c ./tests/config/nextflow.config -c ./tests/modules/util/logging/nextflow.config -entry test_nodebug
+  tags:
+    - "modules"
+    - "util"
+    - "util/logging"
+
+- name: "test_util_logging_debug"
+  command: nextflow run ./tests/modules/util/logging/main.nf -c ./tests/config/nextflow.config -c ./tests/modules/util/logging/nextflow.config -entry test_debug
+  tags:
+    - "modules"
+    - "util"
+    - "util/logging"
