@@ -2,10 +2,10 @@ process ICOUNT_SEGMENT {
     tag "$gtf"
     label "process_single"
 
-    conda (params.enable_conda ? "bioconda::icount=2.0.0" : null)
+    conda (params.enable_conda ? "bioconda::icount-mini=2.0.3" : null)
     container "${ workflow.containerEngine == 'singularity' && !task.ext.singularity_pull_docker_container ?
-        'https://depot.galaxyproject.org/singularity/icount:2.0.0--py_1' :
-        'quay.io/biocontainers/icount:2.0.0--py_1' }"
+        'https://depot.galaxyproject.org/singularity/icount-mini:2.0.3--pyh5e36f6f_0' :
+        'quay.io/biocontainers/icount-mini:2.0.3--pyh5e36f6f_0' }"
 
     input:
     tuple val(meta), path(gtf)
