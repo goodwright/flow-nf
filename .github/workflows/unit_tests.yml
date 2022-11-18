@@ -32,6 +32,7 @@ jobs:
         tags:
           # Modules
           - util/logging
+          - sample/base_samplesheet_check
           - ultraplex/samplesheettobardcode
           - ultraplex/ultraplex
           - xlsxtocsv

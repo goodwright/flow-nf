@@ -1,0 +1,129 @@
+- name: "test_samplesheet_valid_single_pe"
+  command: nextflow run ./tests/modules/sample/base_samplesheet_check/main.nf -c ./tests/config/nextflow.config -entry test_valid_single_pe
+  tags:
+    - "modules"
+    - "sample"
+    - "sample/base_samplesheet_check"
+  files:
+    - path: "output/sample/samplesheet.valid.csv"
+      md5sum: f02a1739f5ce348ad66dd3c3f526bb57
+
+- name: "test_samplesheet_valid_single_se"
+  command: nextflow run ./tests/modules/sample/base_samplesheet_check/main.nf -c ./tests/config/nextflow.config -entry test_valid_single_se
+  tags:
+    - "modules"
+    - "sample"
+    - "sample/base_samplesheet_check"
+  files:
+    - path: "output/sample/samplesheet.valid.csv"
+      md5sum: 97eabc9133837c87336051010e158167
+
+- name: "test_samplesheet_valid_multi_pe"
+  command: nextflow run ./tests/modules/sample/base_samplesheet_check/main.nf -c ./tests/config/nextflow.config -entry test_valid_multi_pe
+  tags:
+    - "modules"
+    - "sample"
+    - "sample/base_samplesheet_check"
+  files:
+    - path: "output/sample/samplesheet.valid.csv"
+      md5sum: 7589a107cd8c79b1077d86f7bdd9bd66
+
+- name: "test_samplesheet_valid_multi_se"
+  command: nextflow run ./tests/modules/sample/base_samplesheet_check/main.nf -c ./tests/config/nextflow.config -entry test_valid_multi_se
+  tags:
+    - "modules"
+    - "sample"
+    - "sample/base_samplesheet_check"
+  files:
+    - path: "output/sample/samplesheet.valid.csv"
+      md5sum: 7fbf1f6a6a206f35f97d87964f5901a4
+
+- name: "test_samplesheet_valid_extra_header"
+  command: nextflow run ./tests/modules/sample/base_samplesheet_check/main.nf -c ./tests/config/nextflow.config -entry test_valid_header_extra
+  tags:
+    - "modules"
+    - "sample"
+    - "sample/base_samplesheet_check"
+  files:
+    - path: "output/sample/samplesheet.valid.csv"
+      md5sum: 418fd05b826a6561e7307df1f85ec5fe
+
+- name: "test_samplesheet_invalid_mixed"
+  command: nextflow run ./tests/modules/sample/base_samplesheet_check/main.nf -c ./tests/config/nextflow.config -entry base_invalid_mixed
+  tags:
+    - "modules"
+    - "sample"
+    - "sample/base_samplesheet_check"
+  exit_code: 1
+
+- name: "test_invalid_dot_sampleid"
+  command: nextflow run ./tests/modules/sample/base_samplesheet_check/main.nf -c ./tests/config/nextflow.config -entry test_invalid_dot_sampleid
+  tags:
+    - "modules"
+    - "sample"
+    - "sample/base_samplesheet_check"
+  exit_code: 1
+
+- name: "test_invalid_dup_rows"
+  command: nextflow run ./tests/modules/sample/base_samplesheet_check/main.nf -c ./tests/config/nextflow.config -entry test_invalid_dup_rows
+  tags:
+    - "modules"
+    - "sample"
+    - "sample/base_samplesheet_check"
+  exit_code: 1
+
+- name: "test_invalid_fastq_ext_error"
+  command: nextflow run ./tests/modules/sample/base_samplesheet_check/main.nf -c ./tests/config/nextflow.config -entry test_invalid_fastq_ext_error
+  tags:
+    - "modules"
+    - "sample"
+    - "sample/base_samplesheet_check"
+  exit_code: 1
+
+- name: "test_invalid_fastq_spaces"
+  command: nextflow run ./tests/modules/sample/base_samplesheet_check/main.nf -c ./tests/config/nextflow.config -entry test_invalid_fastq_spaces
+  tags:
+    - "modules"
+    - "sample"
+    - "sample/base_samplesheet_check"
+  exit_code: 1
+
+- name: "test_invalid_group_blank"
+  command: nextflow run ./tests/modules/sample/base_samplesheet_check/main.nf -c ./tests/config/nextflow.config -entry test_invalid_group_blank
+  tags:
+    - "modules"
+    - "sample"
+    - "sample/base_samplesheet_check"
+  exit_code: 1
+
+- name: "test_invalid_group_spaces"
+  command: nextflow run ./tests/modules/sample/base_samplesheet_check/main.nf -c ./tests/config/nextflow.config -entry test_invalid_group_spaces
+  tags:
+    - "modules"
+    - "sample"
+    - "sample/base_samplesheet_check"
+  exit_code: 1
+
+- name: "test_invalid_colinrow"
+  command: nextflow run ./tests/modules/sample/base_samplesheet_check/main.nf -c ./tests/config/nextflow.config -entry test_invalid_colinrow
+  tags:
+    - "modules"
+    - "sample"
+    - "sample/base_samplesheet_check"
+  exit_code: 1
+
+- name: "test_invalid_negrepnum"
+  command: nextflow run ./tests/modules/sample/base_samplesheet_check/main.nf -c ./tests/config/nextflow.config -entry test_invalid_negrepnum
+  tags:
+    - "modules"
+    - "sample"
+    - "sample/base_samplesheet_check"
+  exit_code: 1
+
+- name: "test_invalid_rep_start"
+  command: nextflow run ./tests/modules/sample/base_samplesheet_check/main.nf -c ./tests/config/nextflow.config -entry test_invalid_rep_start
+  tags:
+    - "modules"
+    - "sample"
+    - "sample/base_samplesheet_check"
+  exit_code: 1
