@@ -46,7 +46,7 @@
     - "sample/base_samplesheet_check"
   files:
     - path: "output/sample/samplesheet.valid.csv"
-      md5sum: 418fd05b826a6561e7307df1f85ec5fe
+      md5sum: 61c40e02b63600522d6bbeb13216308a
 
 - name: "test_samplesheet_invalid_mixed"
   command: nextflow run ./tests/modules/sample/base_samplesheet_check/main.nf -c ./tests/config/nextflow.config -entry base_invalid_mixed

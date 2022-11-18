@@ -54,12 +54,13 @@ def check_samplesheet(process_name, file_in, file_out):
         ## Check header
         MIN_COLS = 3
         HEADER = ["group", "replicate", "fastq_1", "fastq_2"]
-        HEADER_LEN = len(HEADER)
+        #HEADER_LEN = len(HEADER)
         header = [x.strip('"') for x in fin.readline().strip().split(",")]
+        ACTUAL_HEADER_LEN = len(header)
 
-        if header[: len(HEADER)] != HEADER:
-            print("ERROR: Please check samplesheet header -> {} != {}".format(",".join(header), ",".join(HEADER)))
-            sys.exit(1)
+        # if header[: len(HEADER)] != HEADER:
+        #     print("ERROR: Please check samplesheet header -> {} != {}".format(",".join(header), ",".join(HEADER)))
+        #     sys.exit(1)
 
         ## Check sample entries
         line_no = 1
@@ -71,7 +72,7 @@ def check_samplesheet(process_name, file_in, file_out):
                 continue
 
             ## Check valid number of columns per row
-            if len(lspl) != HEADER_LEN:
+            if len(lspl) != ACTUAL_HEADER_LEN:
                 print_error(
                     "Invalid number of columns (found {} should be {})! - line no. {}".format(
                         len(lspl), len(HEADER), line_no
@@ -125,11 +126,18 @@ def check_samplesheet(process_name, file_in, file_out):
             ## Auto-detect paired-end/single-end
             sample_info = []
             if sample and fastq_1 and fastq_2:  ## Paired-end short reads
-                sample_info = [sample, str(replicate), "0", fastq_1, fastq_2]
+                sample_info = [sample, str(replicate), "0"]
             elif sample and fastq_1 and not fastq_2:  ## Single-end short reads
-                sample_info = [sample, str(replicate), "1", fastq_1, fastq_2]
+                sample_info = [sample, str(replicate), "1"]
             else:
                 print_error("Invalid combination of columns provided!", "Line", line)
+
+            ## Collect additional sample data
+            extra_data = lspl[len(HEADER) :]
+            sample_info = sample_info + extra_data
+
+            ## Add fastq 1and fastq2
+            sample_info = sample_info + [fastq_1, fastq_2]
 
             ## Create sample mapping dictionary = {sample: {replicate : [ single_end, fastq_1, fastq_2 ]}}
             if sample not in sample_run_dict:
@@ -152,18 +160,19 @@ def check_samplesheet(process_name, file_in, file_out):
     if min(num_fastq_list) != max(num_fastq_list):
         print_error("Mixture of paired-end and single-end reads!")
 
+    ## Calculate output header
+    ouput_header = ["id", "group", "replicate", "single_end"]
+    extra_header = header[len(HEADER) :]
+    ouput_header = ouput_header + extra_header + ["fastq_1", "fastq_2"]
+
     ## Write validated samplesheet with appropriate columns
     if len(sample_run_dict) > 0:
         out_dir = os.path.dirname(file_out)
         make_dir(out_dir)
         with open(file_out, "w") as fout:
+            fout.write(",".join(ouput_header) + "\n")
 
-            fout.write(
-                ",".join(["id", "group", "replicate", "single_end", "fastq_1", "fastq_2"])
-                + "\n"
-            )
             for sample in sorted(sample_run_dict.keys()):
-
                 ## Check that replicate ids are in format 1..<NUM_REPS>
                 uniq_rep_ids = set(sample_run_dict[sample].keys())
                 if len(uniq_rep_ids) != max(uniq_rep_ids):
@@ -173,13 +182,6 @@ def check_samplesheet(process_name, file_in, file_out):
                         sample,
                     )
                 for replicate in sorted(sample_run_dict[sample].keys()):
-
-                    ## Check tech reps have same control group id
-                    check_group = sample_run_dict[sample][replicate][0][2]
-                    for tech_rep in sample_run_dict[sample][replicate]:
-                        if tech_rep[2] != check_group:
-                            print_error("Control group must match within technical replicates", tech_rep[2])
-
                     ## Write to file
                     for idx, sample_info in enumerate(sample_run_dict[sample][replicate]):
                         sample_id = "{}_R{}_T{}".format(sample, replicate, idx + 1)
