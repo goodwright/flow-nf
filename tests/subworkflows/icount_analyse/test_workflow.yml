@@ -1,5 +1,5 @@
-- name: "test_sw_icount_analyse"
-  command: nextflow run ./tests/subworkflows/icount_analyse/main.nf -c ./tests/config/nextflow.config -entry test
+- name: "test_sw_icount_analyse_with_peaks"
+  command: nextflow run ./tests/subworkflows/icount_analyse/main.nf -c ./tests/config/nextflow.config -entry test_with_peaks
   tags:
     - "subworkflows"
     - "icount_analyse"
@@ -18,3 +18,24 @@
       md5sum: "545945decfdded1600ea8b105c6096bd"
     - path: "output/gunzip/test.sigxls.bed"
       md5sum: "2e2e44c2f085ec8dde13d9729e0682cb"
+
+- name: "test_sw_icount_analyse_no_peaks"
+  command: nextflow run ./tests/subworkflows/icount_analyse/main.nf -c ./tests/config/nextflow.config -entry test_no_peaks
+  tags:
+    - "subworkflows"
+    - "icount_analyse"
+  files:
+    - path: "output/icount/test.summary_gene.tsv"
+      md5sum: "78ae24dee95703aecfee7aa5ebf264c4"
+    - path: "output/icount/test.summary_subtype.tsv"
+      md5sum: "186b357bb0c4681bb95b466d68984c27"
+    - path: "output/icount/test.summary_type.tsv"
+      md5sum: "c5021a743dcce657fd37e0f0612c24ce"
+    - path: "output/icount/test.scores.tsv"
+      should_exist: false
+    - path: "output/icount/rnamaps_clippy/clippy_plot_data.tsv"
+      md5sum: "63032c9e159e81f617e30bcb1c3c8509"
+    - path: "output/gunzip/test.peaks.bed"
+      should_exist: false
+    - path: "output/gunzip/test.sigxls.bed"
+      should_exist: false
