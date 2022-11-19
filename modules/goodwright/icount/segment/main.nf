@@ -22,7 +22,7 @@ process ICOUNT_SEGMENT {
     def args   = task.ext.args ?: ''
     def prefix = task.ext.prefix ? "${gtf.simpleName}${task.ext.prefix}" : "${gtf.simpleName}.seg"
     """
-    iCount segment \\
+    iCount-Mini segment \\
         $gtf \\
         ${prefix}.gtf \\
         $fai
