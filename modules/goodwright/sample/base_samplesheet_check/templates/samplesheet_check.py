@@ -54,7 +54,7 @@ def check_samplesheet(process_name, file_in, file_out):
         ## Check header
         MIN_COLS = 3
         HEADER = ["group", "replicate", "fastq_1", "fastq_2"]
-        #HEADER_LEN = len(HEADER)
+        # HEADER_LEN = len(HEADER)
         header = [x.strip('"') for x in fin.readline().strip().split(",")]
         ACTUAL_HEADER_LEN = len(header)
 
