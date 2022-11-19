@@ -162,5 +162,7 @@ workflow PREPARE_CLIPSEQ {
     seg_filt_gtf           = ch_seg_filt_gtf           // channel: [ val(meta), [ gtf ] ]
     seg_resolved_gtf       = ch_seg_resolved_gtf       // channel: [ val(meta), [ gtf ] ]
     seg_resolved_gtf_genic = ch_seg_resolved_gtf_genic // channel: [ val(meta), [ gtf ] ]
+    genome_index           = ch_genome_index           // channel: [ val(meta), [ star_index ] ]
+    smrna_index            = ch_smrna_index            // channel: [ val(meta), [ bt2_index ] ]
     versions               = ch_versions               // channel: [ versions.yml ]
 }
