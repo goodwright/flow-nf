@@ -25,6 +25,13 @@
                         "git_sha": "e797efb47b0d3b2124753beb55dc83ab9512bceb",
                         "installed_by": "modules"
                     },
+                    "cat/fastq": {
+                        "branch": "master",
+                        "git_sha": "5e34754d42cd2d5d248ca8673c0a53cdf5624905",
+                        "installed_by": [
+                            "modules"
+                        ]
+                    },
                     "custom/getchromsizes": {
                         "branch": "master",
                         "git_sha": "cf5b9c30a2adacc581793afb79fae5f5b50bed01",

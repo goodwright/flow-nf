@@ -48,6 +48,16 @@
     - path: "output/sample/samplesheet.valid.csv"
       md5sum: 61c40e02b63600522d6bbeb13216308a
 
+- name: "test_samplesheet_valid_merge_rep"
+  command: nextflow run ./tests/modules/sample/base_samplesheet_check/main.nf -c ./tests/config/nextflow.config -entry test_valid_merge_rep
+  tags:
+    - "modules"
+    - "sample"
+    - "sample/base_samplesheet_check"
+  files:
+    - path: "output/sample/samplesheet.valid.csv"
+      md5sum: 91ae2781cbd5d4f84d4c1cd49a1de941
+
 - name: "test_samplesheet_invalid_mixed"
   command: nextflow run ./tests/modules/sample/base_samplesheet_check/main.nf -c ./tests/config/nextflow.config -entry base_invalid_mixed
   tags:

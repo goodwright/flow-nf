@@ -50,7 +50,7 @@ jobs:
           - paraclu/cut
           - peka
           # Subworkflows
-          - parse_input
+          - parse_fastq_input
           - prepare_genome/prepare_ref
           - prepare_genome/prepare_aligner
           - prepare_genome/prepare_clipseq
