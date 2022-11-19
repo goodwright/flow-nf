@@ -52,7 +52,6 @@ workflow PARSE_FASTQ_INPUT {
     )
     ch_versions  = ch_versions.mix(CAT_FASTQ.out.versions)
     ch_cat_fastq = CAT_FASTQ.out.reads.mix(ch_fastq.single)
-    ch_cat_fastq | view
 
     emit:
     fastq    = ch_cat_fastq // channel: [ val(meta), [ reads ] ]
