@@ -72,10 +72,10 @@ def dashed_line(monochrome_logs) {
 }
 
 def goodwright_logo(monochrome_logs) {
-     Map colors = log_colours(monochrome_logs)
-     def logo_color = colors.bblue
+    Map colors = log_colours(monochrome_logs)
+    def logo_color = colors.bblue
 
-     String.format(
+    String.format(
         """\n
         ${dashed_line(monochrome_logs)}
         ${logo_color}                          _               _       _     _   ${colors.reset}
