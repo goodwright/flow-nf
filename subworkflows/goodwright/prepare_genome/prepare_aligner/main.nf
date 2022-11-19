@@ -48,7 +48,13 @@ workflow PREPARE_ALINGER {
         }
     }
     else if ("star" in aligners) {
-        ch_star_index = STAR_GENOMEGENERATE ( fasta, gtf ).index
+        // Check for meta data channel and strip if present
+        ch_star_input = fasta
+        if(fasta instanceof groovyx.gpars.dataflow.DataflowVariable) {
+            ch_star_input = fasta.map{ [it.last()] }
+        }
+                
+        ch_star_index = STAR_GENOMEGENERATE ( ch_star_input, gtf ).index
         ch_versions   = ch_versions.mix(STAR_GENOMEGENERATE.out.versions)
     }
 
