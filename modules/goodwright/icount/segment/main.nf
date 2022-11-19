@@ -2,6 +2,14 @@ process ICOUNT_SEGMENT {
     tag "$gtf"
     label "process_single"
 
+    // iCount-Mini segement does not seem to work properly
+    /* [RuntimeError] generator raised StopIteration
+    File "/usr/local/lib/python3.9/site-packages/iCount/cli.py", line 448, in main
+        result_object = func(**args)
+
+    File "/usr/local/lib/python3.9/site-packages/iCount/genomes/segment.py", line 1015, in get_segments
+        for gene_content in _get_gene_content(annotation, chromosomes, report_progress):
+    */
     conda (params.enable_conda ? "bioconda::icount=2.0.0" : null)
     container "${ workflow.containerEngine == 'singularity' && !task.ext.singularity_pull_docker_container ?
         'https://depot.galaxyproject.org/singularity/icount:2.0.0--py_1' :

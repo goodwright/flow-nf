@@ -27,10 +27,12 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        NXF_VER: ["22.04.0", ""]
+        NXF_VER: ["22.10.1", ""]
         profile: ["docker", "singularity"]
         tags:
           # Modules
+          - util/logging
+          - sample/base_samplesheet_check
           - ultraplex/samplesheettobardcode
           - ultraplex/ultraplex
           - xlsxtocsv
@@ -48,6 +50,7 @@ jobs:
           - paraclu/cut
           - peka
           # Subworkflows
+          - parse_input
           - prepare_genome/prepare_ref
           - prepare_genome/prepare_aligner
           - prepare_genome/prepare_clipseq
@@ -193,4 +196,3 @@ jobs:
           path: |
             /home/runner/pytest_workflow_*/*/log.out
             /home/runner/pytest_workflow_*/*/log.err
-

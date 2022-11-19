@@ -1,7 +1,7 @@
 {
     "Verbose": false,
     "IgnoreDefaults": false,
-    "Exclude": ["tests/data", "\\.md$"],
+    "Exclude": ["tests/data", "\\.md$", "modules/goodwright/util/logging"],
     "SpacesAfterTabs": false,
     "Disable": {
         "EndOfLine": false,
