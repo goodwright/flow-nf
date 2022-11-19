@@ -196,4 +196,3 @@ jobs:
           path: |
             /home/runner/pytest_workflow_*/*/log.out
             /home/runner/pytest_workflow_*/*/log.err
-
