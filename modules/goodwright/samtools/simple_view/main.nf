@@ -42,7 +42,7 @@ process SAMTOOLS_SIMPLE_VIEW {
         $args \\
         -o ${prefix}.${file_type} \\
         $input \\
-        'cat ${filter_file}' \\
+        `cat ${filter_file}` \\
         $args2
 
     cat <<-END_VERSIONS > versions.yml
