@@ -6,13 +6,14 @@
 /*
 * MODULES
 */
-include { BOWTIE2_ALIGN } from '../../../modules/nf-core/bowtie2/align/main.nf'
-include { STAR_ALIGN    } from '../../../modules/nf-core/star/align/main.nf'
+include { BOWTIE2_ALIGN  } from '../../../modules/nf-core/bowtie2/align/main.nf'
+include { STAR_ALIGN     } from '../../../modules/nf-core/star/align/main.nf'
+include { SAMTOOLS_INDEX } from '../../../modules/nf-core/samtools/index/main'
 
 /*
 * SUBWORKFLOWS
 */
-include { BAM_SORT_STATS_SAMTOOLS as BAM_SORT_STATS_SAMTOOLS_GENOME     } from '../../nf-core/bam_sort_stats_samtools/main.nf'
+include { BAM_STATS_SAMTOOLS as BAM_STATS_SAMTOOLS_GENOME               } from '../../nf-core/bam_stats_samtools/main.nf'
 include { BAM_SORT_STATS_SAMTOOLS as BAM_SORT_STATS_SAMTOOLS_TRANSCRIPT } from '../../nf-core/bam_sort_stats_samtools/main.nf'
 
 workflow RNA_ALIGN {
@@ -51,16 +52,37 @@ workflow RNA_ALIGN {
     ch_versions = ch_versions.mix(STAR_ALIGN.out.versions)
 
     /*
-    * SUBWORKFLOW: Sort, index, stats on genome-level bam
+    * MODULE: Index genome-level BAM file
     */
-    BAM_SORT_STATS_SAMTOOLS_GENOME (
-        STAR_ALIGN.out.bam,
-        fasta
-    )
-    ch_versions = ch_versions.mix(BAM_SORT_STATS_SAMTOOLS_GENOME.out.versions)
+    SAMTOOLS_INDEX ( STAR_ALIGN.out.bam_sorted )
+    ch_versions = ch_versions.mix(SAMTOOLS_INDEX.out.versions.first())
 
     /*
-    * SUBWORKFLOW: Sort, index, stats on transcript-level bam
+    * CHANNEL: Join bam and bai files
+    */
+    ch_bam_bai = STAR_ALIGN.out.bam_sorted
+        .join(SAMTOOLS_INDEX.out.bai, by: [0], remainder: true)
+        .join(SAMTOOLS_INDEX.out.csi, by: [0], remainder: true)
+        .map {
+            meta, bam, bai, csi ->
+                if (bai) {
+                    [ meta, bam, bai ]
+                } else {
+                    [ meta, bam, csi ]
+                }
+        }
+
+    /*
+    * SUBWORKFLOW: Stats on genome-level bam
+    */
+    BAM_STATS_SAMTOOLS_GENOME (
+        ch_bam_bai,
+        fasta
+    )
+    ch_versions = ch_versions.mix(BAM_STATS_SAMTOOLS_GENOME.out.versions)
+
+    /*
+    * SUBWORKFLOW: Sort, index and stats on transcript-level bam
     */
     BAM_SORT_STATS_SAMTOOLS_TRANSCRIPT (
         STAR_ALIGN.out.bam_transcript,
@@ -70,15 +92,15 @@ workflow RNA_ALIGN {
     emit:
     bt2_bam             = BOWTIE2_ALIGN.out.bam                           // channel: [ val(meta), [ bam ] ]
     bt2_log             = BOWTIE2_ALIGN.out.log                           // channel: [ val(meta), [ txt ] ]
-    star_bam            = STAR_ALIGN.out.bam                              // channel: [ val(meta), [ bam ] ]
+    star_bam            = STAR_ALIGN.out.bam_sorted                       // channel: [ val(meta), [ bam ] ]
     star_bam_transcript = STAR_ALIGN.out.bam_transcript                   // channel: [ val(meta), [ bam ] ]
     star_log            = STAR_ALIGN.out.log                              // channel: [ val(meta), [ txt ] ]
     star_log_final      = STAR_ALIGN.out.log_final                        // channel: [ val(meta), [ txt ] ]
-    genome_bam          = BAM_SORT_STATS_SAMTOOLS_GENOME.out.bam          // channel: [ val(meta), [ bam ] ]
-    genome_bai          = BAM_SORT_STATS_SAMTOOLS_GENOME.out.bai          // channel: [ val(meta), [ bai ] ]
-    genome_stats        = BAM_SORT_STATS_SAMTOOLS_GENOME.out.stats        // channel: [ val(meta), [ stats ] ]
-    genome_flagstat     = BAM_SORT_STATS_SAMTOOLS_GENOME.out.flagstat     // channel: [ val(meta), [ flagstat ] ]
-    genome_idxstats     = BAM_SORT_STATS_SAMTOOLS_GENOME.out.idxstats     // channel: [ val(meta), [ idxstats ] ]
+    genome_bam          = STAR_ALIGN.out.bam_sorted                       // channel: [ val(meta), [ bam ] ]
+    genome_bai          = SAMTOOLS_INDEX.out.bai                          // channel: [ val(meta), [ bai ] ]
+    genome_stats        = BAM_STATS_SAMTOOLS_GENOME.out.stats             // channel: [ val(meta), [ stats ] ]
+    genome_flagstat     = BAM_STATS_SAMTOOLS_GENOME.out.flagstat          // channel: [ val(meta), [ flagstat ] ]
+    genome_idxstats     = BAM_STATS_SAMTOOLS_GENOME.out.idxstats          // channel: [ val(meta), [ idxstats ] ]
     transcript_bam      = BAM_SORT_STATS_SAMTOOLS_TRANSCRIPT.out.bam      // channel: [ val(meta), [ bam ] ]
     transcript_bai      = BAM_SORT_STATS_SAMTOOLS_TRANSCRIPT.out.bai      // channel: [ val(meta), [ bai ] ]
     transcript_stats    = BAM_SORT_STATS_SAMTOOLS_TRANSCRIPT.out.stats    // channel: [ val(meta), [ stats ] ]
