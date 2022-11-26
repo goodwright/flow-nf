@@ -57,7 +57,7 @@ def main(process_name, gtf, output):
         gene_transcripts.sort(key=lambda t: t["gene_id"])
         gene_transcripts.reverse()
         gene_transcripts.sort(key=lambda t: [-t["cds_length"], -t["exon_length"]])
-        transcript_ids.append(gene_transcripts[0]["id"] + "\\n")
+        transcript_ids.append(gene_transcripts[0]["id"] + "\n")
 
     # Save to file
     print("Saving longest transcript per gene...")
