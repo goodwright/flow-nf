@@ -49,6 +49,7 @@ jobs:
           - paraclu/paraclu
           - paraclu/cut
           - peka
+          - samtools/simple_view
           # Subworkflows
           - parse_fastq_input
           - prepare_genome/prepare_ref
