@@ -198,7 +198,7 @@ def summary_log(workflow, params, debug, monochrome_logs) {
 // Get workflow summary for MultiQC
 //
 def multiqc_summary(workflow, params) {
-    def params_map = params_summary_map(workflow, params, false)
+    def summary = params_summary_map(workflow, params, false)
     String summary_section = ''
     for (group in summary.keySet()) {
         def group_params = summary.get(group)  // This gets the parameters of that particular group
