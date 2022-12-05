@@ -1,0 +1,13 @@
+- name: "test_sw_bam_dedup_stats_samtools_umitools"
+  command: nextflow run ./tests/subworkflows/bam_dedup_stats_samtools_umitools/main.nf -c ./tests/config/nextflow.config -c ./tests/subworkflows/bam_dedup_stats_samtools_umitools/nextflow.config -entry test
+  tags:
+    - "subworkflows"
+    - "bam_dedup_stats_samtools_umitools"
+  files:
+    - path: "output/umitools/test.bam"
+      md5sum: "413518b632ca07a3ec515642754bf6a7"
+    - path: "output/umitools/test_UMICollapse.log"
+    - path: "output/samtools/test.bam.bai"
+      md5sum: "60280ef3df73bd695c915ccf3db13719"
+    - path: "output/samtools/test.flagstat"
+      md5sum: "fe5d172d06e6ed7a71cb38469a5292bd"
