@@ -1,0 +1,22 @@
+- name: "test_umitools_collapse_default"
+  command: nextflow run ./tests/modules/umitools/collapse/main.nf -c ./tests/config/nextflow.config -c ./tests/modules/umitools/collapse/nextflow.config -entry test_default
+  tags:
+    - "modules"
+    - "umitools"
+    - "umitools/collapse"
+  files:
+    - path: "output/umitools/test.bam"
+      md5sum: 413518b632ca07a3ec515642754bf6a7
+    - path: "output/umitools/test_UMICollapse.log"
+
+- name: "test_umitools_collapse_sep"
+  command: nextflow run ./tests/modules/umitools/collapse/main.nf -c ./tests/config/nextflow.config -c ./tests/modules/umitools/collapse/nextflow.config -entry test_sep
+  tags:
+    - "modules"
+    - "umitools"
+    - "umitools/collapse"
+  files:
+    - path: "output/umitools/test.bam"
+      md5sum: f697ac49edb707df27b875243783ac6f
+    - path: "output/umitools/test_UMICollapse.log"
+
