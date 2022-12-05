@@ -19,7 +19,7 @@ workflow test_single_end {
 
     RNA_ALIGN ( 
         ch_fastq,
-        ch_bt2_index,
+        ch_bt2_index.collect{it[1]},
         ch_star_index.collect{it[1]},
         gtf,
         fasta
@@ -42,7 +42,7 @@ workflow test_paired_end {
 
     RNA_ALIGN ( 
         ch_fastq,
-        ch_bt2_index,
+        ch_bt2_index.collect{it[1]},
         ch_star_index.collect{it[1]},
         gtf,
         fasta
