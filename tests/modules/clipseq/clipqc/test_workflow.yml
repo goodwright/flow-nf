@@ -1,0 +1,15 @@
+- name: "test_clipseq_clipqc"
+  command: nextflow run ./tests/modules/clipseq/clipqc/main.nf -c ./tests/config/nextflow.config -entry test
+  tags:
+    - "modules"
+    - "clipseq"
+    - "clipseq/clipqc"
+  files:
+    - path: "output/clipseq/dedup_mean_umis.tsv"
+      md5sum: 99fb5843d09ee0d10be2857cd6c6c64e
+    - path: "output/clipseq/mapping.tsv"
+      md5sum: 0c8b78a10056a86f70f8bbba0bdbbae6
+    - path: "output/clipseq/xlinks_counts.tsv"
+      md5sum: 46d5c9d0718382a7adb3984eb947591f
+    - path: "output/clipseq/total_peaks.tsv"
+      md5sum: 7a0bf8b2a27f05bb1d9ffc8f2150f295

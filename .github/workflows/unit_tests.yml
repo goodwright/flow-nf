@@ -52,6 +52,7 @@ jobs:
           - peka
           - samtools/simple_view
           - umitools/collapse
+          - clipseq/clipqc
           # Subworkflows
           - parse_fastq_input
           - prepare_genome/prepare_ref
@@ -62,6 +63,7 @@ jobs:
           - clip_calc_crosslinks
           - paraclu_analyse
           - icount_analyse
+          - bam_dedup_stats_samtools_umitools
           # Wrappers
           - wrappers/ultraplex
     steps:
