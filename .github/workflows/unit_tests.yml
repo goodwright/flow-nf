@@ -34,6 +34,7 @@ jobs:
           - util/logging
           - dump_software_versions
           - sample/base_samplesheet_check
+          - sample/diff_samplesheet_check
           - ultraplex/samplesheettobardcode
           - ultraplex/ultraplex
           - xlsxtocsv

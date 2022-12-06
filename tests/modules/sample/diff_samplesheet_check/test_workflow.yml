@@ -1,0 +1,81 @@
+- name: "test_diff_samplesheet_valid_condition"
+  command: nextflow run ./tests/modules/sample/diff_samplesheet_check/main.nf -c ./tests/config/nextflow.config -entry test_valid_condition
+  tags:
+    - "modules"
+    - "sample"
+    - "sample/diff_samplesheet_check"
+  files:
+    - path: "output/sample/samplesheet.valid.csv"
+      md5sum: 4abae7878a5f568d98d7324de1f14650
+
+- name: "test_diff_samplesheet_valid_condition_factor"
+  command: nextflow run ./tests/modules/sample/diff_samplesheet_check/main.nf -c ./tests/config/nextflow.config -entry test_valid_condition_factor
+  tags:
+    - "modules"
+    - "sample"
+    - "sample/diff_samplesheet_check"
+  files:
+    - path: "output/sample/samplesheet.valid.csv"
+      md5sum: 952dc6e10bdccee18074aa0710906944
+
+- name: "test_diff_samplesheet_check_dup_rows"
+  command: nextflow run ./tests/modules/sample/diff_samplesheet_check/main.nf -c ./tests/config/nextflow.config -entry test_check_dup_rows
+  tags:
+    - "modules"
+    - "sample"
+    - "sample/diff_samplesheet_check"
+  exit_code: 1
+
+- name: "test_diff_samplesheet_row_check_dots"
+  command: nextflow run ./tests/modules/sample/diff_samplesheet_check/main.nf -c ./tests/config/nextflow.config -entry test_row_check_dots
+  tags:
+    - "modules"
+    - "sample"
+    - "sample/diff_samplesheet_check"
+  exit_code: 1
+
+- name: "test_diff_samplesheet_row_check_num_col"
+  command: nextflow run ./tests/modules/sample/diff_samplesheet_check/main.nf -c ./tests/config/nextflow.config -entry test_row_check_num_col
+  tags:
+    - "modules"
+    - "sample"
+    - "sample/diff_samplesheet_check"
+  exit_code: 1
+
+- name: "test_diff_samplesheet_row_check_num_content"
+  command: nextflow run ./tests/modules/sample/diff_samplesheet_check/main.nf -c ./tests/config/nextflow.config -entry test_row_check_num_content
+  tags:
+    - "modules"
+    - "sample"
+    - "sample/diff_samplesheet_check"
+  exit_code: 1
+
+- name: "test_diff_samplesheet_row_check_spaces_1"
+  command: nextflow run ./tests/modules/sample/diff_samplesheet_check/main.nf -c ./tests/config/nextflow.config -entry test_row_check_spaces_1
+  tags:
+    - "modules"
+    - "sample"
+    - "sample/diff_samplesheet_check"
+  exit_code: 1
+
+- name: "test_diff_samplesheet_row_check_spaces_2"
+  command: nextflow run ./tests/modules/sample/diff_samplesheet_check/main.nf -c ./tests/config/nextflow.config -entry test_row_check_spaces_2
+    - "modules"
+    - "sample"
+    - "sample/diff_samplesheet_check"
+  exit_code: 1
+
+- name: "test_diff_samplesheet_sample_noin_counts"
+  command: nextflow run ./tests/modules/sample/diff_samplesheet_check/main.nf -c ./tests/config/nextflow.config -entry test_sample_noin_counts
+    - "modules"
+    - "sample"
+    - "sample/diff_samplesheet_check"
+  exit_code: 1
+
+- name: "test_diff_samplesheet_sample_noin_samplesheet"
+  command: nextflow run ./tests/modules/sample/diff_samplesheet_check/main.nf -c ./tests/config/nextflow.config -entry test_sample_noin_samplesheet
+    - "modules"
+    - "sample"
+    - "sample/diff_samplesheet_check"
+  exit_code: 1
+
