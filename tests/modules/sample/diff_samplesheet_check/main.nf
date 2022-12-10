@@ -12,7 +12,8 @@ workflow test_valid_condition {
 
     SAMPLE_DIFF_SAMPLESHEET_CHECK ( 
         samplesheet,
-        counts 
+        counts,
+        ','
     )
 }
 
@@ -22,7 +23,8 @@ workflow test_valid_condition_factor {
 
     SAMPLE_DIFF_SAMPLESHEET_CHECK ( 
         samplesheet,
-        counts 
+        counts,
+        ','
     )
 }
 
@@ -38,7 +40,8 @@ workflow test_check_dup_rows {
 
     SAMPLE_DIFF_SAMPLESHEET_CHECK ( 
         samplesheet,
-        counts 
+        counts,
+        ','
     )
 }
 
@@ -48,7 +51,8 @@ workflow test_row_check_dots {
 
     SAMPLE_DIFF_SAMPLESHEET_CHECK ( 
         samplesheet,
-        counts 
+        counts,
+        ','
     )
 }
 
@@ -58,7 +62,8 @@ workflow test_row_check_num_col {
 
     SAMPLE_DIFF_SAMPLESHEET_CHECK ( 
         samplesheet,
-        counts 
+        counts,
+        ','
     )
 }
 
@@ -68,7 +73,8 @@ workflow test_row_check_num_content {
 
     SAMPLE_DIFF_SAMPLESHEET_CHECK ( 
         samplesheet,
-        counts 
+        counts,
+        ','
     )
 }
 
@@ -78,7 +84,8 @@ workflow test_row_check_spaces_1 {
 
     SAMPLE_DIFF_SAMPLESHEET_CHECK ( 
         samplesheet,
-        counts 
+        counts,
+        ','
     )
 }
 
@@ -88,7 +95,8 @@ workflow test_row_check_spaces_2 {
 
     SAMPLE_DIFF_SAMPLESHEET_CHECK ( 
         samplesheet,
-        counts 
+        counts,
+        ','
     )
 }
 
@@ -98,7 +106,8 @@ workflow test_sample_noin_counts {
 
     SAMPLE_DIFF_SAMPLESHEET_CHECK ( 
         samplesheet,
-        counts 
+        counts,
+        ','
     )
 }
 
@@ -108,6 +117,7 @@ workflow test_sample_noin_samplesheet {
 
     SAMPLE_DIFF_SAMPLESHEET_CHECK ( 
         samplesheet,
-        counts 
+        counts,
+        ','
     )
 }
