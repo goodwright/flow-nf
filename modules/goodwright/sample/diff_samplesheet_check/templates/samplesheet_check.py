@@ -142,13 +142,13 @@ def check_samplesheet(process_name, samplesheet, counts, count_sep, output):
     # Load sample ids from counts file
     with open(counts, "r") as fin:
         # Load header
-        header = [x.strip('"') for x in fin.readline().strip().split(count_sep)]
+        count_header = [x.strip('"') for x in fin.readline().strip().split(count_sep)]
 
         # Strip first column
-        header = header[1:]
+        count_header = count_header[1:]
 
         # Collect unique sample ids
-        for sample in header:
+        for sample in count_header:
             count_dict[sample] = True
 
     # Check that all samples in samplesheet are present in counts file
