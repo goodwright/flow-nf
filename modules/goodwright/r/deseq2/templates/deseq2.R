@@ -73,38 +73,46 @@ round_dataframe_columns <- function(df, columns = NULL, digits = 8){
     df
 }
 
-################################################
-################################################
-## PARSE PARAMETERS FROM NEXTFLOW             ##
-################################################
-################################################
+#####################################################
+#####################################################
+## PARSE PARAMETERS FROM NEXTFLOW AND COMMAND LINE ##
+#####################################################
+#####################################################
 
 # Set defaults and classes
 opt <- list(
+    cores = 1,                                    # Number of cores to use
     count_file = '$counts',                       # The input count matrix file
     sample_file = '$samplesheet',                 # The experimental design file
     contrast_variable = NULL,                     # The design column that will be used for comparision
     reference_level = NULL,                       # The reference level name for the contrast
-    treatment_level = NULL                       # The treatment level name for the contrast
-    # blocking_variables = NULL,
+    treatment_level = NULL,                       # The treatment level name for the contrast
+    blocking_variables = NULL,                    # The design columns that will be used for blocking factors
+    gene_id_col = "gene_id",                      # The fault id column in the count matrix
+    sample_id_col = "sample_id",                  # The sample id column sample sheet
+
     # control_genes_file = '$control_genes_file',
     # sizefactors_from_controls = FALSE,
-    # gene_id_col = "gene_id",
-    # sample_id_col = "experiment_accession",
-    # test = "Wald",
-    # fit_type = "parametric",
-    # sf_type = 'ratio',
-    # min_replicates_for_replace = 7,
-    # use_t = FALSE,
-    # lfc_threshold = 0,
-    # alt_hypothesis = 'greaterAbs',
-    # independent_filtering = TRUE,
-    # p_adjust_method = 'BH',
-    # alpha = 0.1,
-    # minmu = 0.5,
+
+    # DESeq params, these are the defaults - see https://bioconductor.org/packages/devel/bioc/manuals/DESeq2/man/DESeq2.pdf
+    test = "Wald",
+    fit_type = "parametric",
+    min_replicates_for_replace = 7,
+    use_t = FALSE,
+    sf_type = 'ratio',
+
+    # results params, these are the defaults - see https://bioconductor.org/packages/devel/bioc/manuals/DESeq2/man/DESeq2.pdf
+    lfc_threshold = 0,
+    alt_hypothesis = 'greaterAbs',
+    independent_filtering = TRUE,
+    p_adjust_method = 'BH',
+    alpha = 0.1,
+    minmu = 0.5,
+
+    shrink_lfc = TRUE,
+    lfcshrink_type = 'ashr'
+
     # vs_method = 'vst', # 'rlog', 'vst', or 'rlog,vst'
-    # shrink_lfc = TRUE,
-    # cores = 1,
     # vs_blind = TRUE,
     # vst_nsub = 1000
 )
@@ -159,250 +167,219 @@ for (file_input in c('count_file', 'sample_file')){
 
 ################################################
 ################################################
-## Finish loading libraries                   ##
-################################################
-################################################
-
-# library(DESeq2)
-# library(BiocParallel)
-
-################################################
-################################################
 ## READ IN COUNTS FILE AND SAMPLE METADATA    ##
 ################################################
 ################################################
 
-# count.table <-
-#     read_delim_flexible(
-#         file = opt\$count_file,
-#         header = TRUE,
-#         row.names = opt\$gene_id_col
-#     )
-# sample.sheet <- read_delim_flexible(file = opt\$sample_file)
+count.table <-
+    read_delim_flexible(
+        file = opt$count_file,
+        header = TRUE,
+        row.names = opt$gene_id_col
+    )
+sample.sheet <- read_delim_flexible(file = opt$sample_file)
 
-# if (! opt\$sample_id_col %in% colnames(sample.sheet)){
-#     stop(paste0("Specified sample ID column '", opt\$sample_id_col, "' is not in the sample sheet"))
-# }
+# Prepare the sample sheet
+rownames(sample.sheet) <- sample.sheet[[opt$sample_id_col]]
 
-# # Sample sheet can have duplicate rows for multiple sequencing runs, so uniqify
-# # before assigning row names
-
-# sample.sheet <- sample.sheet[! duplicated(sample.sheet[[opt\$sample_id_col]]), ]
-# rownames(sample.sheet) <- sample.sheet[[opt\$sample_id_col]]
-
-# # Check that all samples specified in the input sheet are present in the counts
-# # table. Assuming they are, subset and sort the count table to match the sample
-# # sheet
-
-# missing_samples <-
-#     sample.sheet[!rownames(sample.sheet) %in% colnames(count.table), opt\$sample_id_col]
-
-# if (length(missing_samples) > 0) {
-#     stop(paste(
-#         length(missing_samples),
-#         'specified samples missing from count table:',
-#         paste(missing_samples, collapse = ',')
-#     ))
-# } else{
-#     # Save any non-count data, will gene metadata etc we might need later
-#     noncount.table <-
-#         count.table[, !colnames(count.table) %in% rownames(sample.sheet), drop = FALSE]
-#     count.table <- count.table[, rownames(sample.sheet)]
-# }
+# Prepare the count table
+# Save any non-count data, will gene metadata etc we might need later
+# Round the count table values
+noncount.table <- count.table[, !colnames(count.table) %in% rownames(sample.sheet), drop = FALSE]
+count.table <- count.table[, rownames(sample.sheet)]
+count.table <- round(count.table)
 
 # ################################################
 # ################################################
-# ## CHECK CONTRAST SPECIFICATION               ##
+# ## CHECK MODEL SPECIFICATION                  ##
 # ################################################
 # ################################################
 
-# blocking.vars <- c()
+blocking.vars <- c()
 
-# if (!opt\$contrast_variable %in% colnames(sample.sheet)) {
-#     stop(
-#         paste0(
-#         'Chosen contrast variable \"',
-#         opt\$contrast_variable,
-#         '\" not in sample sheet'
-#         )
-#     )
-# } else if (any(!c(opt\$reflevel, opt\$treatlevel) %in% sample.sheet[[opt\$contrast_variable]])) {
-#     stop(
-#         paste(
-#         'Please choose reference and treatment levels that are present in the',
-#         opt\$contrast_variable,
-#         'column of the sample sheet'
-#         )
-#     )
-# } else if (!is.null(opt\$blocking_variables)) {
-#     blocking.vars = unlist(strsplit(opt\$blocking_variables, split = ';'))
-#     if (!all(blocking.vars %in% colnames(sample.sheet))) {
-#         missing_block <- paste(blocking.vars[! blocking.vars %in% colnames(sample.sheet)], collapse = ',')
-#         stop(
-#             paste(
-#                 'Blocking variables', missing_block,
-#                 'do not correspond to sample sheet columns.'
-#             )
-#         )
-#     }
-# }
+if (!opt$contrast_variable %in% colnames(sample.sheet)) {
+    stop(
+        paste0(
+        'Chosen contrast variable \"',
+        opt$contrast_variable,
+        '\" not in sample sheet'
+        )
+    )
+} else if (any(!c(opt$reference_level, opt$treatment_level) %in% sample.sheet[[opt$contrast_variable]])) {
+    stop(
+        paste(
+        'Please choose reference and treatment levels that are present in the',
+        opt$contrast_variable,
+        'column of the sample sheet'
+        )
+    )
+} else if (!is.null(opt$blocking_variables)) {
+    blocking.vars = unlist(strsplit(opt$blocking_variables, split = ';'))
+    if (!all(blocking.vars %in% colnames(sample.sheet))) {
+        missing_block <- paste(blocking.vars[! blocking.vars %in% colnames(sample.sheet)], collapse = ',')
+        stop(
+            paste(
+                'Blocking variables', missing_block,
+                'do not correspond to sample sheet columns.'
+            )
+        )
+    }
+}
 
-# # Now specify the model. Use cell-means style so we can be explicit with the
-# # contrasts
+# Make sure all the appropriate variables are factors
+for (v in c(blocking.vars, opt$contrast_variable)) {
+    sample.sheet[[v]] <- as.factor(sample.sheet[[v]])
+}
 
-# model <- '~ 0 +'
+# Now specify the model. Use cell-means style so we can be explicit with the
+# contrasts
+model <- '~ 0 +'
 
-# if (!is.null(opt\$blocking_variables)) {
-#     model <- paste(model, paste(blocking.vars, collapse = '+'))
-# }
+# ~ sex + condition
+# ~ sex + condition + batch
+# ~ sex + condition + batch + genotype + genotype:condition
+# Variable of interest goes last, see https://bioconductor.org/packages/release/bioc/vignettes/DESeq2/inst/doc/DESeq2.html#multi-factor-designs
+if (!is.null(opt$blocking_variables)) {
+    model <- paste(model, paste(blocking.vars, collapse = '+'))
+    model <- paste(model, opt$contrast_variable, sep = ' + ')
+} else {
+    model <- paste(model, opt$contrast_variable, sep = ' ')
+}
 
-# # Make sure all the appropriate variables are factors
+model <- as.formula(model)
+print(model)
 
-# for (v in c(blocking.vars, opt\$contrast_variable)) {
-#     sample.sheet[[v]] <- as.factor(sample.sheet[[v]])
-# }
+################################################
+################################################
+## Finish loading libraries                   ##
+################################################
+################################################
 
-# # Variable of interest goes last, see https://bioconductor.org/packages/release/bioc/vignettes/DESeq2/inst/doc/DESeq2.html#multi-factor-designs
+library(DESeq2)
+library(BiocParallel)
 
-# model <- paste(model, opt\$contrast_variable, sep = ' + ')
+################################################
+################################################
+## Run DESeq2 processes                       ##
+################################################
+################################################
 
-# ################################################
-# ################################################
-# ## Run DESeq2 processes                       ##
-# ################################################
-# ################################################
+dds <- DESeqDataSetFromMatrix(
+    countData = count.table,
+    colData = sample.sheet,
+    design = model
+)
 
-# if (opt\$control_genes_file != ''){
-#     control_genes <- readLines(opt\$control_genes_file)
-#     if (! opt\$sizefactors_from_controls){
+# if (opt$control_genes_file != ''){
+#     control_genes <- readLines(opt$control_genes_file)
+#     if (! opt$sizefactors_from_controls){
 #         count.table <- count.table[setdiff(rownames(count.table), control_genes),]
 #     }
 # }
-
-# dds <- DESeqDataSetFromMatrix(
-#     countData = round(count.table),
-#     colData = sample.sheet,
-#     design = as.formula(model)
-#)
 
 # if (opt\$control_genes_file != '' && opt\$sizefactors_from_controls){
 #     print(paste('Estimating size factors using', length(control_genes), 'control genes'))
 #     dds <- estimateSizeFactors(dds, controlGenes=rownames(count.table) %in% control_genes)
 # }
 
-# dds <- DESeq(
-#     dds,
-#     test = opt\$test,
-#     fitType = opt\$fit_type,
-#     minReplicatesForReplace = opt\$min_replicates_for_replace,
-#     useT = opt\$use_t,
-#     sfType = opt\$sf_type,
-#     parallel=TRUE, BPPARAM=MulticoreParam(opt\$cores)
-# )
+dds <- DESeq(
+    dds,
+    test = opt$test,
+    fitType = opt$fit_type,
+    minReplicatesForReplace = opt$min_replicates_for_replace,
+    useT = opt$use_t,
+    sfType = opt$sf_type,
+    parallel=TRUE, BPPARAM=MulticoreParam(opt$cores)
+)
 
-# comp.results <-
-#     results(
-#         dds,
-#         lfcThreshold = opt\$lfc_threshold,
-#         altHypothesis = opt\$alt_hypothesis,
-#         independentFiltering = opt\$independent_filtering,
-#         alpha = opt\$alpha,
-#         pAdjustMethod = opt\$p_adjust_method,
-#         minmu = opt\$minmu,
-#         contrast = c(
-#             opt\$contrast_variable,
-#             c(opt\$treatment_level, opt\$reference_level)
-#         )
-#     )
+comp.results <-
+    results(
+        dds,
+        lfcThreshold = opt$lfc_threshold,
+        altHypothesis = opt$alt_hypothesis,
+        independentFiltering = opt$independent_filtering,
+        alpha = opt$alpha,
+        pAdjustMethod = opt$p_adjust_method,
+        minmu = opt$minmu,
+        contrast = c(
+            opt$contrast_variable,
+            c(opt$treatment_level, opt$reference_level)
+        )
+    )
 
-# if (opt\$shrink_lfc){
-#     comp.results <- lfcShrink(dds,
-#         type = 'ashr',
-#         contrast = c(
-#             opt\$contrast_variable,
-#             c(opt\$treatment_level, opt\$reference_level)
-#         )
-#     )
-# }
+# Adds shrunken log2 fold changes (LFC) and SE to a results table from DESeq run without LFC shrinkage.
+if (opt$shrink_lfc){
+    comp.results <- lfcShrink(dds,
+        type = opt$lfcshrink_type,
+        contrast = c(
+            opt$contrast_variable,
+            c(opt$treatment_level, opt$reference_level)
+        )
+    )
+}
 
-# ################################################
-# ################################################
-# ## Generate outputs                           ##
-# ################################################
-# ################################################
+################################################
+################################################
+## Generate outputs                           ##
+################################################
+################################################
 
-# prefix_part_names <- c('contrast_variable', 'reference_level', 'treatment_level', 'blocking_variables')
-# prefix_parts <- unlist(lapply(prefix_part_names, function(x) gsub("[^[:alnum:]]", "_", opt[[x]])))
-# output_prefix <- paste(prefix_parts[prefix_parts != ''], collapse = '-')
+prefix_part_names <- c('contrast_variable', 'reference_level', 'treatment_level', 'blocking_variables')
+prefix_parts <- unlist(lapply(prefix_part_names, function(x) gsub("[^[:alnum:]]", "_", opt[[x]])))
+output_prefix <- paste(prefix_parts[prefix_parts != ''], collapse = '-')
 
-# contrast.name <-
-#     paste(opt\$treatment_level, opt\$reference_level, sep = "_vs_")
-# cat("Saving results for ", contrast.name, " ...\n", sep = "")
+contrast.name <-
+    paste(opt$treatment_level, opt$reference_level, sep = "_vs_")
+cat("Saving results for ", contrast.name, " ...\n", sep = "")
 
-# # Differential expression table- note very limited rounding for consistency of
-# # results
+# Differential expression table- note very limited rounding for consistency of
+# results
+write.table(
+    data.frame(
+        gene_id = rownames(comp.results),
+        round_dataframe_columns(data.frame(comp.results))
+    ),
+    file = paste(output_prefix, 'deseq2.results.tsv', sep = '.'),
+    col.names = TRUE,
+    row.names = FALSE,
+    sep = '\t',
+    quote = FALSE
+)
 
-# write.table(
-#     data.frame(
-#         gene_id = rownames(comp.results),
-#         round_dataframe_columns(data.frame(comp.results))
-#     ),
-#     file = paste(output_prefix, 'deseq2.results.tsv', sep = '.'),
-#     col.names = TRUE,
-#     row.names = FALSE,
-#     sep = '\t',
-#     quote = FALSE
-# )
+# R object for other processes to use
+saveRDS(dds, file = paste(output_prefix, 'dds.rld.rds', sep = '.'))
 
-# # Dispersion plot
+# Size factors
+sf_df = data.frame(sample = names(sizeFactors(dds)), data.frame(sizeFactors(dds)))
+colnames(sf_df) <- c('sample', 'sizeFactor')
+write.table(
+    sf_df,
+    file = paste(output_prefix, 'deseq2.sizefactors.tsv', sep = '.'),
+    col.names = TRUE,
+    row.names = FALSE,
+    sep = '\t',
+    quote = FALSE
+)
 
-# png(
-#     file = paste(output_prefix, 'deseq2.dispersion.png', sep = '.'),
-#     width = 600,
-#     height = 600
-# )
-# plotDispEsts(dds)
-# dev.off()
-
-# # R object for other processes to use
-
-# saveRDS(dds, file = paste(output_prefix, 'dds.rld.rds', sep = '.'))
-
-# # Size factors
-
-# sf_df = data.frame(sample = names(sizeFactors(dds)), data.frame(sizeFactors(dds)))
-# colnames(sf_df) <- c('sample', 'sizeFactor')
-# write.table(
-#     sf_df,
-#     file = paste(output_prefix, 'deseq2.sizefactors.tsv', sep = '.'),
-#     col.names = TRUE,
-#     row.names = FALSE,
-#     sep = '\t',
-#     quote = FALSE
-# )
-
-# # Write specified matrices
-
-# write.table(
-#     data.frame(gene_id=rownames(counts(dds)), counts(dds, normalized = TRUE)),
-#     file = paste(output_prefix, 'normalised_counts.tsv', sep = '.'),
-#     col.names = TRUE,
-#     row.names = FALSE,
-#     sep = '\t',
-#     quote = FALSE
-# )
+# Write specified matrices
+write.table(
+    data.frame(gene_id=rownames(counts(dds)), counts(dds, normalized = TRUE)),
+    file = paste(output_prefix, 'normalised_counts.tsv', sep = '.'),
+    col.names = TRUE,
+    row.names = FALSE,
+    sep = '\t',
+    quote = FALSE
+)
 
 # # Note very limited rounding for consistency of results
-
-# for (vs_method_name in strsplit(opt\$vs_method, ',')){
+# for (vs_method_name in strsplit(opt$vs_method, ',')){
 #     if (vs_method_name == 'vst'){
-#         vs_mat <- vst(dds, blind = opt\$vs_blind, nsub = opt\$vst_nsub)
+#         vs_mat <- vst(dds, blind = opt$vs_blind, nsub = opt$vst_nsub)
 #     }else if (vs_method_name == 'rlog'){
-#         vs_mat <- rlog(dds, blind = opt\$vs_blind, fitType = opt\$fit_type)
+#         vs_mat <- rlog(dds, blind = opt$vs_blind, fitType = opt$fit_type)
 #     }
 
 #     # Again apply the slight rounding and then restore numeric
-
 #     write.table(
 #         data.frame(
 #             gene_id=rownames(counts(dds)),
@@ -416,32 +393,32 @@ for (file_input in c('count_file', 'sample_file')){
 #     )
 # }
 
-# ################################################
-# ################################################
-# ## R SESSION INFO                             ##
-# ################################################
-# ################################################
+################################################
+################################################
+## R SESSION INFO                             ##
+################################################
+################################################
 
-# sink(paste(output_prefix, "R_sessionInfo.log", sep = '.'))
-# print(sessionInfo())
-# sink()
+sink(paste(output_prefix, "R_sessionInfo.log", sep = '.'))
+print(sessionInfo())
+sink()
 
-# ################################################
-# ################################################
-# ## VERSIONS FILE                              ##
-# ################################################
-# ################################################
+################################################
+################################################
+## VERSIONS FILE                              ##
+################################################
+################################################
 
-# r.version <- strsplit(version[['version.string']], ' ')[[1]][3]
-# deseq2.version <- as.character(packageVersion('DESeq2'))
+r.version <- strsplit(version[['version.string']], ' ')[[1]][3]
+deseq2.version <- as.character(packageVersion('DESeq2'))
 
-# writeLines(
-#     c(
-#         '"${task.process}":',
-#         paste('    r-base:', r.version),
-#         paste('    bioconductor-deseq2:', deseq2.version)
-#     ),
-# 'versions.yml')
+writeLines(
+    c(
+        '"${task.process}":',
+        paste('    r-base:', r.version),
+        paste('    bioconductor-deseq2:', deseq2.version)
+    ),
+'versions.yml')
 
 ################################################
 ################################################
