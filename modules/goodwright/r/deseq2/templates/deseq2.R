@@ -82,17 +82,14 @@ round_dataframe_columns <- function(df, columns = NULL, digits = 8){
 # Set defaults and classes
 opt <- list(
     cores = 1,                                    # Number of cores to use
-    count_file = '$counts',                       # The input count matrix file
-    sample_file = '$samplesheet',                 # The experimental design file
-    contrast_variable = NULL,                     # The design column that will be used for comparision
-    reference_level = NULL,                       # The reference level name for the contrast
-    treatment_level = NULL,                       # The treatment level name for the contrast
-    blocking_variables = NULL,                    # The design columns that will be used for blocking factors
+    count_file = "!{counts}",                     # The input count matrix file
+    sample_file = '!{samplesheet}',               # The experimental design file
+    contrast_variable = "!{contrast_variable}",   # The design column that will be used for comparision
+    reference_level = "!{reference_level}",       # The reference level name for the contrast
+    treatment_level = "!{treatment_level}",       # The treatment level name for the contrast
+    blocking_variables = "!{blocking_variables}", # The design columns that will be used for blocking factors
     gene_id_col = "gene_id",                      # The fault id column in the count matrix
     sample_id_col = "sample_id",                  # The sample id column sample sheet
-
-    # control_genes_file = '$control_genes_file',
-    # sizefactors_from_controls = FALSE,
 
     # DESeq params, these are the defaults - see https://bioconductor.org/packages/devel/bioc/manuals/DESeq2/man/DESeq2.pdf
     test = "Wald",

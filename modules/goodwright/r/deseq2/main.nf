@@ -1,4 +1,4 @@
-process DESEQ2_DIFFERENTIAL {
+process R_DESEQ2 {
     tag "$meta"
     label 'process_medium'
 
@@ -8,12 +8,15 @@ process DESEQ2_DIFFERENTIAL {
         'quay.io/biocontainers/bioconductor-deseq2:1.34.0--r41hc247a5b_3' }"
 
     input:
-    tuple val(meta), path(samplesheet), path(counts)
-    tuple val(control_genes_meta), path(control_genes_file)
+    tuple val(meta), path(samplesheet)
+    path counts
+    val contrast
+    val reference
+    val treatment
+    val blocking
 
     output:
     tuple val(meta), path("*.deseq2.results.tsv")              , emit: results
-    tuple val(meta), path("*.deseq2.dispersion.png")           , emit: dispersion_plot
     tuple val(meta), path("*.dds.rld.rds")                     , emit: rdata
     tuple val(meta), path("*.deseq2.sizefactors.tsv")          , emit: size_factors
     tuple val(meta), path("*.normalised_counts.tsv")           , emit: normalised_counts
@@ -25,6 +28,10 @@ process DESEQ2_DIFFERENTIAL {
     when:
     task.ext.when == null || task.ext.when
 
-    script:
-    template 'deseq_de.R'
+    shell:
+    contrast_variable = contrast ?: "condition"
+    reference_level = reference ?: "NO_REF"
+    treatment_level = treatment ?: "NO_TREAT"
+    blocking_variables = blocking ?: ""
+    template 'deseq2.R'
 }

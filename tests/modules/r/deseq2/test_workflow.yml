@@ -1,0 +1,16 @@
+
+- name: "test_r_deseq2_basic"
+  command: nextflow run ./tests/modules/r/deseq2/main.nf -c ./tests/config/nextflow.config -entry test_basic
+  tags:
+    - "modules"
+    - "r"
+    - "r/deseq2"
+  files:
+    - path: "output/r/condition-A-B.dds.rld.rds"
+      md5sum: fc5f01e070c664be7f5ed4157693fda2
+    - path: "output/r/condition-A-B.deseq2.results.tsv"
+      md5sum: e55bc6cb5d5b43d578c9cccfde5c10c6
+    - path: "output/r/condition-A-B.deseq2.sizefactors.tsv"
+      md5sum: bf8976410a658f2663113d7b30a24e47
+    - path: "output/r/condition-A-B.normalised_counts.tsv"
+      md5sum: 94a01766b198743b7334c1f26bd9b55b
