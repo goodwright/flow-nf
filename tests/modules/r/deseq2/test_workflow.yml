@@ -1,4 +1,3 @@
-
 - name: "test_r_deseq2_basic"
   command: nextflow run ./tests/modules/r/deseq2/main.nf -c ./tests/config/nextflow.config -entry test_basic
   tags:
@@ -13,4 +12,36 @@
     - path: "output/r/condition-A-B.deseq2.sizefactors.tsv"
       md5sum: bf8976410a658f2663113d7b30a24e47
     - path: "output/r/condition-A-B.normalised_counts.tsv"
+      md5sum: 94a01766b198743b7334c1f26bd9b55b
+
+- name: "test_r_deseq2_multi_factor"
+  command: nextflow run ./tests/modules/r/deseq2/main.nf -c ./tests/config/nextflow.config -entry test_multi_factor
+  tags:
+    - "modules"
+    - "r"
+    - "r/deseq2"
+  files:
+    - path: "output/r/condition-A-B-method.dds.rld.rds"
+      md5sum: 23d60015e59ecac423bff12bafb532ee
+    - path: "output/r/condition-A-B-method.deseq2.results.tsv"
+      md5sum: c1379ba53b2fd23baa728509df8381d0
+    - path: "output/r/condition-A-B-method.deseq2.sizefactors.tsv"
+      md5sum: bf8976410a658f2663113d7b30a24e47
+    - path: "output/r/condition-A-B-method.normalised_counts.tsv"
+      md5sum: 94a01766b198743b7334c1f26bd9b55b
+
+- name: "test_r_deseq2_config"
+  command: nextflow run ./tests/modules/r/deseq2/main.nf -c ./tests/config/nextflow.config -c ./tests/modules/r/deseq2/nextflow.config -entry test_multi_factor_with_config
+  tags:
+    - "modules"
+    - "r"
+    - "r/deseq2"
+  files:
+    - path: "output/r/condition-A-B-method.dds.rld.rds"
+      md5sum: fd5c5278738bd187f2564c0eec67eeb2
+    - path: "output/r/condition-A-B-method.deseq2.results.tsv"
+      md5sum: e43ce6c6385c6e1ecc8daf9ef49cb646
+    - path: "output/r/condition-A-B-method.deseq2.sizefactors.tsv"
+      md5sum: bf8976410a658f2663113d7b30a24e47
+    - path: "output/r/condition-A-B-method.normalised_counts.tsv"
       md5sum: 94a01766b198743b7334c1f26bd9b55b

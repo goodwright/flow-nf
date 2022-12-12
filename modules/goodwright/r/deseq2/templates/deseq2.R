@@ -129,12 +129,11 @@ for (key in cl_keys) {
 opt <- modifyList(opt, cl_opt)
 
 # Apply parameter overrides
-args_opt <- parse_args('$task.ext.args')
+args_opt <- parse_args("!{task.ext.args}")
 for ( ao in names(args_opt)){
     if (! ao %in% names(opt)){
         stop(paste("Invalid option:", ao))
-    }else{
-
+    } else{
         # Preserve classes from defaults where possible
         if (! is.null(opt[[ao]])){
             args_opt[[ao]] <- as(args_opt[[ao]], opt_types[[ao]])
@@ -161,6 +160,8 @@ for (file_input in c('count_file', 'sample_file')){
         stop(paste0('Value of ', file_input, ': ', opt[[file_input]], ' is not a valid file'))
     }
 }
+
+print(opt)
 
 ################################################
 ################################################

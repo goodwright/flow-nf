@@ -1,0 +1,6 @@
+sample_id,condition,method,method2
+WT_REP1,A,single,test1
+WT_REP2,A,paired,test2
+RAP1_IAA_30M_REP1,B,single,test1
+RAP1_UNINDUCED_REP1,C,single,test2
+RAP1_UNINDUCED_REP2,C,paired,test3
