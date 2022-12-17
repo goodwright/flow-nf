@@ -6,7 +6,7 @@
     - "r/deseq2"
   files:
     - path: "output/r/condition-A-B.dds.rld.rds"
-      md5sum: fc5f01e070c664be7f5ed4157693fda2
+      md5sum: 74e211ee305eeb6bdf87ec4f6268897f
     - path: "output/r/condition-A-B.deseq2.results.tsv"
       md5sum: e55bc6cb5d5b43d578c9cccfde5c10c6
     - path: "output/r/condition-A-B.deseq2.sizefactors.tsv"
@@ -22,9 +22,9 @@
     - "r/deseq2"
   files:
     - path: "output/r/condition-A-B-method.dds.rld.rds"
-      md5sum: 23d60015e59ecac423bff12bafb532ee
+      md5sum: 9fca5da45c6f3138d2325e0b2213d7be
     - path: "output/r/condition-A-B-method.deseq2.results.tsv"
-      md5sum: c1379ba53b2fd23baa728509df8381d0
+      md5sum: af9b5a3844d75494a8bf32977fab9a82
     - path: "output/r/condition-A-B-method.deseq2.sizefactors.tsv"
       md5sum: bf8976410a658f2663113d7b30a24e47
     - path: "output/r/condition-A-B-method.normalised_counts.tsv"
@@ -38,9 +38,9 @@
     - "r/deseq2"
   files:
     - path: "output/r/condition-A-B-method.dds.rld.rds"
-      md5sum: fd5c5278738bd187f2564c0eec67eeb2
+      md5sum: 02fa94026eaaa073500bfd776be19188
     - path: "output/r/condition-A-B-method.deseq2.results.tsv"
-      md5sum: e43ce6c6385c6e1ecc8daf9ef49cb646
+      md5sum: e3dc36015f861e1d79b25bbe1ac6ca2d
     - path: "output/r/condition-A-B-method.deseq2.sizefactors.tsv"
       md5sum: bf8976410a658f2663113d7b30a24e47
     - path: "output/r/condition-A-B-method.normalised_counts.tsv"
