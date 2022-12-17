@@ -142,6 +142,10 @@ for ( ao in names(args_opt)){
     }
 }
 
+if (is.na(opt$blocking_variables) || opt$blocking_variables== '') {
+    opt$blocking_variables <- NULL
+}
+
 # Check if required parameters have been provided
 required_opts <- c('contrast_variable', 'reference_level', 'treatment_level')
 missing <- required_opts[unlist(lapply(opt[required_opts], is.null)) | ! required_opts %in% names(opt)]
