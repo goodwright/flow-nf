@@ -30,9 +30,30 @@ parse_args <- function(x){
 
 # Set defaults and classes
 opt <- list(
-    deseq_rds = "!{rds}"
+    deseq_rds = "!{rds}",
+    contrast_variable = "!{contrast_variable}",
+    reference_level = "!{reference_level}",
+    treatment_level = "!{treatment_level}",
+    blocking_variables = "!{blocking_variables}",
+
+    pca_title = NULL,
+    pca_num_genes = 1000,
+    loading_top_genes = 10,
+
+    plot_width = 1800,
+    plot_height = 1200,
+    plot_res = 200,
+    plot_point_size = 4
 )
 opt_types <- lapply(opt, class)
+
+
+# pairwise correlation gene counts
+# genespca top gene count - include default switch for not diisplaying gene names 
+# choices?
+# alpha - use default from other script
+# varname.size = 5
+# loadings top genes
 
 # Parse command line args
 cl_args <- commandArgs(trailingOnly=TRUE)
@@ -61,8 +82,12 @@ for ( ao in names(args_opt)){
     }
 }
 
+if (is.na(opt$blocking_variables) || opt$blocking_variables== '') {
+    opt$blocking_variables <- NULL
+}
+
 # Check if required parameters have been provided
-required_opts <- c('deseq_rds')
+required_opts <- c('deseq_rds', 'contrast_variable', 'reference_level', 'treatment_level')
 missing <- required_opts[unlist(lapply(opt[required_opts], is.null)) | ! required_opts %in% names(opt)]
 
 if (length(missing) > 0){
@@ -88,6 +113,7 @@ print(opt)
 ################################################
 ################################################
 
+library(DESeq2)
 library(pcaExplorer)
 
 ################################################
@@ -96,12 +122,97 @@ library(pcaExplorer)
 ################################################
 ################################################
 
-# prefix_part_names <- c('deseq_rds')
-# prefix_parts <- unlist(lapply(prefix_part_names, function(x) gsub("[^[:alnum:]]", "_", opt[[x]])))
-# output_prefix <- paste(prefix_parts[prefix_parts != ''], collapse = '-')
+prefix_part_names <- c('contrast_variable', 'reference_level', 'treatment_level', 'blocking_variables')
+prefix_parts <- unlist(lapply(prefix_part_names, function(x) gsub("[^[:alnum:]]", "_", opt[[x]])))
+output_prefix <- paste(prefix_parts[prefix_parts != ''], collapse = '-')
 
 # Load RDS file
 dds <- readRDS(opt$deseq_rds)
+
+# rlog trans
+dds_rlog <- rlogTransformation(dds)
+
+# Create intgroup
+intgroup.vars <- c(opt$contrast_variable)
+if (!is.null(opt$blocking_variables)) {
+    blocking.vars = unlist(strsplit(opt$blocking_variables, split = ';'))
+    intgroup.vars <- c(intgroup, blocking.vars)
+}
+
+# PCA Plot
+pca_title <- ifelse(is.null(opt$pca_title), paste('PCA Plot', output_prefix), opt$pca_title)
+png(
+    file = paste(output_prefix, 'pcaexp.pca.png', sep = '.'),
+    width = opt$plot_width,
+    height = opt$plot_height,
+    res = opt$plot_res,
+    pointsize = opt$plot_point_size
+)
+pcaplot(dds_rlog,intgroup = intgroup.vars,ntop = opt$pca_num_genes, pcX = 1, pcY = 2, title = pca_title, ellipse = TRUE)
+dev.off()
+
+# Scree plot
+pcaobj_dds <- prcomp(t(assay(dds_rlog)))
+png(
+    file = paste(output_prefix, 'pcaexp.scree.png', sep = '.'),
+    width = opt$plot_width,
+    height = opt$plot_height,
+    res = opt$plot_res,
+    pointsize = opt$plot_point_size
+)
+pcascree(pcaobj_dds,type="pev", title=ifelse(is.null(opt$pca_title), paste('Scree Plot', output_prefix), opt$pca_title))
+dev.off()
+
+# # Corr plot
+# dd_corr <- correlatePCs(pcaobj_dds,colData(dds))
+# png(
+#     file = paste(output_prefix, 'pcaexp.corr.png', sep = '.'),
+#     width = opt$plot_width,
+#     height = opt$plot_height,
+#     res = opt$plot_res,
+#     pointsize = opt$plot_point_size
+# )
+# plotPCcorrs(dd_corr)
+# dev.off()
+
+
+
+# # extract the table of the genes with high loadings
+# hi_loadings(pcaobj_airway,topN = 10,exprTable=counts(dds_airway))
+
+# Plot Loadings
+png(
+    file = paste(output_prefix, 'pcaexp.loadings.png', sep = '.'),
+    width = opt$plot_width,
+    height = opt$plot_height,
+    res = opt$plot_res,
+    pointsize = opt$plot_point_size
+)
+hi_loadings(pcaobj_dds,topN = opt$loading_top_genes)
+dev.off()
+
+# groups_airway <- colData(dds_airway)$dex
+# cols_airway <- scales::hue_pal()(2)[groups_airway]
+# # with many genes, do not plot the labels of the genes
+# genespca(rld_airway,ntop=5000,
+#          choices = c(1,2),
+#          arrowColors=cols_airway,groupNames=groups_airway,
+#          alpha = 0.2,
+#          useRownamesAsLabels=FALSE,
+#          varname.size = 5
+#         )
+
+# # with a smaller number of genes, plot gene names included in the annotation
+# genespca(rld_airway,ntop=100,
+#          choices = c(1,2),
+#          arrowColors=cols_airway,groupNames=groups_airway,
+#          alpha = 0.7,
+#          varname.size = 5,
+#          annotation = annotation_airway
+#         )
+
+# # use a subset of the counts to reduce plotting time, it can be time consuming with many samples
+# pair_corr(counts(dds_airway)[1:100,])
 
 # # Dispersion plot
 # png(

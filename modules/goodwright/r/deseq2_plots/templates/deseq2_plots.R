@@ -31,7 +31,6 @@ parse_args <- function(x){
 # Set defaults and classes
 opt <- list(
     deseq_rds = "!{rds}",
-
     contrast_variable = "!{contrast_variable}",
     reference_level = "!{reference_level}",
     treatment_level = "!{treatment_level}",
@@ -76,7 +75,7 @@ if (is.na(opt$blocking_variables) || opt$blocking_variables== '') {
 }
 
 # Check if required parameters have been provided
-required_opts <- c('deseq_rds')
+required_opts <- c('deseq_rds', 'contrast_variable', 'reference_level', 'treatment_level')
 missing <- required_opts[unlist(lapply(opt[required_opts], is.null)) | ! required_opts %in% names(opt)]
 
 if (length(missing) > 0){

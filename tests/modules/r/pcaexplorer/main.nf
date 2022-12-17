@@ -7,6 +7,10 @@ workflow test_basic {
     dds = [ [id:'test'], file(params.goodwright_test_data['deseq2']['rds_condition'], checkIfExists: true) ]
 
     R_PCAEXPLORER(
-        dds
+        dds,
+        "condition",
+        "A",
+        "B",
+        []
     )
 }
