@@ -96,34 +96,34 @@ library(pcaExplorer)
 ################################################
 ################################################
 
-prefix_part_names <- c('deseq_rds')
-prefix_parts <- unlist(lapply(prefix_part_names, function(x) gsub("[^[:alnum:]]", "_", opt[[x]])))
-output_prefix <- paste(prefix_parts[prefix_parts != ''], collapse = '-')
+# prefix_part_names <- c('deseq_rds')
+# prefix_parts <- unlist(lapply(prefix_part_names, function(x) gsub("[^[:alnum:]]", "_", opt[[x]])))
+# output_prefix <- paste(prefix_parts[prefix_parts != ''], collapse = '-')
 
 # Load RDS file
 dds <- readRDS(opt$deseq_rds)
 
-# Dispersion plot
-png(
-    file = paste(output_prefix, 'deseq2.dispersion.png', sep = '.'),
-    width = opt$plot_width,
-    height = opt$plot_height,
-    res = opt$plot_res,
-    pointsize = opt$plot_point_size
-)
-plotDispEsts(dds)
-dev.off()
+# # Dispersion plot
+# png(
+#     file = paste(output_prefix, 'deseq2.dispersion.png', sep = '.'),
+#     width = opt$plot_width,
+#     height = opt$plot_height,
+#     res = opt$plot_res,
+#     pointsize = opt$plot_point_size
+# )
+# plotDispEsts(dds)
+# dev.off()
 
-# MA plot
-png(
-    file = paste(output_prefix, 'deseq2.ma.png', sep = '.'),
-    width = opt$plot_width,
-    height = opt$plot_height,
-    res = opt$plot_res,
-    pointsize = opt$plot_point_size
-)
-plotMA(dds)
-dev.off()
+# # MA plot
+# png(
+#     file = paste(output_prefix, 'deseq2.ma.png', sep = '.'),
+#     width = opt$plot_width,
+#     height = opt$plot_height,
+#     res = opt$plot_res,
+#     pointsize = opt$plot_point_size
+# )
+# plotMA(dds)
+# dev.off()
 
 ################################################
 ################################################
