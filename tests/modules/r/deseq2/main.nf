@@ -12,8 +12,6 @@ workflow test_basic {
         sample,
         counts,
         "condition",
-        "A",
-        "B",
         []
     )
 }
@@ -27,8 +25,6 @@ workflow test_multi_factor {
         sample,
         counts,
         "condition",
-        "A",
-        "B",
         "method"
     )
 }
@@ -42,8 +38,6 @@ workflow test_multi_factor_with_config {
         sample,
         counts,
         "condition",
-        "A",
-        "B",
         "method"
     )
 }

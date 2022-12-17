@@ -85,8 +85,6 @@ opt <- list(
     count_file = "!{counts}",                     # The input count matrix file
     sample_file = '!{samplesheet}',               # The experimental design file
     contrast_variable = "!{contrast_variable}",   # The design column that will be used for comparision
-    reference_level = "!{reference_level}",       # The reference level name for the contrast
-    treatment_level = "!{treatment_level}",       # The treatment level name for the contrast
     blocking_variables = "!{blocking_variables}", # The design columns that will be used for blocking factors
     gene_id_col = "gene_id",                      # The fault id column in the count matrix
     sample_id_col = "sample_id",                  # The sample id column sample sheet
@@ -96,22 +94,7 @@ opt <- list(
     fit_type = "parametric",
     min_replicates_for_replace = 7,
     use_t = FALSE,
-    sf_type = 'ratio',
-
-    # results params, these are the defaults - see https://bioconductor.org/packages/devel/bioc/manuals/DESeq2/man/DESeq2.pdf
-    lfc_threshold = 0,
-    alt_hypothesis = 'greaterAbs',
-    independent_filtering = TRUE,
-    p_adjust_method = 'BH',
-    alpha = 0.1,
-    minmu = 0.5,
-
-    shrink_lfc = TRUE,
-    lfcshrink_type = 'ashr'
-
-    # vs_method = 'vst', # 'rlog', 'vst', or 'rlog,vst'
-    # vs_blind = TRUE,
-    # vst_nsub = 1000
+    sf_type = 'ratio'
 )
 opt_types <- lapply(opt, class)
 
@@ -142,8 +125,12 @@ for ( ao in names(args_opt)){
     }
 }
 
+if (is.na(opt$blocking_variables) || opt$blocking_variables == '') {
+    opt$blocking_variables <- NULL
+}
+
 # Check if required parameters have been provided
-required_opts <- c('contrast_variable', 'reference_level', 'treatment_level')
+required_opts <- c('contrast_variable')
 missing <- required_opts[unlist(lapply(opt[required_opts], is.null)) | ! required_opts %in% names(opt)]
 
 if (length(missing) > 0){
@@ -187,11 +174,11 @@ noncount.table <- count.table[, !colnames(count.table) %in% rownames(sample.shee
 count.table <- count.table[, rownames(sample.sheet)]
 count.table <- round(count.table)
 
-# ################################################
-# ################################################
-# ## CHECK MODEL SPECIFICATION                  ##
-# ################################################
-# ################################################
+################################################
+################################################
+## CHECK MODEL SPECIFICATION                  ##
+################################################
+################################################
 
 blocking.vars <- c()
 
@@ -268,128 +255,18 @@ dds <- DESeqDataSetFromMatrix(
     design = model
 )
 
-# if (opt$control_genes_file != ''){
-#     control_genes <- readLines(opt$control_genes_file)
-#     if (! opt$sizefactors_from_controls){
-#         count.table <- count.table[setdiff(rownames(count.table), control_genes),]
-#     }
-# }
-
-# if (opt\$control_genes_file != '' && opt\$sizefactors_from_controls){
-#     print(paste('Estimating size factors using', length(control_genes), 'control genes'))
-#     dds <- estimateSizeFactors(dds, controlGenes=rownames(count.table) %in% control_genes)
-# }
-
-dds <- DESeq(
-    dds,
-    test = opt$test,
-    fitType = opt$fit_type,
-    minReplicatesForReplace = opt$min_replicates_for_replace,
-    useT = opt$use_t,
-    sfType = opt$sf_type,
-    parallel=TRUE, BPPARAM=MulticoreParam(opt$cores)
-)
-
-comp.results <-
-    results(
-        dds,
-        lfcThreshold = opt$lfc_threshold,
-        altHypothesis = opt$alt_hypothesis,
-        independentFiltering = opt$independent_filtering,
-        alpha = opt$alpha,
-        pAdjustMethod = opt$p_adjust_method,
-        minmu = opt$minmu,
-        contrast = c(
-            opt$contrast_variable,
-            c(opt$treatment_level, opt$reference_level)
-        )
-    )
-
-# Adds shrunken log2 fold changes (LFC) and SE to a results table from DESeq run without LFC shrinkage.
-if (opt$shrink_lfc){
-    comp.results <- lfcShrink(dds,
-        type = opt$lfcshrink_type,
-        contrast = c(
-            opt$contrast_variable,
-            c(opt$treatment_level, opt$reference_level)
-        )
-    )
-}
-
 ################################################
 ################################################
 ## Generate outputs                           ##
 ################################################
 ################################################
 
-prefix_part_names <- c('contrast_variable', 'reference_level', 'treatment_level', 'blocking_variables')
+prefix_part_names <- c('contrast_variable', 'blocking_variables')
 prefix_parts <- unlist(lapply(prefix_part_names, function(x) gsub("[^[:alnum:]]", "_", opt[[x]])))
 output_prefix <- paste(prefix_parts[prefix_parts != ''], collapse = '-')
 
-contrast.name <-
-    paste(opt$treatment_level, opt$reference_level, sep = "_vs_")
-cat("Saving results for ", contrast.name, " ...\n", sep = "")
-
-# Differential expression table- note very limited rounding for consistency of
-# results
-write.table(
-    data.frame(
-        gene_id = rownames(comp.results),
-        round_dataframe_columns(data.frame(comp.results))
-    ),
-    file = paste(output_prefix, 'deseq2.results.tsv', sep = '.'),
-    col.names = TRUE,
-    row.names = FALSE,
-    sep = '\t',
-    quote = FALSE
-)
-
 # R object for other processes to use
 saveRDS(dds, file = paste(output_prefix, 'dds.rld.rds', sep = '.'))
-
-# Size factors
-sf_df = data.frame(sample = names(sizeFactors(dds)), data.frame(sizeFactors(dds)))
-colnames(sf_df) <- c('sample', 'sizeFactor')
-write.table(
-    sf_df,
-    file = paste(output_prefix, 'deseq2.sizefactors.tsv', sep = '.'),
-    col.names = TRUE,
-    row.names = FALSE,
-    sep = '\t',
-    quote = FALSE
-)
-
-# Write specified matrices
-write.table(
-    data.frame(gene_id=rownames(counts(dds)), counts(dds, normalized = TRUE)),
-    file = paste(output_prefix, 'normalised_counts.tsv', sep = '.'),
-    col.names = TRUE,
-    row.names = FALSE,
-    sep = '\t',
-    quote = FALSE
-)
-
-# # Note very limited rounding for consistency of results
-# for (vs_method_name in strsplit(opt$vs_method, ',')){
-#     if (vs_method_name == 'vst'){
-#         vs_mat <- vst(dds, blind = opt$vs_blind, nsub = opt$vst_nsub)
-#     }else if (vs_method_name == 'rlog'){
-#         vs_mat <- rlog(dds, blind = opt$vs_blind, fitType = opt$fit_type)
-#     }
-
-#     # Again apply the slight rounding and then restore numeric
-#     write.table(
-#         data.frame(
-#             gene_id=rownames(counts(dds)),
-#             round_dataframe_columns(data.frame(assay(vs_mat)))
-#         ),
-#         file = paste(output_prefix, vs_method_name,'tsv', sep = '.'),
-#         col.names = TRUE,
-#         row.names = FALSE,
-#         sep = '\t',
-#         quote = FALSE
-#     )
-# }
 
 ################################################
 ################################################
