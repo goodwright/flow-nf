@@ -119,6 +119,16 @@ png(
 plotDispEsts(dds)
 dev.off()
 
+# MA plot
+png(
+    file = paste(output_prefix, 'deseq2.ma.png', sep = '.'),
+    width = opt$plot_width,
+    height = opt$plot_height,
+    res = opt$plot_res,
+    pointsize = opt$plot_point_size
+)
+plotMA(dds)
+dev.off()
 
 ################################################
 ################################################

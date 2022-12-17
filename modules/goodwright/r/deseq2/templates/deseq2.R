@@ -348,7 +348,7 @@ write.table(
     quote = FALSE
 )
 
-# R object for other processes to use
+# R objects for other processes to use
 saveRDS(dds, file = paste(output_prefix, 'dds.rld.rds', sep = '.'))
 
 # Size factors
