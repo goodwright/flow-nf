@@ -9,6 +9,10 @@ process R_DESEQ2_PLOTS {
 
     input:
     tuple val(meta), path(rds)
+    val contrast
+    val reference
+    val treatment
+    val blocking
 
     output:
     tuple val(meta), path("*.png")                , emit: png
@@ -19,5 +23,9 @@ process R_DESEQ2_PLOTS {
     task.ext.when == null || task.ext.when
 
     shell:
+    contrast_variable = contrast ?: "condition"
+    reference_level = reference ?: "NO_REF"
+    treatment_level = treatment ?: "NO_TREAT"
+    blocking_variables = blocking ?: ""
     template 'deseq2_plots.R'
 }
