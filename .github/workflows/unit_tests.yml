@@ -54,6 +54,9 @@ jobs:
           - samtools/simple_view
           - umitools/collapse
           - clipseq/clipqc
+          - r/deseq2
+          - r/deseq2_plots
+          - r/pca_explorer
           # Subworkflows
           - parse_fastq_input
           - prepare_genome/prepare_ref
