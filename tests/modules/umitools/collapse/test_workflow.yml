@@ -19,4 +19,3 @@
     - path: "output/umitools/test.bam"
       md5sum: f697ac49edb707df27b875243783ac6f
     - path: "output/umitools/test_UMICollapse.log"
-

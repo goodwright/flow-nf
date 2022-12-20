@@ -59,23 +59,25 @@
   exit_code: 1
 
 - name: "test_diff_samplesheet_row_check_spaces_2"
-  command: nextflow run ./tests/modules/sample/diff_samplesheet_check/main.nf -c ./tests/config/nextflow.config -entry test_row_check_spaces_2
+  command:
+    nextflow run ./tests/modules/sample/diff_samplesheet_check/main.nf -c ./tests/config/nextflow.config -entry test_row_check_spaces_2
     - "modules"
     - "sample"
     - "sample/diff_samplesheet_check"
   exit_code: 1
 
 - name: "test_diff_samplesheet_sample_noin_counts"
-  command: nextflow run ./tests/modules/sample/diff_samplesheet_check/main.nf -c ./tests/config/nextflow.config -entry test_sample_noin_counts
+  command:
+    nextflow run ./tests/modules/sample/diff_samplesheet_check/main.nf -c ./tests/config/nextflow.config -entry test_sample_noin_counts
     - "modules"
     - "sample"
     - "sample/diff_samplesheet_check"
   exit_code: 1
 
 - name: "test_diff_samplesheet_sample_noin_samplesheet"
-  command: nextflow run ./tests/modules/sample/diff_samplesheet_check/main.nf -c ./tests/config/nextflow.config -entry test_sample_noin_samplesheet
+  command:
+    nextflow run ./tests/modules/sample/diff_samplesheet_check/main.nf -c ./tests/config/nextflow.config -entry test_sample_noin_samplesheet
     - "modules"
     - "sample"
     - "sample/diff_samplesheet_check"
   exit_code: 1
-
