@@ -114,8 +114,8 @@ jobs:
       - name: Install nf-core
         run: python -m pip install --upgrade git+https://github.com/goodwright/tools.git@dev
 
-      - name: Restore nf-core packages
-        run: nf-core modules list local
+      # - name: Restore nf-core packages
+      #   run: nf-core modules list local
 
       # - name: Run pytest-workflow
       #   # only use one thread for pytest-workflow to avoid race condition on conda cache.
