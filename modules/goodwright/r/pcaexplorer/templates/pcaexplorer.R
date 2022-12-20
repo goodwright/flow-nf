@@ -39,6 +39,9 @@ opt <- list(
     pca_title = NULL,
     pca_num_genes = 1000,
     loading_top_genes = 10,
+    gene_pca_num_genes = 1000,
+    gene_pca_alpha = 0.2,
+    gene_pca_show_names = FALSE,
 
     plot_width = 1800,
     plot_height = 1200,
@@ -175,8 +178,6 @@ dev.off()
 # plotPCcorrs(dd_corr)
 # dev.off()
 
-
-
 # # extract the table of the genes with high loadings
 # hi_loadings(pcaobj_airway,topN = 10,exprTable=counts(dds_airway))
 
@@ -191,50 +192,31 @@ png(
 hi_loadings(pcaobj_dds,topN = opt$loading_top_genes)
 dev.off()
 
-# groups_airway <- colData(dds_airway)$dex
-# cols_airway <- scales::hue_pal()(2)[groups_airway]
-# # with many genes, do not plot the labels of the genes
-# genespca(rld_airway,ntop=5000,
-#          choices = c(1,2),
-#          arrowColors=cols_airway,groupNames=groups_airway,
-#          alpha = 0.2,
-#          useRownamesAsLabels=FALSE,
-#          varname.size = 5
-#         )
+# Genes PCA
+png(
+    file = paste(output_prefix, 'pcaexp.genes_pca.png', sep = '.'),
+    width = opt$plot_width,
+    height = opt$plot_height,
+    res = opt$plot_res,
+    pointsize = opt$plot_point_size
+)
+genespca(dds_rlog,ntop=opt$gene_pca_num_genes,
+         alpha = opt$gene_pca_alpha,
+         useRownamesAsLabels=opt$gene_pca_show_names,
+         varname.size = 3
+        )
+dev.off()
 
-# # with a smaller number of genes, plot gene names included in the annotation
-# genespca(rld_airway,ntop=100,
-#          choices = c(1,2),
-#          arrowColors=cols_airway,groupNames=groups_airway,
-#          alpha = 0.7,
-#          varname.size = 5,
-#          annotation = annotation_airway
-#         )
-
-# # use a subset of the counts to reduce plotting time, it can be time consuming with many samples
-# pair_corr(counts(dds_airway)[1:100,])
-
-# # Dispersion plot
-# png(
-#     file = paste(output_prefix, 'deseq2.dispersion.png', sep = '.'),
-#     width = opt$plot_width,
-#     height = opt$plot_height,
-#     res = opt$plot_res,
-#     pointsize = opt$plot_point_size
-# )
-# plotDispEsts(dds)
-# dev.off()
-
-# # MA plot
-# png(
-#     file = paste(output_prefix, 'deseq2.ma.png', sep = '.'),
-#     width = opt$plot_width,
-#     height = opt$plot_height,
-#     res = opt$plot_res,
-#     pointsize = opt$plot_point_size
-# )
-# plotMA(dds)
-# dev.off()
+# Corr plot
+png(
+    file = paste(output_prefix, 'pcaexp.corr.png', sep = '.'),
+    width = opt$plot_width,
+    height = opt$plot_height,
+    res = opt$plot_res,
+    pointsize = opt$plot_point_size
+)
+pair_corr(counts(dds)[1:100,])
+dev.off()
 
 ################################################
 ################################################
