@@ -1,0 +1,10 @@
+Arguments	[bam, -i, sample_1_R1.Aligned.sortedByCoord.out.bam, -o, sample_1_R1.genome.dedup.bam, --umi-sep, rbc:]
+Done reading input file into memory!
+Number of input reads	465
+Number of removed unmapped reads	0
+Number of unremoved reads	465
+Number of unique alignment positions	188
+Average number of UMIs per alignment position	2.4202127659574466
+Max number of UMIs over all alignment positions	66
+Number of reads after deduplicating	389
+UMI collapsing finished in 0.451 seconds!

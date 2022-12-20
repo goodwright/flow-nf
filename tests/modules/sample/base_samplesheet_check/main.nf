@@ -31,6 +31,12 @@ workflow test_valid_header_extra {
     SAMPLE_BASE_SAMPLESHEET_CHECK ( samplesheet )
 }
 
+workflow test_valid_merge_rep {
+    samplesheet = file(params.goodwright_test_data['samplesheets']['base_valid_merge_rep'], checkIfExists: true)
+    SAMPLE_BASE_SAMPLESHEET_CHECK ( samplesheet )
+}
+
+
 /*
  * Should fail checks
  */

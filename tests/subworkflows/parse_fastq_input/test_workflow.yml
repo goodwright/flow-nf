@@ -1,0 +1,26 @@
+- name: "test_sw_parse_fastq_input_multi_pe"
+  command: nextflow run ./tests/subworkflows/parse_fastq_input/main.nf -c ./tests/config/nextflow.config -entry test_multi_pe
+  tags:
+    - "subworkflows"
+    - "parse_fastq_input"
+
+- name: "test_sw_parse_fastq_input_extra_header"
+  command: nextflow run ./tests/subworkflows/parse_fastq_input/main.nf -c ./tests/config/nextflow.config -entry test_extra_header
+  tags:
+    - "subworkflows"
+    - "parse_fastq_input"
+
+- name: "test_sw_parse_fastq_input_merge_rep"
+  command: nextflow run ./tests/subworkflows/parse_fastq_input/main.nf -c ./tests/config/nextflow.config -entry test_merge_rep
+  tags:
+    - "subworkflows"
+    - "parse_fastq_input"
+  files:
+    - path: "output/cat/h3k27me3_R1_1.merged.fastq.gz"
+      md5sum: 2ffa090a19cda8602cf4df59bacb73d2
+    - path: "output/cat/h3k27me3_R1_2.merged.fastq.gz"
+      md5sum: 87aa715302d4e5b8b9ea90a5ddd116b4
+    - path: "output/cat/h3k27me3_R2_1.merged.fastq.gz"
+      md5sum: 2ffa090a19cda8602cf4df59bacb73d2
+    - path: "output/cat/h3k27me3_R2_2.merged.fastq.gz"
+      md5sum: 87aa715302d4e5b8b9ea90a5ddd116b4

@@ -55,7 +55,7 @@ workflow PARACLU_ANALYSE {
     )
 
     emit:
-    sigxls   = PARACLU_PARACLU.out.tsv // channel: [ val(meta), [ tsv ] ]
-    peaks    = PARACLU_CUT.out.tsv     // channel: [ val(meta), [ tsv ] ]
-    versions = ch_versions             // channel: [ versions.yml ]
+    sigxls   = PARACLU_PARACLU.out.tsv  // channel: [ val(meta), [ tsv ] ]
+    peaks    = PARACLU_CONVERT.out.file // channel: [ val(meta), [ tsv ] ]
+    versions = ch_versions              // channel: [ versions.yml ]
 }

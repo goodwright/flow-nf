@@ -32,7 +32,9 @@ jobs:
         tags:
           # Modules
           - util/logging
+          - dump_software_versions
           - sample/base_samplesheet_check
+          - sample/diff_samplesheet_check
           - ultraplex/samplesheettobardcode
           - ultraplex/ultraplex
           - xlsxtocsv
@@ -49,8 +51,14 @@ jobs:
           - paraclu/paraclu
           - paraclu/cut
           - peka
+          - samtools/simple_view
+          - umitools/collapse
+          - clipseq/clipqc
+          - r/deseq2
+          - r/deseq2_plots
+          - r/pca_explorer
           # Subworkflows
-          - parse_input
+          - parse_fastq_input
           - prepare_genome/prepare_ref
           - prepare_genome/prepare_aligner
           - prepare_genome/prepare_clipseq
@@ -59,6 +67,7 @@ jobs:
           - clip_calc_crosslinks
           - paraclu_analyse
           - icount_analyse
+          - bam_dedup_stats_samtools_umitools
           # Wrappers
           - wrappers/ultraplex
     steps:

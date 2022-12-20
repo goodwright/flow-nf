@@ -1,0 +1,9 @@
+- name: "test_samtools_simpleview_longesttranscripts"
+  command: nextflow run ./tests/modules/samtools/simple_view/main.nf -c ./tests/config/nextflow.config -c ./tests/modules/samtools/simple_view/nextflow.config -entry test_simple_view_longest_transcripts
+  tags:
+    - "modules"
+    - "samtools"
+    - "samtools/simple_view"
+  files:
+    - path: "output/samtools/test.bam"
+      md5sum: c5ba3ab83b43f1f3b1b4800cf7da5d20

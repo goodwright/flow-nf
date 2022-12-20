@@ -1,14 +1,18 @@
 /*
- * Check input samplesheet and get read channels
+ * Check input samplesheet, get read channels and merge replicates if necessary.
+ * Subworkflow goal is to output a valid, prepared set of fastq files with metadata
  */
 
 include { SAMPLE_BASE_SAMPLESHEET_CHECK } from '../../../modules/goodwright/sample/base_samplesheet_check/main.nf'
+include { CAT_FASTQ                     } from '../../../modules/nf-core/cat/fastq/main.nf'
 
-workflow PARSE_INPUT {
+workflow PARSE_FASTQ_INPUT {
     take:
     samplesheet // file: /path/to/samplesheet.csv
 
     main:
+    ch_versions = Channel.empty()
+
     /*
     * MODULE: Check the samplesheet for errors
     */
@@ -19,14 +23,39 @@ workflow PARSE_INPUT {
     /*
     * MODULE: Parse samplesheet into meta and fastq files
     */
-    SAMPLE_BASE_SAMPLESHEET_CHECK.out.csv
+    ch_reads = SAMPLE_BASE_SAMPLESHEET_CHECK.out.csv
         .splitCsv ( header:true, sep:"," )
         .map { parse_meta(it) }
-        .set { reads }
+
+    /*
+    * CHANNEL: Split out files which need merging
+    */
+    ch_fastq = ch_reads
+        .map {
+            meta, fastq ->
+                meta.id = meta.id.split("_")[0..-2].join("_")
+                [ meta, fastq ] }
+        .groupTuple(by: [0])
+        .branch {
+            meta, fastq ->
+                single  : fastq.size() == 1
+                    return [ meta, fastq.flatten() ]
+                multiple: fastq.size() > 1
+                    return [ meta, fastq.flatten() ]
+        }
+
+    /*
+     * MODULE: Concatenate FastQ files from same sample if required
+     */
+    CAT_FASTQ (
+        ch_fastq.multiple
+    )
+    ch_versions  = ch_versions.mix(CAT_FASTQ.out.versions)
+    ch_cat_fastq = CAT_FASTQ.out.reads.mix(ch_fastq.single)
 
     emit:
-    reads // channel: [ val(meta), [ reads ] ]
-    versions = SAMPLE_BASE_SAMPLESHEET_CHECK.out.versions
+    fastq    = ch_cat_fastq // channel: [ val(meta), [ reads ] ]
+    versions = ch_versions  // channel: [ versions.yml ]
 }
 
 // Function to get list of [ meta, [ fastq_1, fastq_2 ] ]

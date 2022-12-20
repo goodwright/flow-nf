@@ -1,0 +1,6 @@
+- name: "test_r_pcaexplorer_basic"
+  command: nextflow run ./tests/modules/r/pcaexplorer/main.nf -c ./tests/config/nextflow.config -entry test_basic
+  tags:
+    - "modules"
+    - "r"
+    - "r/pca_explorer"

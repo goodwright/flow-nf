@@ -1,5 +1,5 @@
 - name: "test_sw_rna_align_single_end"
-  command: nextflow run ./tests/subworkflows/rna_align/main.nf -entry test_single_end -c ./tests/config/nextflow.config -c ./tests/subworkflows/rna_align/nextflow.config
+  command: nextflow run ./tests/subworkflows/rna_align/main.nf -c ./tests/config/nextflow.config -c ./tests/subworkflows/rna_align/nextflow.config -entry test_single_end
   tags:
     - "subworkflows"
     - "rna_align"
@@ -11,7 +11,7 @@
     - path: output/samtools/sample_1.stats
 
 - name: "test_sw_rna_align_paired_end"
-  command: nextflow run ./tests/subworkflows/rna_align/main.nf -entry test_paired_end -c ./tests/config/nextflow.config -c ./tests/subworkflows/rna_align/nextflow.config
+  command: nextflow run ./tests/subworkflows/rna_align/main.nf -c ./tests/config/nextflow.config -c ./tests/subworkflows/rna_align/nextflow.config -entry test_paired_end
   tags:
     - "subworkflows"
     - "rna_align"

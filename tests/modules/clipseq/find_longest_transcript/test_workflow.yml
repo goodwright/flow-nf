@@ -4,3 +4,6 @@
     - "modules"
     - "clipseq"
     - "clipseq/find_longest_transcript"
+  files:
+    - path: "output/clipseq/longest_transcript.txt"
+      md5sum: 4080e24d1dbc167abe22946f7b15bb1d
