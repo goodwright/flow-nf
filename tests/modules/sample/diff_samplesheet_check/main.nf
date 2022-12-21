@@ -60,7 +60,7 @@ workflow test_row_check_num_col {
     samplesheet = file(params.goodwright_test_data['samplesheets']['row_check_num_col'], checkIfExists: true)
     counts      = file(params.goodwright_test_data['count_matrix']['simple'], checkIfExists: true)
 
-    SAMPLE_DIFF_SAMPLESHEET_CHECK ( 
+    SAMPLE_DIFF_SAMPLESHEET_CHECK (
         samplesheet,
         counts,
         ','
@@ -93,7 +93,7 @@ workflow test_row_check_spaces_2 {
     samplesheet = file(params.goodwright_test_data['samplesheets']['row_check_spaces_2'], checkIfExists: true)
     counts      = file(params.goodwright_test_data['count_matrix']['simple'], checkIfExists: true)
 
-    SAMPLE_DIFF_SAMPLESHEET_CHECK ( 
+    SAMPLE_DIFF_SAMPLESHEET_CHECK (
         samplesheet,
         counts,
         ','
