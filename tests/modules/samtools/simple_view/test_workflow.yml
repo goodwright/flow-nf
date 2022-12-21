@@ -6,4 +6,4 @@
     - "samtools/simple_view"
   files:
     - path: "output/samtools/test.bam"
-      md5sum: c5ba3ab83b43f1f3b1b4800cf7da5d20
+      md5sum: a6c0d4bfe8adcc7d0301dd0474a7aa13
