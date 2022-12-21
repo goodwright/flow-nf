@@ -52,7 +52,7 @@ opt_types <- lapply(opt, class)
 
 
 # pairwise correlation gene counts
-# genespca top gene count - include default switch for not diisplaying gene names 
+# genespca top gene count - include default switch for not diisplaying gene names
 # choices?
 # alpha - use default from other script
 # varname.size = 5
@@ -63,9 +63,9 @@ cl_args <- commandArgs(trailingOnly=TRUE)
 cl_keys <- grep("^--", cl_args, value = TRUE)
 cl_opt <- list()
 for (key in cl_keys) {
-  key_index <- which(cl_args == key)
-  value <- cl_args[key_index + 1]
-  cl_opt[[sub("^--", "", key)]] <- value
+    key_index <- which(cl_args == key)
+    value <- cl_args[key_index + 1]
+    cl_opt[[sub("^--", "", key)]] <- value
 }
 
 # Override defaults with command line args
@@ -200,11 +200,12 @@ png(
     res = opt$plot_res,
     pointsize = opt$plot_point_size
 )
-genespca(dds_rlog,ntop=opt$gene_pca_num_genes,
-         alpha = opt$gene_pca_alpha,
-         useRownamesAsLabels=opt$gene_pca_show_names,
-         varname.size = 3
-        )
+genespca(dds_rlog,
+        ntop=opt$gene_pca_num_genes,
+        alpha = opt$gene_pca_alpha,
+        useRownamesAsLabels=opt$gene_pca_show_names,
+        varname.size = 3
+    )
 dev.off()
 
 # Corr plot
