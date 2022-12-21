@@ -5,6 +5,5 @@
     - "r"
     - "r/deseq2_plots"
   files:
-    - path: "output/r/condition_A_B_dds_rld_rds.deseq2.dispersion.png"
-    - path: "output/r/condition_A_B_dds_rld_rds.deseq2.ma.png"
-
+    - path: "output/r/condition-A-B.deseq2.dispersion.png"
+    - path: "output/r/condition-A-B.deseq2.ma.png"
