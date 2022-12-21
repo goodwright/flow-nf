@@ -120,9 +120,9 @@ cl_args <- commandArgs(trailingOnly=TRUE)
 cl_keys <- grep("^--", cl_args, value = TRUE)
 cl_opt <- list()
 for (key in cl_keys) {
-  key_index <- which(cl_args == key)
-  value <- cl_args[key_index + 1]
-  cl_opt[[sub("^--", "", key)]] <- value
+    key_index <- which(cl_args == key)
+    value <- cl_args[key_index + 1]
+    cl_opt[[sub("^--", "", key)]] <- value
 }
 
 # Override defaults with command line args

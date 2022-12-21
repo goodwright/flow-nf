@@ -5,6 +5,4 @@
     - "dump_software_versions"
   files:
     - path: "output/dump/software_versions_mqc.yml"
-      md5sum: 645cf94bb493d1fb9b2266f33bc4553d
     - path: "output/dump/software_versions_unique_mqc.yml"
-      md5sum: 5e46d28b51315aa354eb1cda061f3a71

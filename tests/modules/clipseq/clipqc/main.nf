@@ -12,7 +12,7 @@ workflow test {
     qc_clippy_peaks  = file(params.goodwright_test_data['clipqc']['paraclu'], checkIfExists: true)
     qc_paraclu_peaks = file(params.goodwright_test_data['clipqc']['clippy'], checkIfExists: true)
 
-     CLIPSEQ_CLIPQC (
+    CLIPSEQ_CLIPQC (
         qc_bt_log,
         qc_star_log,
         qc_umi_log,

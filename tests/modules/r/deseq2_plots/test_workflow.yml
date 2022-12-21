@@ -5,7 +5,5 @@
     - "r"
     - "r/deseq2_plots"
   files:
-    - path: "output/r/condition_A_B_dds_rld_rds.deseq2.dispersion.png"
-      md5sum: 11dcb0178a50dd6db8b2e95261ec8917
-    - path: "output/r/condition_A_B_dds_rld_rds.deseq2.ma.png"
-      md5sum: aad53c39d3d665b37fee80d62a47a043
+    - path: "output/r/condition-A-B.deseq2.dispersion.png"
+    - path: "output/r/condition-A-B.deseq2.ma.png"
