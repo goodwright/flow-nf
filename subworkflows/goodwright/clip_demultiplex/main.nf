@@ -40,23 +40,24 @@ workflow CLIP_DEMULTIPLEX {
     * MODULE: Demultiplex the fastq file
     */
     ULTRAPLEX (
-        [ [ id:file(fastq).name ], file(fastq) ],
+        [ [ id:"fastq" ], fastq ],
         CLIP_SAMPLESHEET_TO_BARCODE.out.csv
     )
     ch_versions = ch_versions.mix(ULTRAPLEX.out.versions)
+    //ULTRAPLEX.out.fastq | view
 
     /*
     * CHANNEL: Create meta data using the samplesheet and the outputs from ultraplex
     */
-    ch_csv
+    ch_meta_fastq = ch_csv
         .splitCsv (header:true, sep:",")
         .combine (ULTRAPLEX.out.fastq)
         .map { row ->
-            def match
-            row[2].each { file -> if (file.name.contains(row[0].id)) { match = file } }
-            [ row[0], match ]
-         }
-        .set { ch_meta_fastq }
+            def match = []
+            row[2].each { file -> if (file.name.contains(row[0].id)) { match << file } }
+            [ row[0].id, row[0], match ]
+        }
+        .unique()
     //ch_meta_fastq | view
 
     emit:
