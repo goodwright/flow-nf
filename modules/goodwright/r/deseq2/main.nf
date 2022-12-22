@@ -2,10 +2,10 @@ process R_DESEQ2 {
     tag "${contrast}:${reference}_${treatment}"
     label 'process_medium'
 
-    conda (params.enable_conda ? "bioconda::bioconductor-deseq2=1.38.0" : null)
+    conda (params.enable_conda ? "bioconda::bioconductor-deseq2=1.34.0" : null)
     container "${ workflow.containerEngine == 'singularity' && !task.ext.singularity_pull_docker_container ?
-        'https://depot.galaxyproject.org/singularity/bioconductor-deseq2:1.38.0--r42hc247a5b_0' :
-        'quay.io/biocontainers/bioconductor-deseq2:1.38.0--r42hc247a5b_0' }"
+        'https://depot.galaxyproject.org/singularity/bioconductor-deseq2:1.34.0--r41hc247a5b_3' :
+        'quay.io/biocontainers/bioconductor-deseq2:1.34.0--r41hc247a5b_3' }"
 
     input:
     tuple val(meta), path(samplesheet)
