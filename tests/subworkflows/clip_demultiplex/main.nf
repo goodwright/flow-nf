@@ -8,6 +8,8 @@ workflow test_single_sample {
     fastq       = file(params.goodwright_test_data['ultraplex']['multiplexed_fastq'], checkIfExists: true)
 
     CLIP_DEMULTIPLEX ( samplesheet, fastq )
+
+    CLIP_DEMULTIPLEX.out.fastq | view
 }
 
 workflow test_multi_sample {
@@ -16,6 +18,8 @@ workflow test_multi_sample {
     fastq       = file(params.goodwright_test_data['ultraplex']['multiplexed_fastq'], checkIfExists: true)
 
     CLIP_DEMULTIPLEX ( samplesheet, fastq )
+
+    CLIP_DEMULTIPLEX.out.fastq | view
 }
 
 workflow test_with_excel {
@@ -24,4 +28,17 @@ workflow test_with_excel {
     fastq       = file(params.goodwright_test_data['ultraplex']['multiplexed_fastq'], checkIfExists: true)
 
     CLIP_DEMULTIPLEX ( samplesheet, fastq )
+
+    CLIP_DEMULTIPLEX.out.fastq | view
+}
+
+workflow test_multi_sample_paired_end {
+
+    samplesheet = file(params.goodwright_test_data['samplesheets']['clip_samplesheet'], checkIfExists: true)
+    fastq1      = file(params.goodwright_test_data['ultraplex']['multiplexed_fastq'], checkIfExists: true)
+    fastq2      = file(params.goodwright_test_data['ultraplex']['multiplexed_fastq2'], checkIfExists: true)
+
+    CLIP_DEMULTIPLEX ( samplesheet, [fastq1, fastq2] )
+
+    CLIP_DEMULTIPLEX.out.fastq | view
 }
