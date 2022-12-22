@@ -1,4 +1,4 @@
-name: r_deseq2_plot
+name: r_deseq2_plots
 description: Generates standard deseq2 plots
 keywords:
   - r
