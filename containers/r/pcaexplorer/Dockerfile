@@ -1,13 +1,5 @@
 FROM debian:testing
 
-# ## Set a default user. Available via runtime flag `--user docker`
-# ## Add user to 'staff' group, granting them write privileges to /usr/local/lib/R/site.library
-# ## User should also have & own a home directory (for rstudio or linked volumes to work properly).
-# RUN useradd docker \
-#     && mkdir /home/docker \
-#     && chown docker:docker /home/docker \
-#     && adduser docker staff
-
 ## NB: No 'apt-get upgrade -y' in official images, see eg
 ## https://github.com/docker-library/official-images/pull/13443#issuecomment-1297829291
 RUN apt-get update \
@@ -18,7 +10,8 @@ RUN apt-get update \
         vim-tiny \
         wget \
         ca-certificates \
-        fonts-texgyre
+        fonts-texgyre \
+        procps
 
 ## Configure default locale, see https://github.com/rocker-org/rocker/issues/19
 RUN echo "en_US.UTF-8 UTF-8" >> /etc/locale.gen \
