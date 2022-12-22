@@ -1,4 +1,4 @@
-name: umicollapse
+name: umitools_collapse
 description: Deduplicate reads based on the mapping co-ordinate and the UMI attached to the read.
 keywords:
   - umicollapse
