@@ -2,7 +2,7 @@
 * UMI-tools collapse, index BAM file and run samtools stats, flagstat and idxstats
 */
 
-include { UMITOOLS_COLLAPSE  } from '../../../modules/goodwright/umitools/collapse/main'
+include { UMICOLLAPSE  } from '../../../modules/goodwright/umicollapse/main'
 include { SAMTOOLS_INDEX     } from '../../../modules/nf-core/samtools/index/main'
 include { BAM_STATS_SAMTOOLS } from '../../nf-core/bam_stats_samtools/main'
 

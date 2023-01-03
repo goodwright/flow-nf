@@ -85,7 +85,7 @@ jobs:
           nf-core modules lint paraclu/cut
           nf-core modules lint peka
           nf-core modules lint samtools/simple_view
-          nf-core modules lint umitools/collapse
+          nf-core modules lint umicollapse
           nf-core modules lint clipseq/clipqc
           nf-core modules lint r/deseq2
           nf-core modules lint r/deseq2_plots
