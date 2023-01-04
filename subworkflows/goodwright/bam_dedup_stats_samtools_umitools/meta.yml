@@ -9,7 +9,7 @@ keywords:
   - sam
   - cram
 modules:
-  - umitools/collapse
+  - umicollapse
   - samtools/index
   - samtools/stats
   - samtools/idxstats

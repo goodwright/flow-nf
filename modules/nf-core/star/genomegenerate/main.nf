@@ -2,7 +2,7 @@ process STAR_GENOMEGENERATE {
     tag "$fasta"
     label 'process_high'
 
-    conda (params.enable_conda ? "bioconda::star=2.7.10a bioconda::samtools=1.16.1 conda-forge::gawk=5.1.0" : null)
+    conda "bioconda::star=2.7.10a bioconda::samtools=1.16.1 conda-forge::gawk=5.1.0"
     container "${ workflow.containerEngine == 'singularity' && !task.ext.singularity_pull_docker_container ?
         'https://depot.galaxyproject.org/singularity/mulled-v2-1fa26d1ce03c295fe2fdcf85831a92fbcbd7e8c2:1df389393721fc66f3fd8778ad938ac711951107-0' :
         'quay.io/biocontainers/mulled-v2-1fa26d1ce03c295fe2fdcf85831a92fbcbd7e8c2:1df389393721fc66f3fd8778ad938ac711951107-0' }"
@@ -33,6 +33,7 @@ process STAR_GENOMEGENERATE {
             --runThreadN $task.cpus \\
             $memory \\
             $args
+
         cat <<-END_VERSIONS > versions.yml
         "${task.process}":
             star: \$(STAR --version | sed -e "s/STAR_//g")
@@ -44,6 +45,7 @@ process STAR_GENOMEGENERATE {
         """
         samtools faidx $fasta
         NUM_BASES=`gawk '{sum = sum + \$2}END{if ((log(sum)/log(2))/2 - 1 > 14) {printf "%.0f", 14} else {printf "%.0f", (log(sum)/log(2))/2 - 1}}' ${fasta}.fai`
+
         mkdir star
         STAR \\
             --runMode genomeGenerate \\
@@ -54,6 +56,7 @@ process STAR_GENOMEGENERATE {
             --genomeSAindexNbases \$NUM_BASES \\
             $memory \\
             $args
+
         cat <<-END_VERSIONS > versions.yml
         "${task.process}":
             star: \$(STAR --version | sed -e "s/STAR_//g")
@@ -82,6 +85,7 @@ process STAR_GENOMEGENERATE {
     touch star/sjdbList.fromGTF.out.tab
     touch star/sjdbList.out.tab
     touch star/transcriptInfo.tab
+
     cat <<-END_VERSIONS > versions.yml
     "${task.process}":
         star: \$(STAR --version | sed -e "s/STAR_//g")
