@@ -4,9 +4,9 @@
     - "subworkflows"
     - "bam_dedup_stats_samtools_umitools"
   files:
-    - path: "output/umitools/test.bam"
+    - path: "output/umicollapse/test.bam"
       md5sum: "413518b632ca07a3ec515642754bf6a7"
-    - path: "output/umitools/test_UMICollapse.log"
+    - path: "output/umicollapse/test_UMICollapse.log"
     - path: "output/samtools/test.bam.bai"
       md5sum: "60280ef3df73bd695c915ccf3db13719"
     - path: "output/samtools/test.flagstat"
