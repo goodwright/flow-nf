@@ -71,6 +71,7 @@ jobs:
           # Wrappers
           - wrappers/modules/ultraplex
           - wrappers/subworkflows/demultiplex
+          - wrappers/subworkflows/prepare_clipseq
     steps:
       - name: Checkout Code
         uses: actions/checkout@v3
