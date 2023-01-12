@@ -22,20 +22,25 @@ process ICOUNT_SEGMENT {
     path fai
 
     output:
-    tuple val(meta), path("*.gtf"),emit: gtf
-    path "versions.yml"           ,emit: versions
+    tuple val(meta), path("*_seg.gtf")                  ,  emit: gtf
+	tuple val(meta), path("*_regions.gtf.gz")           ,  emit: regions
+    path "versions.yml"                                 ,  emit: versions
 
     when:
     task.ext.when == null || task.ext.when
 
     script:
     def args   = task.ext.args ?: ''
-    def prefix = task.ext.prefix ? "${gtf.simpleName}${task.ext.prefix}" : "${gtf.simpleName}.seg"
+    def prefix = task.ext.prefix ?: "${gtf.simpleName}_seg"
+	def regions_prefix = task.ext.regions_prefix ?: "${gtf.simpleName}"
     """
     iCount-Mini segment \\
         $gtf \\
         ${prefix}.gtf \\
         $fai
+
+    mv regions.gtf.gz ${regions_prefix}_regions.gtf.gz
+
     cat <<-END_VERSIONS > versions.yml
     "${task.process}":
         iCount-Mini: \$(iCount-Mini -v)
