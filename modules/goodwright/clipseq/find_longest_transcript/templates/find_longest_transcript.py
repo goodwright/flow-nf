@@ -9,7 +9,6 @@ import re
 
 t_types = ["transcript_type", "transcript_biotype"]
 
-
 def dump_versions(process_name):
     with open("versions.yml", "w") as out_f:
         out_f.write(process_name + ":\n")
@@ -25,18 +24,15 @@ def main(process_name, gtf, output):
     transcripts = {}
     with open(gtf) as f:
         for line in f:
-            if line[0] == "#":
-                continue
+            if line[0] == "#": continue
             values = line.split("\t")
             if any(f'{t} "protein_coding"' in values[8] for t in t_types):
                 gene_id = re.search(r"gene_id \"(.+?)\";", values[8])[1]
                 transcript_id = re.search(r"transcript_id \"(.+?)\";", values[8])[1]
                 if transcript_id not in transcripts:
                     transcripts[transcript_id] = {
-                        "id": transcript_id,
-                        "gene_id": gene_id,
-                        "exon_length": 0,
-                        "cds_length": 0,
+                        "id": transcript_id, "gene_id": gene_id,
+                        "exon_length": 0, "cds_length": 0
                     }
                 length = int(values[4]) - int(values[3]) + 1
                 if values[2] == "CDS":
@@ -50,8 +46,7 @@ def main(process_name, gtf, output):
     genes = {}
     transcripts.sort(key=lambda t: [t["gene_id"], -t["exon_length"], t["id"]])
     for transcript in transcripts:
-        if transcript["gene_id"] not in genes:
-            genes[transcript["gene_id"]] = []
+        if transcript["gene_id"] not in genes: genes[transcript["gene_id"]] = []
         genes[transcript["gene_id"]].append(transcript)
     print(f"These belong to {len(genes)} genes")
 
@@ -64,11 +59,24 @@ def main(process_name, gtf, output):
         gene_transcripts.sort(key=lambda t: [-t["cds_length"], -t["exon_length"]])
         transcript_ids.append(gene_transcripts[0]["id"] + "\n")
 
+    # create a transcript.fai file for use in getting crosslinks
+    fai_output = []
+    for transcript in transcripts:
+        output_line = ""
+        if transcript["id"] + "\n" in transcript_ids:
+            output_line = transcript["id"] + "\t"
+            output_line = output_line + str(max(transcript["exon_length"], transcript["cds_length"])) + "\n"
+            fai_output.append(output_line)
+
     # Save to file
     print("Saving longest transcript per gene...")
-    with open(output, "w") as f:
+    with open(output + ".txt", "w") as f:
         f.writelines(transcript_ids)
 
+    # Save to file
+    print("Saving longest transcript fai index...")
+    with open(output + ".fai", "w") as f:
+        f.writelines(fai_output)
 
 if __name__ == "__main__":
 
