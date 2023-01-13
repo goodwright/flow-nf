@@ -18,6 +18,18 @@
     - path: "output/sample/samplesheet.valid.csv"
       md5sum: 4020ef4e71ebb50a2608df3482470e47
 
+- name: "test_diff_samplesheet_valid_multicount"
+  command: nextflow run ./tests/modules/sample/diff_samplesheet_check/main.nf -c ./tests/config/nextflow.config -entry test_valid_multicount
+  tags:
+    - "modules"
+    - "sample"
+    - "sample/diff_samplesheet_check"
+  files:
+    - path: "output/sample/samplesheet.valid.csv"
+      md5sum: 4020ef4e71ebb50a2608df3482470e47
+    - path: "output/sample/merged_counts.tsv"
+      md5sum: 6ca0e6e1ac44f28becdd6f7bb7566b37
+
 - name: "test_diff_samplesheet_check_dup_rows"
   command: nextflow run ./tests/modules/sample/diff_samplesheet_check/main.nf -c ./tests/config/nextflow.config -entry test_check_dup_rows
   tags:
