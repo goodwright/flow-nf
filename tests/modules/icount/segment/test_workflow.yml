@@ -5,5 +5,7 @@
     - "icount"
     - "icount/segment"
   files:
-    - path: "output/icount/gencode.seg.gtf"
-      md5sum: 3eabafbd213e31ba2235d959ebf6f0ca
+    - path: "output/icount/gencode_seg.gtf"
+      md5sum: 23ac963f9904e4ee15b94e9e8159db08
+    - path: "output/icount/gencode_regions.gtf.gz"
+      md5sum: c8873f4981dccb10d994f66d4761023a
