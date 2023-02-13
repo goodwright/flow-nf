@@ -51,16 +51,15 @@ workflow PREPARE_CLIPSEQ {
     main:
     ch_versions = Channel.empty()
 
-
-    
     /*
     * SUBWORKFLOW: Uncompress and prepare main genome files
     */
-    if (params.fasta_fai && params.chrom_sizes){
+    if (fasta_fai && chrom_sizes){
         ch_fasta       = fasta
         ch_fasta_fai   = fasta_fai
         ch_chrom_sizes = chrom_sizes
-        ch_gtf         = [ [id:gtf.baseName], gtf ]
+        ch_gtf         = gtf
+
     } else {
         PREPARE_PRIMARY_GENOME (
             fasta,
@@ -75,6 +74,8 @@ workflow PREPARE_CLIPSEQ {
         ch_versions    = ch_versions.mix(PREPARE_PRIMARY_GENOME.out.versions)
     }
 
+    ch_gtf | view
+
     // Sometimes gtf have brackets in gene names and this makes UMICollapse fail.
     REMOVE_GTF_BRACKETS ( 
         ch_gtf,
@@ -84,12 +85,10 @@ workflow PREPARE_CLIPSEQ {
     ch_gtf_with_meta = REMOVE_GTF_BRACKETS.out.file
     ch_gtf = REMOVE_GTF_BRACKETS.out.file.flatten().last()
 
-
-
     /*
     * SUBWORKFLOW: Uncompress and prepare smrna genome files
     */
-    if (params.smrna_fasta_fai && params.smrna_chrom_sizes){
+    if (smrna_fasta_fai && smrna_chrom_sizes){
         ch_smrna_fasta       = smrna_fasta
         ch_smrna_fasta_fai   = smrna_fasta_fai
         ch_smrna_chrom_sizes = smrna_chrom_sizes
@@ -109,7 +108,7 @@ workflow PREPARE_CLIPSEQ {
     /*
     * MODULE: Find the longest transcript from the primary genome
     */
-    if (params.longest_transcript && params.longest_transcript_fai && params.longest_transcript_gtf){
+    if (longest_transcript && longest_transcript_fai && longest_transcript_gtf){
         ch_longest_transcript     = longest_transcript
         ch_longest_transcript_fai = longest_transcript_fai
         ch_longest_transcript_gtf = longest_transcript_gtf
@@ -126,7 +125,7 @@ workflow PREPARE_CLIPSEQ {
     /*
     * MODULE: Filter the GTF file
     */
-    if (params.filtered_gtf){
+    if (filtered_gtf){
     ch_filt_gtf = filtered_gtf
     } else {
     CLIPSEQ_FILTER_GTF (
@@ -167,7 +166,7 @@ workflow PREPARE_CLIPSEQ {
     /*
     * MODULE: Segment GTF file using icount
     */
-    if (params.seg_gtf && params.regions_gtf){
+    if (seg_gtf && regions_gtf){
     ch_seg_gtf     = seg_gtf
 	ch_regions_gtf = regions_gtf
     } else {
@@ -183,7 +182,7 @@ workflow PREPARE_CLIPSEQ {
     /*
     * MODULE: Segment the filtered GTF file using icount
     */
-    if (params.seg_filt_gtf && params.regions_filt_gtf){
+    if (seg_filt_gtf && regions_filt_gtf){
     ch_seg_filt_gtf     = seg_filt_gtf
     ch_regions_filt_gtf = regions_filt_gtf
     } else {
@@ -198,7 +197,7 @@ workflow PREPARE_CLIPSEQ {
     /*
     * MODULE: Resolve the GTF regions that iCount did not annotate
     */
-    if (params.seg_resolved_gtf){
+    if (seg_resolved_gtf){
     ch_seg_resolved_gtf = seg_resolved_gtf
     } else {
     RESOLVE_UNANNOTATED (
@@ -215,7 +214,7 @@ workflow PREPARE_CLIPSEQ {
     /*
     * MODULE: Resolve the GTF regions that iCount did not annotate REGIONS FILE
     */
-    if (params.regions_resolved_gtf){
+    if (regions_resolved_gtf){
     ch_regions_resolved_gtf = regions_resolved_gtf
     } else {
     RESOLVE_UNANNOTATED_REGIONS (
@@ -231,7 +230,7 @@ workflow PREPARE_CLIPSEQ {
     /*
     * MODULE: Resolve the GTF regions that iCount did not annotate with genic_other flag
     */
-    if (params.seg_resolved_gtf_genic){
+    if (seg_resolved_gtf_genic){
     ch_seg_resolved_gtf_genic = seg_resolved_gtf_genic
     } else {
     RESOLVE_UNANNOTATED_GENIC_OTHER (
@@ -247,7 +246,7 @@ workflow PREPARE_CLIPSEQ {
     /*
     * MODULE: Resolve the GTF regions that iCount did not annotate with genic_other flag REGIONS FILE
     */
-    if (params.regions_resolved_gtf_genic){
+    if (regions_resolved_gtf_genic){
     ch_regions_resolved_gtf_genic = regions_resolved_gtf_genic
     } else {
     RESOLVE_UNANNOTATED_GENIC_OTHER_REGIONS (
@@ -259,7 +258,6 @@ workflow PREPARE_CLIPSEQ {
     )
     ch_regions_resolved_gtf_genic = RESOLVE_UNANNOTATED_GENIC_OTHER_REGIONS.out.gtf
     }
-
 
     emit:
     fasta                      = ch_fasta                       // channel: [ val(meta), [ fasta ] ]
