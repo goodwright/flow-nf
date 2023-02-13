@@ -119,7 +119,7 @@ workflow PREPARE_CLIPSEQ {
         )
         ch_longest_transcript     = CLIPSEQ_FIND_LONGEST_TRANSCRIPT.out.longest_transcript
         ch_longest_transcript_fai = CLIPSEQ_FIND_LONGEST_TRANSCRIPT.out.longest_transcript_fai
-        ch_longest_transcript_gtf = CLIPSEQ_FIND_LONGEST_TRANSCRIPT.out.longest_transcript_gtf
+        ch_longest_transcript_gtf = CLIPSEQ_FIND_LONGEST_TRANSCRIPT.out.longest_transcript
         ch_versions               = ch_versions.mix(CLIPSEQ_FIND_LONGEST_TRANSCRIPT.out.versions)
     }
 
