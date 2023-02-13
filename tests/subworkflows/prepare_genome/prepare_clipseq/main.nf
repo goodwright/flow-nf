@@ -13,6 +13,23 @@ workflow test_noindex {
         smrna_fasta,
         gtf,
         [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
         []
     )
 }
@@ -30,6 +47,23 @@ workflow test_withindex {
         smrna_fasta,
         gtf,
         star_index,
-        bowtie2_index
+        bowtie2_index,
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        []
     )
 }

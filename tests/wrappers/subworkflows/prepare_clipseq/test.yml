@@ -1,12 +1,12 @@
 - name: "test_wrappers_prepare_clipseq_no_index"
-  command: nextflow run ./wrappers/subworkflows/prepare_clipseq/main.nf -c ./tests/config/nextflow.config --fasta ./tests/data/genome/homosapien-hg37-chr21.fa.gz --smrna_fasta ./tests/data/genome/homosapien-hg37-chr21.fa.gz --gtf ./tests/data/genome/gencode.v35.chr21.gtf
+  command: nextflow run ./wrappers/subworkflows/prepare_clipseq/main.nf -c ./tests/config/nextflow.config -c ./wrappers/subworkflows/prepare_clipseq/nextflow.config --fasta ./tests/data/genome/homosapien-hg37-chr21.fa.gz --smrna_fasta ./tests/data/genome/homosapien-hg37-chr21.fa.gz --gtf ./tests/data/genome/gencode.v35.chr21.gtf
   tags:
     - "wrappers"
     - "wrappers/subworkflows"
     - "wrappers/subworkflows/prepare_clipseq"
 
 - name: "test_wrappers_prepare_clipseq_with_index"
-  command: nextflow run ./wrappers/subworkflows/prepare_clipseq/main.nf -c ./tests/config/nextflow.config --fasta ./tests/data/genome/homosapien-hg37-chr21.fa.gz --smrna_fasta ./tests/data/genome/homosapien-hg37-chr21.fa.gz --gtf ./tests/data/genome/gencode.v35.chr21.gtf star_index ./tests/data/genome/indexes/star.tar.gz bowtie2_index ./tests/data/genome/indexes/bowtie.tar.gz
+  command: nextflow run ./wrappers/subworkflows/prepare_clipseq/main.nf -c ./tests/config/nextflow.config -c ./wrappers/subworkflows/prepare_clipseq/nextflow.config --fasta ./tests/data/genome/homosapien-hg37-chr21.fa.gz --smrna_fasta ./tests/data/genome/homosapien-hg37-chr21.fa.gz --gtf ./tests/data/genome/gencode.v35.chr21.gtf star_index ./tests/data/genome/indexes/star.tar.gz bowtie2_index ./tests/data/genome/indexes/bowtie.tar.gz
   tags:
     - "wrappers"
     - "wrappers/subworkflows"
