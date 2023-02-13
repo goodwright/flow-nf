@@ -29,7 +29,6 @@ workflow test_noindex {
         [],
         [],
         [],
-        [],
         []
     )
 }
@@ -48,7 +47,6 @@ workflow test_withindex {
         gtf,
         star_index,
         bowtie2_index,
-        [],
         [],
         [],
         [],
