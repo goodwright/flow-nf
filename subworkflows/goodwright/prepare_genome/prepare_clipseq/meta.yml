@@ -37,6 +37,70 @@ input:
       type: file/folder
       description: pre-computed star index folder for the small-rna genome
       pattern: "*.{tar.gz}"
+  - fasta_fai:
+      type: file
+      description: genome fasta index produced with samtools faidx
+      pattern: "*.{fa.fai,fa.fai.gz}"
+  - filtered_gtf:
+      type: file
+      description: filtered genome gtf annotation file
+      pattern: "*.{gtf,gtf.gz}"
+  - chrom_sizes:
+      type: file
+      description: primary genome chromosome sizes
+      pattern: "*.{sizes}"
+  - smrna_fasta_fai:
+      type: file
+      description: small RNA fasta index produced with samtools faidx
+      pattern: "*.{fa.fai,fa.fai.gz}"
+  - smrna_chrom_sizes:
+      type: file
+      description: small RNA chromosome sizes
+      pattern: "*.{sizes}"
+  - longest_transcript:
+      type: file
+      description: list of longest transcript per gene
+      pattern: "*.{txt}"
+  - seg_gtf:
+      type: file
+      description: icount segmented gtf file
+      pattern: "*.{gtf,gtf.gz}"
+  - seg_filt_gtf:
+      type: file
+      description: icount segmented gtf file based on the filtered gtf file
+      pattern: "*.{gtf,gtf.gz}"
+  - seg_resolved_gtf:
+      type: file
+      description: icount segmented gtf file with unannotated regons resolved
+      pattern: "*.{gtf,gtf.gz}"
+  - seg_resolved_gtf_genic:
+      type: file
+      description: icount segmented gtf file with unannotated regons resolved with genic other
+      pattern: "*.{gtf,gtf.gz}"
+  - regions_gtf:
+      type: file
+      description: icount regions gtf file
+      pattern: "*.{gtf,gtf.gz}"
+  - regions_filt_gtf:
+      type: file
+      description: icount regions gtf file based on the filtered gtf file
+      pattern: "*.{gtf,gtf.gz}"
+  - regions_resolved_gtf:
+      type: file
+      description: icount regions gtf file with unannotated regons resolved
+      pattern: "*.{gtf,gtf.gz}"
+  - regions_resolved_gtf_genic:
+      type: file
+      description: icount regions gtf file with unannotated regons resolved with genic other
+      pattern: "*.{gtf,gtf.gz}"
+  - longest_transcript_fai:
+      type: file
+      description: list of longest transcript IDs per gene and their lengths
+      pattern: "*.{fai}"
+  - longest_transcript_gtf:
+      type: file
+      description: minimal gtf with only the longest transcript per gene in transcriptome coordinates
+      pattern: "*.{gtf,gtf.gz}"
 output:
   - meta:
       type: map
@@ -86,5 +150,24 @@ output:
   - seg_resolved_gtf_genic:
       type: file
       description: icount segmented gtf file with unannotated regons resolved with genic other
+  - regions_gtf:
+      type: file
+      description: icount regions gtf file
+  - regions_filt_gtf:
+      type: file
+      description: icount regions gtf file based on the filtered gtf file
+  - regions_resolved_gtf:
+      type: file
+      description: icount regions gtf file with unannotated regons resolved
+  - regions_resolved_gtf_genic:
+      type: file
+      description: icount regions gtf file with unannotated regons resolved with genic other
+  - longest_transcript_fai:
+      type: file
+      description: list of longest transcript IDs per gene and their lengths
+  - longest_transcript_gtf:
+      type: file
+      description: minimal gtf with only the longest transcript per gene in transcriptome coordinates
 authors:
   - "@chris-cheshire"
+  - "@charlotteanne"

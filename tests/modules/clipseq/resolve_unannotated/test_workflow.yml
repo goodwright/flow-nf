@@ -5,7 +5,7 @@
     - "clipseq"
     - "clipseq/resolve_unannotated"
   files:
-    - path: "output/clipseq/gencode.resolved.gtf"
+    - path: "output/clipseq/gencode_genicOtherfalse.resolved.gtf"
       md5sum: 3d08a44ec46af5039c8ed245b6bbfbc0
 
 - name: "test_clipseq_resolve_unannotated"
@@ -15,5 +15,5 @@
     - "clipseq"
     - "clipseq/resolve_unannotated"
   files:
-    - path: "output/clipseq/gencode.resolved.gtf"
+    - path: "output/clipseq/gencode_genicOthertrue.resolved.gtf"
       md5sum: 3ffabaa735adfee977b03b4d76fe1132

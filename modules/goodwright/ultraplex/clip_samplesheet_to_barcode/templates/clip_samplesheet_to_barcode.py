@@ -50,7 +50,6 @@ def main(process_name, samplesheet, output):
 
 
 if __name__ == "__main__":
-
     # Allows switching between nextflow templating and standalone python running using arguments
     parser = argparse.ArgumentParser()
     parser.add_argument("--process_name", default="!{process_name}")

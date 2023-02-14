@@ -69,7 +69,9 @@ jobs:
           - icount_analyse
           - bam_dedup_stats_samtools_umitools
           # Wrappers
-          - wrappers/ultraplex
+          - wrappers/modules/ultraplex
+          - wrappers/subworkflows/demultiplex
+          - wrappers/subworkflows/prepare_clipseq
     steps:
       - name: Checkout Code
         uses: actions/checkout@v3

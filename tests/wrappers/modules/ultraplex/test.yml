@@ -2,4 +2,5 @@
   command: nextflow run ./wrappers/modules/ultraplex/ultraplex.nf -c ./tests/config/nextflow.config --reads ./tests/data/ultraplex/multiplexed.fastq.gz --barcodes ./tests/data/ultraplex/barcodes.csv
   tags:
     - "wrappers"
-    - "wrappers/ultraplex"
+    - "wrappers/modules"
+    - "wrappers/modules/ultraplex"
