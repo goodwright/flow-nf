@@ -9,23 +9,41 @@ workflow  {
 
     star_index                      = params.star_index ? file(params.star_index, checkIfExists: true) : null
     bowtie2_index                   = params.bowtie2_index ? file(params.bowtie2_index, checkIfExists: true) : null
-    fasta_fai                       = params.fasta_fai ? file(params.fasta_fai, checkIfExists: true) : null
-    filtered_gtf                    = params.filtered_gtf ? file(params.filtered_gtf, checkIfExists: true) : null
-    chrom_sizes                     = params.chrom_sizes ? file(params.chrom_sizes, checkIfExists: true) : null
-    smrna_fasta_fai                 = params.smrna_fasta_fai ? file(params.smrna_fasta_fai, checkIfExists: true) : null
-    smrna_chrom_sizes               = params.smrna_chrom_sizes ? file(params.smrna_chrom_sizes, checkIfExists: true) : null
-    longest_transcript              = params.longest_transcript ? file(params.longest_transcript, checkIfExists: true) : null
-    longest_transcript_fai          = params.longest_transcript_fai ? file(params.longest_transcript_fai, checkIfExists: true) : null
-    longest_transcript_gtf          = params.longest_transcript_gtf ? file(params.longest_transcript_gtf, checkIfExists: true) : null
-    seg_gtf                         = params.seg_gtf ? file(params.seg_gtf, checkIfExists: true) : null
-    seg_filt_gtf                    = params.seg_filt_gtf ? file(params.seg_filt_gtf, checkIfExists: true) : null
-    seg_resolved_gtf                = params.seg_resolved_gtf ? file(params.seg_resolved_gtf, checkIfExists: true) : null
-    seg_resolved_gtf_genic          = params.seg_resolved_gtf_genic ? file(params.seg_resolved_gtf_genic, checkIfExists: true) : null
-    regions_gtf                     = params.regions_gtf ? file(params.regions_gtf, checkIfExists: true) : null
-    regions_filt_gtf                = params.regions_filt_gtf ? file(params.regions_filt_gtf, checkIfExists: true) : null
-    regions_resolved_gtf            = params.regions_resolved_gtf ? file(regions_resolved_gtf, checkIfExists: true) : null
-    regions_resolved_gtf_genic      = params.regions_resolved_gtf_genic ? file(params.regions_resolved_gtf_genic, checkIfExists: true) : null
 
+    ch_fasta_fai                  = []
+    ch_filtered_gtf               = []
+    ch_chrom_sizes                = []
+    ch_smrna_fasta_fai            = []
+    ch_smrna_chrom_sizes          = []
+    ch_longest_transcript         = []
+    ch_seg_gtf                    = []
+    ch_seg_filt_gtf               = []
+    ch_seg_resolved_gtf           = []
+    ch_seg_resolved_gtf_genic     = []
+    ch_regions_gtf                = []
+    ch_regions_filt_gtf           = []
+    ch_regions_resolved_gtf       = []
+    ch_regions_resolved_gtf_genic = []
+    ch_longest_transcript_fai     = []
+    ch_longest_transcript_gtf     = []
+
+    if(params.fasta_fai) { fasta_fai = Channel.of([[:],file(params.fasta_fai, checkIfExists: true)]) } 
+    if(params.filtered_gtf) { filtered_gtf = Channel.of([[:],file(params.filtered_gtf, checkIfExists: true)]) }
+    if(params.chrom_sizes) { chrom_sizes = Channel.of([[:],file(params.chrom_sizes, checkIfExists: true)]) }
+    if(params.smrna_fasta_fai) { smrna_fasta_fai = Channel.of([[:],file(params.smrna_fasta_fai, checkIfExists: true)]) }
+    if(params.smrna_chrom_sizes) { smrna_chrom_sizes = Channel.of([[:],file(params.smrna_chrom_sizes, checkIfExists: true)]) }
+    if(params.longest_transcript) { longest_transcript = Channel.of([[:],file(params.longest_transcript, checkIfExists: true)]) }
+    if(params.longest_transcript_fai) { longest_transcript_fai = Channel.of([[:],file(params.longest_transcript_fai, checkIfExists: true)]) }
+    if(params.longest_transcript_gtf) { longest_transcript_gtf = Channel.of([[:],file(params.longest_transcript_gtf, checkIfExists: true)]) }
+    if(params.seg_gtf) { seg_gtf = Channel.of([[:],file(params.seg_gtf, checkIfExists: true)]) }
+    if(params.seg_filt_gtf) { seg_filt_gtf = Channel.of([[:],file(params.seg_filt_gtf, checkIfExists: true)]) }
+    if(params.seg_resolved_gtf) { seg_resolved_gtf = file(params.seg_resolved_gtf, checkIfExists: true) }
+    if(params.seg_resolved_gtf_genic) { seg_resolved_gtf_genic= Channel.of([[:],file(params.seg_resolved_gtf_genic, checkIfExists: true)]) }
+    if(params.regions_gtf) { regions_gtf = Channel.of([[:],file(params.regions_gtf, checkIfExists: true)]) }
+    if(params.regions_filt_gtf) { regions_filt_gtf = Channel.of([[:],file(params.regions_filt_gtf, checkIfExists: true)]) }
+    if(params.regions_resolved_gtf) { regions_resolved_gtf = file(params.regions_resolved_gtf, checkIfExists: true) }
+    if(params.regions_resolved_gtf_genic) { regions_resolved_gtf_genic = Channel.of([[:],file(params.regions_resolved_gtf_genic, checkIfExists: true)]) }
+   
     PREPARE_CLIPSEQ (
         fasta,
         smrna_fasta,
