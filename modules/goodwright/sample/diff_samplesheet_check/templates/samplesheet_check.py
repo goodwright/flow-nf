@@ -96,7 +96,6 @@ def check_samplesheet(process_name, samplesheet, counts, count_sep, output):
     count_dict = {}
 
     with open(samplesheet, "r") as fin:
-
         # Check header
         header = [x.strip('"') for x in fin.readline().strip().split(",")]
         ACTUAL_HEADER_LEN = len(header)
@@ -220,7 +219,6 @@ def check_samplesheet(process_name, samplesheet, counts, count_sep, output):
 
 
 if __name__ == "__main__":
-
     # Allows switching between nextflow templating and standalone python running using arguments
     parser = argparse.ArgumentParser()
     parser.add_argument("--process_name", default="!{process_name}")

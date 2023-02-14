@@ -35,9 +35,7 @@ def main(process_name):
     smrna = dict((key, []) for key in ["exp", "input_reads", "smrna_reads"])
 
     for bowtie_log in bowtie_logs:
-
         with open(bowtie_log, "r") as logfile:
-
             exp = re.sub(".out", "", os.path.basename(bowtie_log))
 
             lines = logfile.readlines()
@@ -58,9 +56,7 @@ def main(process_name):
     genome = dict((key, []) for key in ["exp", "genome_reads", "unmapped_reads"])
 
     for star_log in star_logs:
-
         with open(star_log, "r") as logfile:
-
             exp = re.sub(".Log.final.out", "", os.path.basename(star_log))
 
             lines = logfile.readlines()
@@ -99,9 +95,7 @@ def main(process_name):
     dedup = dict((key, []) for key in ["exp", "input_reads", "output_reads", "mean_umis", "ratio"])
 
     for dedup_log in dedup_logs:
-
         with open(dedup_log, "r") as logfile:
-
             exp = re.sub(".log", "", os.path.basename(dedup_log))
 
             lines = logfile.readlines()
@@ -158,7 +152,6 @@ def main(process_name):
     xlinks = dict((key, []) for key in ["exp", "total_xlinks", "total_xlinksites", "ratio"])
 
     for xlinks_file in xlinks_files:
-
         xlinks_df = read_bed(xlinks_file)
 
         exp = re.sub(".bed", "", os.path.basename(xlinks_file))
@@ -190,7 +183,6 @@ def main(process_name):
     peakcallers = ["icount", "paraclu", "clippy"]
 
     def get_peaks_metrics(peakcaller):
-
         peak_files = sorted([peakcaller + "/" + f for f in os.listdir(peakcaller) if f.endswith(".bed")])
 
         peaks = dict(
@@ -212,7 +204,6 @@ def main(process_name):
         )
 
         for peak_file in peak_files:
-
             peaks_df = read_bed(peak_file)
 
             if peakcaller == "icount":
@@ -298,7 +289,6 @@ def main(process_name):
 
 
 if __name__ == "__main__":
-
     # Allows switching between nextflow templating and standalone python running using arguments
     parser = argparse.ArgumentParser()
     parser.add_argument("--process_name", default="!{process_name}")
