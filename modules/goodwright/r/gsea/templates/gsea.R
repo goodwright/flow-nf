@@ -74,9 +74,17 @@ opt <- list(
     min_gset_size = "!{min_gset_size}", # Minimal size of each gene set for analysis. Default should be 10
     max_gset_size = "!{max_gset_size}", #  Maximal size. Default should be 500.
     p_adjust_method = "!{p_adjust_method}", # choose from “holm”, “hochberg”, “hommel”, “bonferroni”, “BH”, “BY”, “fdr”, “none”
+    pathway_count = "!{pathway_count}", # How many pathways to show on the plots
+    stats_metric = "!{stats_metric}", # Stats metric for the plots - c("p.adjust", "pvalue", "qvalue")
+
 
     # KEGG params
-    kegg_cat = "!{kegg_cat}" # “pathway”,“module”, “enzyme”, “disease” (human only), “drug” (human only) or “network” (human only)
+    kegg_cat = "!{kegg_cat}", # “pathway”,“module”, “enzyme”, “disease” (human only), “drug” (human only) or “network” (human only)
+
+    # General Plotting params
+    plot_width = 1800,
+    plot_height = 1200,
+    plot_res = 300
 )
 opt_types <- lapply(opt, class)
 
@@ -138,6 +146,8 @@ if (startsWith(opt$min_gset_size, "!")) { opt$min_gset_size <- 10 }
 if (startsWith(opt$max_gset_size, "!")) { opt$max_gset_size <- 500 }
 if (startsWith(opt$gsea_p_cutoff, "!")) { opt$gsea_p_cutoff <- 0.05 }
 if (startsWith(opt$gsea_q_cutoff, "!")) { opt$gsea_q_cutoff <- 0.05 }
+if (startsWith(opt$pathway_count, "!")) { opt$pathway_count <- 10 }
+if (startsWith(opt$stats_metric, "!")) { opt$stats_metric <- "p.adjust" }
 
 print(opt)
 
@@ -149,6 +159,7 @@ print(opt)
 
 library(geneset)
 library(genekitr)
+# library(patchwork)
 
 ################################################
 ################################################
@@ -189,6 +200,16 @@ gse <- genGSEA(
     q_cutoff=opt$gsea_q_cutoff
 )
 
+ora <- genORA(
+    results$gene_id,
+    geneset=gs,
+    padj_method=opt$p_adjust_method,
+    min_gset_size=opt$min_gset_size,
+    max_gset_size=opt$max_gset_size,
+    p_cutoff=opt$gsea_p_cutoff,
+    q_cutoff=opt$gsea_q_cutoff
+)
+
 ################################################
 ################################################
 ## Output Data                                ##
@@ -200,11 +221,82 @@ genekitr::expoSheet(data_list = gse,
                     filename = paste(opt$prefix, ".genekitr_gsea_result.xlsx"),
                     dir = "./")
 
+genekitr::expoSheet(data_list = ora,
+                    data_name = names(gse),
+                    filename = paste(opt$prefix, ".genekitr_ora_result.xlsx"),
+                    dir = "./")
+
 ################################################
 ################################################
 ## Output Plots                               ##
 ################################################
 ################################################
+
+gse$gsea_df$Hs_MF_ID <- gse$gsea_df$Description
+
+# Classic pathway plot - TODO non-functional
+# png(
+#     file = paste(opt$prefix, '.gsea.pathway.png'),
+#     width = opt$plot_width,
+#     height = opt$plot_height,
+#     res = opt$plot_res,
+#     pointsize = opt$plot_point_size
+# )
+# plotGSEA(gse, plot_type = "classic")
+# dev.off()
+
+# Volcano plot
+png(
+    file = paste(opt$prefix, '.gsea.volcano.png'),
+    width = opt$plot_width,
+    height = opt$plot_height,
+    res = opt$plot_res
+)
+plotGSEA(gse, plot_type = "volcano", show_pathway = 5, stats_metric = opt$stats_metric)
+dev.off()
+
+# Multi-pathway plot
+png(
+    file = paste(opt$prefix, '.gsea.mpathway.png'),
+    width = opt$plot_width,
+    height = opt$plot_height,
+    res = opt$plot_res
+)
+plotGSEA(gse, plot_type = "fgsea", show_pathway = 5, stats_metric = opt$stats_metric)
+dev.off()
+
+# Ridge plot
+png(
+    file = paste(opt$prefix, '.gsea.ridge.png'),
+    width = opt$plot_width,
+    height = opt$plot_height,
+    res = opt$plot_res
+)
+plotGSEA(gse, plot_type = "ridge", show_pathway = opt$pathway_count, stats_metric = opt$stats_metric)
+dev.off()
+
+# Bar plot
+png(
+    file = paste(opt$prefix, '.gsea.bar.png'),
+    width = opt$plot_width,
+    height = opt$plot_height,
+    res = opt$plot_res
+)
+plotGSEA(gse, plot_type = "bar", show_pathway = opt$pathway_count, stats_metric = opt$stats_metric)
+dev.off()
+
+# Dot
+png(
+    file = paste(opt$prefix, '.gsea.dot.png'),
+    width = opt$plot_width,
+    height = opt$plot_height,
+    res = opt$plot_res
+)
+plotEnrich(gse,
+  plot_type = "dot",
+  stats_metric = opt$stats_metric
+)
+dev.off()
 
 ################################################
 ################################################
