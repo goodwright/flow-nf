@@ -3,6 +3,7 @@
         "genome_options": {
             "name": "File options",
             "description": "The files needed for demultiplexing.",
+            "takes_lane": true,
             "properties": {
                 "samplesheet": {
                     "name": "Annotation",
