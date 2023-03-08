@@ -76,10 +76,10 @@ opt <- list(
     p_adjust_method = "!{p_adjust_method}", # choose from “holm”, “hochberg”, “hommel”, “bonferroni”, “BH”, “BY”, “fdr”, “none”
     pathway_count = "!{pathway_count}", # How many pathways to show on the plots
     stats_metric = "!{stats_metric}", # Stats metric for the plots - c("p.adjust", "pvalue", "qvalue")
-
-
-    # KEGG params
-    kegg_cat = "!{kegg_cat}", # “pathway”,“module”, “enzyme”, “disease” (human only), “drug” (human only) or “network” (human only)
+    term_metric = "!{term_metric}", # Term metric for the ora plots - c("FoldEnrich", "GeneRatio", "Count", "RichFactor")
+    scale_ratio = "!{scale_ratio}",
+    main_text_size = "!{main_text_size}",
+    legend_text_size = "!{legend_text_size}",
 
     # General Plotting params
     plot_width = 1800,
@@ -148,6 +148,10 @@ if (startsWith(opt$gsea_p_cutoff, "!")) { opt$gsea_p_cutoff <- 0.05 }
 if (startsWith(opt$gsea_q_cutoff, "!")) { opt$gsea_q_cutoff <- 0.05 }
 if (startsWith(opt$pathway_count, "!")) { opt$pathway_count <- 10 }
 if (startsWith(opt$stats_metric, "!")) { opt$stats_metric <- "p.adjust" }
+if (startsWith(opt$term_metric, "!")) { opt$term_metric <- "FoldEnrich" }
+if (startsWith(opt$scale_ratio, "!")) { opt$scale_ratio <- 0.25 }
+if (startsWith(opt$main_text_size, "!")) { opt$main_text_size <- 5 }
+if (startsWith(opt$legend_text_size, "!")) { opt$legend_text_size <- 8 }
 
 print(opt)
 
@@ -159,7 +163,9 @@ print(opt)
 
 library(geneset)
 library(genekitr)
-# library(patchwork)
+library(patchwork)
+library(igraph)
+library(ggraph)
 
 ################################################
 ################################################
@@ -183,6 +189,12 @@ results <- results[order(results$log2FoldChange, decreasing = TRUE),]
 gene_list <- results$log2FoldChange
 names(gene_list) <- results$gene_id
 
+# Get up genes
+results_up <- subset(results, log2FoldChange >= 0)
+
+#Get down genes
+results_down <- subset(results, log2FoldChange < 0)
+
 ################################################
 ################################################
 ## Generate genekitr                          ##
@@ -190,6 +202,7 @@ names(gene_list) <- results$gene_id
 ################################################
 
 gs <- geneset::getGO(org=opt$organism, ont=opt$ontology)
+
 gse <- genGSEA(
     genelist=gene_list,
     geneset=gs,
@@ -210,6 +223,30 @@ ora <- genORA(
     q_cutoff=opt$gsea_q_cutoff
 )
 
+ora_up <- genORA(
+    results_up$gene_id,
+    geneset=gs,
+    padj_method=opt$p_adjust_method,
+    min_gset_size=opt$min_gset_size,
+    max_gset_size=opt$max_gset_size,
+    p_cutoff=opt$gsea_p_cutoff,
+    q_cutoff=opt$gsea_q_cutoff
+)
+
+ora_down <- genORA(
+    results_down$gene_id,
+    geneset=gs,
+    padj_method=opt$p_adjust_method,
+    min_gset_size=opt$min_gset_size,
+    max_gset_size=opt$max_gset_size,
+    p_cutoff=opt$gsea_p_cutoff,
+    q_cutoff=opt$gsea_q_cutoff
+)
+
+ora_filt <- head(ora, opt$pathway_count)
+ora_up_filt <- head(ora_up, opt$pathway_count)
+ora_down_filt <- head(ora_down, opt$pathway_count)
+
 ################################################
 ################################################
 ## Output Data                                ##
@@ -222,13 +259,13 @@ genekitr::expoSheet(data_list = gse,
                     dir = "./")
 
 genekitr::expoSheet(data_list = ora,
-                    data_name = names(gse),
+                    data_name = names(ora),
                     filename = paste(opt$prefix, ".genekitr_ora_result.xlsx"),
                     dir = "./")
 
 ################################################
 ################################################
-## Output Plots                               ##
+## Output GSEA Plots                          ##
 ################################################
 ################################################
 
@@ -285,16 +322,155 @@ png(
 plotGSEA(gse, plot_type = "bar", show_pathway = opt$pathway_count, stats_metric = opt$stats_metric)
 dev.off()
 
-# Dot
+################################################
+################################################
+## Output ORA Plots                          ##
+################################################
+################################################
+
+# Bar
 png(
-    file = paste(opt$prefix, '.gsea.dot.png'),
+    file = paste(opt$prefix, '.ora.bar.png'),
     width = opt$plot_width,
     height = opt$plot_height,
     res = opt$plot_res
 )
-plotEnrich(gse,
-  plot_type = "dot",
-  stats_metric = opt$stats_metric
+plotEnrich(ora_filt, plot_type = "bar", stats_metric = opt$stats_metric, term_metric = opt$term_metric)
+dev.off()
+
+# Bar Advanced
+# png(
+#     file = paste(opt$prefix, '.ora.bar_split.png'),
+#     width = opt$plot_width,
+#     height = opt$plot_height,
+#     res = opt$plot_res
+# )
+# plotEnrichAdv(
+#     ora_up_filt, 
+#     ora_down_filt,
+#     plot_type = "two",
+#     term_metric = opt$term_metric,
+#     stats_metric = opt$stats_metric
+# )
+# dev.off()
+
+# Bubble
+png(
+    file = paste(opt$prefix, '.ora.bubble.png'),
+    width = opt$plot_width,
+    height = opt$plot_height,
+    res = opt$plot_res
+)
+plotEnrich(
+    ora_filt,
+    plot_type = "bubble",
+    stats_metric = opt$stats_metric,
+    term_metric = opt$term_metric,
+    scale_ratio = opt$scale_ratio,
+    main_text_size = opt$main_text_size,
+    legend_text_size = opt$legend_text_size
+)
+dev.off()
+
+# Dot
+png(
+    file = paste(opt$prefix, '.ora.dot.png'),
+    width = opt$plot_width,
+    height = opt$plot_height,
+    res = opt$plot_res
+)
+plotEnrich(
+    ora_filt,
+    plot_type = "dot",
+    stats_metric = opt$stats_metric,
+    term_metric = opt$term_metric,
+    scale_ratio = opt$scale_ratio,
+    main_text_size = opt$main_text_size,
+    legend_text_size = opt$legend_text_size
+)
+dev.off()
+
+# Lollipop
+png(
+    file = paste(opt$prefix, '.ora.lollipop.png'),
+    width = opt$plot_width,
+    height = opt$plot_height,
+    res = opt$plot_res
+)
+plotEnrich(
+    ora_filt,
+    plot_type = "lollipop",
+    stats_metric = opt$stats_metric,
+    term_metric = opt$term_metric,
+    scale_ratio = opt$scale_ratio,
+    main_text_size = opt$main_text_size,
+    legend_text_size = opt$legend_text_size
+)
+dev.off()
+
+# Geneheat
+png(
+    file = paste(opt$prefix, '.ora.geneheat.png'),
+    width = opt$plot_width,
+    height = opt$plot_height,
+    res = opt$plot_res
+)
+plotEnrich(
+    ora_filt,
+    plot_type = "geneheat",
+    stats_metric = opt$stats_metric,
+    term_metric = opt$term_metric,
+    scale_ratio = opt$scale_ratio,
+    main_text_size = opt$main_text_size,
+    legend_text_size = opt$legend_text_size
+)
+dev.off()
+
+# Network
+png(
+    file = paste(opt$prefix, '.ora.network.png'),
+    width = opt$plot_width,
+    height = opt$plot_height,
+    res = opt$plot_res
+)
+plotEnrich(
+    ora_filt,
+    plot_type = "network",
+    stats_metric = opt$stats_metric,
+    term_metric = opt$term_metric,
+    scale_ratio = opt$scale_ratio,
+    main_text_size = opt$main_text_size,
+    legend_text_size = opt$legend_text_size
+)
+dev.off()
+
+# Gomap
+png(
+    file = paste(opt$prefix, '.ora.gomap.png'),
+    width = opt$plot_width,
+    height = opt$plot_height,
+    res = opt$plot_res
+)
+plotEnrich(
+    ora_filt,
+    plot_type = "gomap",
+    stats_metric = opt$stats_metric,
+    term_metric = opt$term_metric
+)
+dev.off()
+
+# Goheat
+png(
+    file = paste(opt$prefix, '.ora.goheat.png'),
+    width = opt$plot_width,
+    height = opt$plot_height,
+    res = opt$plot_res
+)
+plotEnrich(
+    ora_filt,
+    plot_type = "goheat",
+    stats_metric = opt$stats_metric,
+    term_metric = opt$term_metric
 )
 dev.off()
 
@@ -304,9 +480,9 @@ dev.off()
 ################################################
 ################################################
 
-# sink(paste(output_prefix, "R_sessionInfo.log", sep = '.'))
-# print(sessionInfo())
-# sink()
+sink(paste(output_prefix, "R_sessionInfo.log", sep = '.'))
+print(sessionInfo())
+sink()
 
 ################################################
 ################################################
@@ -314,16 +490,16 @@ dev.off()
 ################################################
 ################################################
 
-# r.version <- strsplit(version[['version.string']], ' ')[[1]][3]
-# deseq2.version <- as.character(packageVersion('DESeq2'))
+r.version <- strsplit(version[['version.string']], ' ')[[1]][3]
+deseq2.version <- as.character(packageVersion('DESeq2'))
 
-# writeLines(
-#     c(
-#         '"${task.process}":',
-#         paste('    r-base:', r.version),
-#         paste('    bioconductor-deseq2:', deseq2.version)
-#     ),
-# 'versions.yml')
+writeLines(
+    c(
+        '"${task.process}":',
+        paste('    r-base:', r.version),
+        paste('    bioconductor-deseq2:', deseq2.version)
+    ),
+'versions.yml')
 
 ################################################
 ################################################
