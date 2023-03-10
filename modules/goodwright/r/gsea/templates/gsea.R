@@ -240,12 +240,12 @@ ora_down_filt <- head(ora_down, opt$pathway_count)
 
 genekitr::expoSheet(data_list = gse,
                     data_name = names(gse),
-                    filename = paste(opt$prefix, ".genekitr_gsea_result.xlsx"),
+                    filename = paste(opt$prefix, "genekitr_gsea_result.xlsx", sep = '.'),
                     dir = "./")
 
 genekitr::expoSheet(data_list = ora,
                     data_name = names(ora),
-                    filename = paste(opt$prefix, ".genekitr_ora_result.xlsx"),
+                    filename = paste(opt$prefix, "genekitr_ora_result.xlsx", sep = '.'),
                     dir = "./")
 
 ################################################
@@ -269,7 +269,7 @@ gse$gsea_df$Hs_MF_ID <- gse$gsea_df$Description
 
 # Volcano plot
 png(
-    file = paste(opt$prefix, '.gsea.volcano.png'),
+    file = paste(opt$prefix, 'gsea.volcano.png', sep = '.'),
     width = opt$plot_width,
     height = opt$plot_height,
     res = opt$plot_res
@@ -279,7 +279,7 @@ dev.off()
 
 # Multi-pathway plot
 png(
-    file = paste(opt$prefix, '.gsea.mpathway.png'),
+    file = paste(opt$prefix, 'gsea.mpathway.png', sep = '.'),
     width = opt$plot_width,
     height = opt$plot_height,
     res = opt$plot_res
@@ -289,7 +289,7 @@ dev.off()
 
 # Ridge plot
 png(
-    file = paste(opt$prefix, '.gsea.ridge.png'),
+    file = paste(opt$prefix, 'gsea.ridge.png', sep = '.'),
     width = opt$plot_width,
     height = opt$plot_height,
     res = opt$plot_res
@@ -299,7 +299,7 @@ dev.off()
 
 # Bar plot
 png(
-    file = paste(opt$prefix, '.gsea.bar.png'),
+    file = paste(opt$prefix, 'gsea.bar.png', sep = '.'),
     width = opt$plot_width,
     height = opt$plot_height,
     res = opt$plot_res
@@ -315,7 +315,7 @@ dev.off()
 
 # Bar
 png(
-    file = paste(opt$prefix, '.ora.bar.png'),
+    file = paste(opt$prefix, 'ora.bar.png', sep = '.'),
     width = opt$plot_width,
     height = opt$plot_height,
     res = opt$plot_res
@@ -341,7 +341,7 @@ dev.off()
 
 # Bubble
 png(
-    file = paste(opt$prefix, '.ora.bubble.png'),
+    file = paste(opt$prefix, 'ora.bubble.png', sep = '.'),
     width = opt$plot_width,
     height = opt$plot_height,
     res = opt$plot_res
@@ -359,7 +359,7 @@ dev.off()
 
 # Dot
 png(
-    file = paste(opt$prefix, '.ora.dot.png'),
+    file = paste(opt$prefix, 'ora.dot.png', sep = '.'),
     width = opt$plot_width,
     height = opt$plot_height,
     res = opt$plot_res
@@ -377,7 +377,7 @@ dev.off()
 
 # Lollipop
 png(
-    file = paste(opt$prefix, '.ora.lollipop.png'),
+    file = paste(opt$prefix, 'ora.lollipop.png', sep = '.'),
     width = opt$plot_width,
     height = opt$plot_height,
     res = opt$plot_res
@@ -395,7 +395,7 @@ dev.off()
 
 # Geneheat
 png(
-    file = paste(opt$prefix, '.ora.geneheat.png'),
+    file = paste(opt$prefix, 'ora.geneheat.png', sep = '.'),
     width = opt$plot_width,
     height = opt$plot_height,
     res = opt$plot_res
@@ -413,7 +413,7 @@ dev.off()
 
 # Network
 png(
-    file = paste(opt$prefix, '.ora.network.png'),
+    file = paste(opt$prefix, 'ora.network.png', sep = '.'),
     width = opt$plot_width,
     height = opt$plot_height,
     res = opt$plot_res
@@ -431,7 +431,7 @@ dev.off()
 
 # Gomap
 png(
-    file = paste(opt$prefix, '.ora.gomap.png'),
+    file = paste(opt$prefix, 'ora.gomap.png', sep = '.'),
     width = opt$plot_width,
     height = opt$plot_height,
     res = opt$plot_res
@@ -446,7 +446,7 @@ dev.off()
 
 # Goheat
 png(
-    file = paste(opt$prefix, '.ora.goheat.png'),
+    file = paste(opt$prefix, 'ora.goheat.png', sep = '.'),
     width = opt$plot_width,
     height = opt$plot_height,
     res = opt$plot_res
