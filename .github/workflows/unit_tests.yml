@@ -58,6 +58,7 @@ jobs:
           - r/deseq2_plots
           - r/pca_explorer
           - r/volcano_plot
+          - r/gsea
           # Subworkflows
           - parse_fastq_input
           - prepare_genome/prepare_ref

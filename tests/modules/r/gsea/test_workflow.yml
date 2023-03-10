@@ -1,0 +1,13 @@
+- name: "test_r_gsea_basic"
+  command: nextflow run ./tests/modules/r/gsea/main.nf -c ./tests/config/nextflow.config -entry test_basic
+  tags:
+    - "modules"
+    - "r"
+    - "r/gsea"
+
+- name: "test_r_gsea_param"
+  command: nextflow run ./tests/modules/r/gsea/main.nf -c ./tests/config/nextflow.config -entry test_param
+  tags:
+    - "modules"
+    - "r"
+    - "r/gsea"
