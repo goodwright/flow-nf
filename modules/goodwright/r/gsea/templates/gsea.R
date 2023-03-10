@@ -62,24 +62,24 @@ opt <- list(
     prefix = "!{prefix}",                 # Output prefix
 
     # Results params
-    dsq_p_thresh = "!{dsq_p_thresh}", # Filter threshold for the deseq2 results table
+    dsq_p_thresh = 1, # Filter threshold for the deseq2 results table
 
     # General GSEA params
-    gsea_p_cutoff = "!{gsea_p_cutoff}", # numeric of cutoff for both pvalue and adjusted pvalue, default should be 0.05
-    gsea_q_cutoff = "!{gsea_q_cutoff}", # numeric of cutoff for qvalue, default should be 0.15
+    gsea_p_cutoff = 0.05, # numeric of cutoff for both pvalue and adjusted pvalue, default should be 0.05
+    gsea_q_cutoff = 0.05, # numeric of cutoff for qvalue, default should be 0.15
 
     # genekitr params
-    ontology = "!{ontology}", # Biological Processes (BP) | Molecular Functions (MF) | Cellular Components (CC)
-    organism = "!{organism}", # https://genekitr.online/docs/species.html
-    min_gset_size = "!{min_gset_size}", # Minimal size of each gene set for analysis. Default should be 10
-    max_gset_size = "!{max_gset_size}", #  Maximal size. Default should be 500.
-    p_adjust_method = "!{p_adjust_method}", # choose from “holm”, “hochberg”, “hommel”, “bonferroni”, “BH”, “BY”, “fdr”, “none”
-    pathway_count = "!{pathway_count}", # How many pathways to show on the plots
-    stats_metric = "!{stats_metric}", # Stats metric for the plots - c("p.adjust", "pvalue", "qvalue")
-    term_metric = "!{term_metric}", # Term metric for the ora plots - c("FoldEnrich", "GeneRatio", "Count", "RichFactor")
-    scale_ratio = "!{scale_ratio}",
-    main_text_size = "!{main_text_size}",
-    legend_text_size = "!{legend_text_size}",
+    ontology = "mf",            # Biological Processes (BP) | Molecular Functions (MF) | Cellular Components (CC)
+    organism = "!{organism}",   # https://genekitr.online/docs/species.html
+    min_gset_size = 10,         # Minimal size of each gene set for analysis. Default should be 10
+    max_gset_size = 500,        # Maximal size. Default should be 500.
+    p_adjust_method = "BH",     # Choose from “holm”, “hochberg”, “hommel”, “bonferroni”, “BH”, “BY”, “fdr”, “none”
+    pathway_count = 10,         # How many pathways to show on the plots
+    stats_metric = "p.adjust",  # Stats metric for the plots - c("p.adjust", "pvalue", "qvalue")
+    term_metric = "FoldEnrich", # Term metric for the ora plots - c("FoldEnrich", "GeneRatio", "Count", "RichFactor")
+    scale_ratio = 0.25,         # Plot scale ratio
+    main_text_size = 5,         # Plot text size
+    legend_text_size = 8,       # Plot legend size
 
     # General Plotting params
     plot_width = 1800,
@@ -137,21 +137,6 @@ for (file_input in c('deseq2_results')){
         stop(paste0('Value of ', file_input, ': ', opt[[file_input]], ' is not a valid file'))
     }
 }
-
-# Convert params to defaults if required
-if (startsWith(opt$dsq_p_thresh, "!")) { opt$dsq_p_thresh <- 1 }
-if (startsWith(opt$ontology, "!")) { opt$ontology <- "mf" }
-if (startsWith(opt$p_adjust_method, "!")) { opt$p_adjust_method <- "BH" }
-if (startsWith(opt$min_gset_size, "!")) { opt$min_gset_size <- 10 }
-if (startsWith(opt$max_gset_size, "!")) { opt$max_gset_size <- 500 }
-if (startsWith(opt$gsea_p_cutoff, "!")) { opt$gsea_p_cutoff <- 0.05 }
-if (startsWith(opt$gsea_q_cutoff, "!")) { opt$gsea_q_cutoff <- 0.05 }
-if (startsWith(opt$pathway_count, "!")) { opt$pathway_count <- 10 }
-if (startsWith(opt$stats_metric, "!")) { opt$stats_metric <- "p.adjust" }
-if (startsWith(opt$term_metric, "!")) { opt$term_metric <- "FoldEnrich" }
-if (startsWith(opt$scale_ratio, "!")) { opt$scale_ratio <- 0.25 }
-if (startsWith(opt$main_text_size, "!")) { opt$main_text_size <- 5 }
-if (startsWith(opt$legend_text_size, "!")) { opt$legend_text_size <- 8 }
 
 print(opt)
 
@@ -480,7 +465,7 @@ dev.off()
 ################################################
 ################################################
 
-sink(paste(output_prefix, "R_sessionInfo.log", sep = '.'))
+sink(paste(opt$prefix, "R_sessionInfo.log", sep = '.'))
 print(sessionInfo())
 sink()
 
@@ -491,13 +476,13 @@ sink()
 ################################################
 
 r.version <- strsplit(version[['version.string']], ' ')[[1]][3]
-deseq2.version <- as.character(packageVersion('DESeq2'))
+genekitr.version <- as.character(packageVersion('genekitr'))
 
 writeLines(
     c(
         '"${task.process}":',
         paste('    r-base:', r.version),
-        paste('    bioconductor-deseq2:', deseq2.version)
+        paste('    genekitr:', genekitr.version)
     ),
 'versions.yml')
 
