@@ -72,8 +72,13 @@ RUN mamba install -y --name packages -c conda-forge r-treemap=2.*
 
 # Install bioconductor packages from mamba
 RUN mamba install -y --name packages -c bioconda bioconductor-clusterprofiler=4.6.*
-RUN mamba install -y --name packages -c bioconda bioconductor-org.hs.eg.db=3.16.*
 RUN mamba install -y --name packages -c bioconda bioconductor-rrvgo=1.10.*
+RUN mamba install -y --name packages -c bioconda bioconductor-org.hs.eg.db=3.16.*
+RUN mamba install -y --name packages -c bioconda bioconductor-org.mm.eg.db=3.16.*
+RUN mamba install -y --name packages -c bioconda bioconductor-org.rn.eg.db=3.16.*
+RUN mamba install -y --name packages -c bioconda bioconductor-org.dm.eg.db=3.16.*
+RUN mamba install -y --name packages -c bioconda bioconductor-org.dr.eg.db=3.16.*
+RUN mamba install -y --name packages -c bioconda bioconductor-org.gg.eg.db=3.16.*
 
 # Install r packages
 RUN R -e 'install.packages("genekitr", repos="https://cran.ma.imperial.ac.uk/")'
