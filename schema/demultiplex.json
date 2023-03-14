@@ -17,7 +17,6 @@
                     "type": "file",
                     "pattern": "fq\\.gz$|fastq\\.gz$|fq$|fastq$",
                     "required": true,
-                    "genome_file": "gtf",
                     "description": "A multiplexed FASTQ file to demultiplex."
                 }
             }
