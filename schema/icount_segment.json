@@ -25,13 +25,13 @@
         {
             "name": "Segmentation GTF",
             "description": "In transcript-wide partitioning, each transcript is split into intervals. Intervals must span the whole transcript, but should not intersect with each other inside transcript. However, higher hierarchy levels: transcripts and genes can still intersect each other. This file contains these 'segments'.",
-            "filetype": "segmentation.gtf",
+            "filetype": "gtf",
             "process": "ICOUNT_SEGMENT"
         },
         {
             "name": "Regions GTF",
             "description": "In genome-wide partition, whole genome is split into intervals. Such intervals must span the whole genome, and should also not intersect with each other. Intervals in genome-wise partition are called regions and the file is also called regions.",
-            "filetype": "regions.gtf.gz",
+            "filetype": "gtf.gz",
             "process": "ICOUNT_SEGMENT"
         }
     ]
