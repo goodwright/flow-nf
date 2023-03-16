@@ -7,8 +7,8 @@
   files:
     - path: "output/r/condition-A-B.dds.rld.rds"
     - path: "output/r/condition-A-B.deseq2.results.tsv"
-    - path: "output/r/condition-A-B.deseq2.sizefactors.tsv"
-    - path: "output/r/condition-A-B.normalised_counts.tsv"
+    - path: "output/r/deseq2.sizefactors.tsv"
+    - path: "output/r/normalised_counts.tsv"
 
 - name: "test_r_deseq2_multi_factor"
   command: nextflow run ./tests/modules/r/deseq2/main.nf -c ./tests/config/nextflow.config -entry test_multi_factor
@@ -19,8 +19,8 @@
   files:
     - path: "output/r/condition-A-B-method.dds.rld.rds"
     - path: "output/r/condition-A-B-method.deseq2.results.tsv"
-    - path: "output/r/condition-A-B-method.deseq2.sizefactors.tsv"
-    - path: "output/r/condition-A-B-method.normalised_counts.tsv"
+    - path: "output/r/deseq2.sizefactors.tsv"
+    - path: "output/r/normalised_counts.tsv"
 
 - name: "test_r_deseq2_config"
   command: nextflow run ./tests/modules/r/deseq2/main.nf -c ./tests/config/nextflow.config -c ./tests/modules/r/deseq2/nextflow.config -entry test_multi_factor_with_config
@@ -31,5 +31,5 @@
   files:
     - path: "output/r/condition-A-B-method.dds.rld.rds"
     - path: "output/r/condition-A-B-method.deseq2.results.tsv"
-    - path: "output/r/condition-A-B-method.deseq2.sizefactors.tsv"
-    - path: "output/r/condition-A-B-method.normalised_counts.tsv"
+    - path: "output/r/deseq2.sizefactors.tsv"
+    - path: "output/r/normalised_counts.tsv"
