@@ -356,17 +356,17 @@ sf_df = data.frame(sample = names(sizeFactors(dds)), data.frame(sizeFactors(dds)
 colnames(sf_df) <- c('sample', 'sizeFactor')
 write.table(
     sf_df,
-    file = paste(output_prefix, 'deseq2.sizefactors.tsv', sep = '.'),
+    file = 'deseq2.sizefactors.tsv',
     col.names = TRUE,
     row.names = FALSE,
     sep = '\t',
     quote = FALSE
 )
-
+ 
 # Write specified matrices
 write.table(
     data.frame(gene_id=rownames(counts(dds)), counts(dds, normalized = TRUE)),
-    file = paste(output_prefix, 'normalised_counts.tsv', sep = '.'),
+    file = 'normalised_counts.tsv',
     col.names = TRUE,
     row.names = FALSE,
     sep = '\t',
