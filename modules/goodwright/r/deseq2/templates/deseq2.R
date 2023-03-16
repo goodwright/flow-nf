@@ -362,7 +362,7 @@ write.table(
     sep = '\t',
     quote = FALSE
 )
- 
+
 # Write specified matrices
 write.table(
     data.frame(gene_id=rownames(counts(dds)), counts(dds, normalized = TRUE)),
