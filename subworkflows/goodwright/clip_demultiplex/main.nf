@@ -4,7 +4,7 @@
 //
 
 include { XLSX_TO_CSV                 } from '../../../modules/goodwright/xlsx_to_csv/main'
-include { SAMPLESHEET_TO_BARCODE } from '../../../modules/goodwright/ultraplex/samplesheet_to_barcode/main'
+include { SAMPLESHEET_TO_BARCODE      } from '../../../modules/goodwright/ultraplex/samplesheet_to_barcode/main'
 include { ULTRAPLEX                   } from '../../../modules/goodwright/ultraplex/ultraplex/main'
 
 workflow CLIP_DEMULTIPLEX {
@@ -54,8 +54,8 @@ workflow CLIP_DEMULTIPLEX {
         .combine (ULTRAPLEX.out.fastq)
         .map { row ->
             def match = []
-            row[2].each { file -> if (file.name.contains(row[0].id)) { match << file } }
-            [ row[0].id, row[0], match ]
+            row[2].each { file -> if (file.name.contains(row[0]['Sample Name'])) { match << file } }
+            [ row[0]['Sample Name'], row[0], match ]
         }
         .unique()
     //ch_meta_fastq | view
