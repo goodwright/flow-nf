@@ -23,9 +23,9 @@ def main(process_name, samplesheet, output):
     df_samplesheet = pd.read_csv(samplesheet, dtype=str, keep_default_na=False)
 
     # Init for loop
-    five_prime = df_samplesheet["5prime_barcode"]
-    three_prime = df_samplesheet["3prime_barcode"]
-    sample_names = df_samplesheet["id"]
+    five_prime = df_samplesheet["5' Barcode Sequence"]
+    three_prime = df_samplesheet["3' Barcode Sequence"]
+    sample_names = df_samplesheet["Sample Name"]
     barcode_dict = {}
 
     # Create barcode dict
