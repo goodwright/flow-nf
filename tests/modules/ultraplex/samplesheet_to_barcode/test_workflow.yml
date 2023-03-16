@@ -5,7 +5,7 @@
     - "ultraplex"
     - "ultraplex/samplesheettobardcode"
   files:
-    - path: "output/clip/barcodes.csv"
+    - path: "output/samplesheet/barcodes.csv"
       contains:
         - "NNNGGCGNN:Sample1"
         - "NNNTTGTNN:Sample2"
