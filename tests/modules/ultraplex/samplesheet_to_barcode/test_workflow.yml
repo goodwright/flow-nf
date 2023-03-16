@@ -1,5 +1,5 @@
 - name: "test_ultraplex_samplesheettobardcode_twosamples"
-  command: nextflow run ./tests/modules/ultraplex/clip_samplesheet_to_barcode -entry test_samplesheettobardcode_two_samples -c ./tests/config/nextflow.config
+  command: nextflow run ./tests/modules/ultraplex/samplesheet_to_barcode -entry test_samplesheettobardcode_two_samples -c ./tests/config/nextflow.config
   tags:
     - "modules"
     - "ultraplex"

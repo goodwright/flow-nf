@@ -159,7 +159,7 @@
                             "modules"
                         ]
                     },
-                    "ultraplex/clip_samplesheet_to_barcode": {
+                    "ultraplex/samplesheet_to_barcode": {
                         "branch": "master",
                         "git_sha": "4146728d56beafca300efba689fead1d838cfae0",
                         "installed_by": [

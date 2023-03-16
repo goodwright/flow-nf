@@ -68,7 +68,7 @@ jobs:
           nf-core modules lint dump_software_versions
           nf-core modules lint sample/base_samplesheet_check
           nf-core modules lint sample/diff_samplesheet_check
-          nf-core modules lint ultraplex/clip_samplesheet_to_barcode
+          nf-core modules lint ultraplex/samplesheet_to_barcode
           nf-core modules lint ultraplex/ultraplex
           nf-core modules lint xlsx_to_csv
           nf-core modules lint clipseq/filter_gtf

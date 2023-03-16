@@ -1,4 +1,4 @@
-name: clip_samplesheet_to_barcode
+name: samplesheet_to_barcode
 description: |
   Converts CSV describing samples and creates a barcodes spreadsheet that can be
   read by Ultraplex.

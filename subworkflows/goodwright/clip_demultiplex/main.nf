@@ -4,7 +4,7 @@
 //
 
 include { XLSX_TO_CSV                 } from '../../../modules/goodwright/xlsx_to_csv/main'
-include { CLIP_SAMPLESHEET_TO_BARCODE } from '../../../modules/goodwright/ultraplex/clip_samplesheet_to_barcode/main'
+include { SAMPLESHEET_TO_BARCODE } from '../../../modules/goodwright/ultraplex/samplesheet_to_barcode/main'
 include { ULTRAPLEX                   } from '../../../modules/goodwright/ultraplex/ultraplex/main'
 
 workflow CLIP_DEMULTIPLEX {
@@ -31,17 +31,17 @@ workflow CLIP_DEMULTIPLEX {
     /*
     * MODULE: Convert the clip samplesheet into ultraplex input
     */
-    CLIP_SAMPLESHEET_TO_BARCODE (
+    SAMPLESHEET_TO_BARCODE (
         ch_csv
     )
-    ch_versions = ch_versions.mix(CLIP_SAMPLESHEET_TO_BARCODE.out.versions)
+    ch_versions = ch_versions.mix(SAMPLESHEET_TO_BARCODE.out.versions)
 
     /*
     * MODULE: Demultiplex the fastq file
     */
     ULTRAPLEX (
         [ [ id:"fastq" ], fastq ],
-        CLIP_SAMPLESHEET_TO_BARCODE.out.csv
+        SAMPLESHEET_TO_BARCODE.out.csv
     )
     ch_versions = ch_versions.mix(ULTRAPLEX.out.versions)
     //ULTRAPLEX.out.fastq | view
