@@ -7,3 +7,13 @@
   files:
     - path: "output/ultraplex/ultraplex_demux_Sample1.fastq.gz"
     - path: "output/ultraplex/ultraplex_demux_Sample2.fastq.gz"
+
+- name: "test_ultraplex_ultraplex_adaptor"
+  command: nextflow run ./tests/modules/ultraplex/ultraplex -entry test_ultraplex_adaptor -c ./tests/config/nextflow.config
+  tags:
+    - "modules"
+    - "ultraplex"
+    - "ultraplex/ultraplex"
+  files:
+    - path: "output/ultraplex/ultraplex_demux_Sample1.fastq.gz"
+    - path: "output/ultraplex/ultraplex_demux_Sample2.fastq.gz"

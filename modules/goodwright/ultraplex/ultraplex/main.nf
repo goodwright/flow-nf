@@ -10,6 +10,7 @@ process ULTRAPLEX {
     input:
     tuple val(meta), path(reads)
     path(barcode_file)
+    val(adapter_seq)
 
     output:
     tuple val(meta), path("*[!no_match].fastq.gz"),              emit: fastq
@@ -24,18 +25,24 @@ process ULTRAPLEX {
     def VERSION = "1.2.5" // WARN: Version information not provided by tool on CLI. Please update this string when bumping container versions.
     def args = task.ext.args ?: ''
     prefix   = task.ext.prefix ?: "${meta.id}"
+
+    def adapter_seq_command = ''
+    if(adapter_seq) {
+        adapter_seq_command = "--adapter ${adapter_seq}"
+    }
+
     read_list = reads.collect{it.toString()}
     if (read_list.size > 1){
         ultraplex_command = """ultraplex \\
         --inputfastq ${read_list[0]} \\
         --input_2 ${read_list[1]} \\
         --barcodes $barcode_file \\
-        --threads $task.cpus $args"""
+        --threads $task.cpus $args $adapter_seq_command"""
     } else {
         ultraplex_command = """ultraplex \\
         --inputfastq ${read_list[0]} \\
         --barcodes $barcode_file \\
-        --threads $task.cpus $args"""
+        --threads $task.cpus $args $adapter_seq_command"""
     }
 
     """
