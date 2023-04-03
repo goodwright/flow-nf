@@ -37,6 +37,13 @@ workflow CLIP_DEMULTIPLEX {
     ch_versions = ch_versions.mix(CLIP_SAMPLESHEET_TO_BARCODE.out.versions)
 
     /*
+    * CHANNEL: Pull out params for ultraplex
+    */
+    SAMPLESHEET_CHECK.out.csv
+        .splitCsv ( header:true, sep:"," )
+        .map { get_samplesheet_paths(it) }
+
+    /*
     * MODULE: Demultiplex the fastq file
     */
     ULTRAPLEX (
