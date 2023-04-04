@@ -242,10 +242,11 @@ def check_samplesheet(process_name, samplesheet, counts, count_sep, output, is_m
                     suffix = count_sample.split('_')[-1]
                     if sample in count_sample:
                         data = sample_dict[sample]
-                        data[0] = count_sample
-                        for idx, item in enumerate(data[1:]):
-                            data[idx + 1] = item + "_" + suffix
-                        fout.write(",".join(data) + "\n")
+                        new_data = []
+                        new_data.append(count_sample)
+                        for item in data[1:]:
+                            new_data.append(item + "_" + suffix)
+                        fout.write(",".join(new_data) + "\n")
 
 
     # # Check that all samples in counts file are present in samplesheet
