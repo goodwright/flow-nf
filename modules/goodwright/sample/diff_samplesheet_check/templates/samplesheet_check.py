@@ -239,9 +239,12 @@ def check_samplesheet(process_name, samplesheet, counts, count_sep, output, is_m
             fout.write(",".join(output_header) + "\n")
             for sample in sample_dict.keys():
                 for count_sample in count_dict.keys():
+                    suffix = count_sample.split('_')[-1]
                     if sample in count_sample:
                         data = sample_dict[sample]
                         data[0] = count_sample
+                        for idx, item in enumerate(data[1:]):
+                            data[idx + 1] = item + "_" + suffix
                         fout.write(",".join(data) + "\n")
 
 
