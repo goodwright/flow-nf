@@ -41,7 +41,7 @@
     - "r"
     - "r/deseq2"
   files:
-    - path: "output/r/condition-A-B-method.dds.rld.rds"
-    - path: "output/r/condition-A-B-method.deseq2.results.tsv"
+    - path: "output/r/condition-SHAM-SPE.dds.rld.rds"
+    - path: "output/r/condition-SHAM-SPE.deseq2.results.tsv"
     - path: "output/r/deseq2.sizefactors.tsv"
     - path: "output/r/normalised_counts.tsv"
