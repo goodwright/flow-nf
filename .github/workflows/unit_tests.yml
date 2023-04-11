@@ -35,7 +35,7 @@ jobs:
           - dump_software_versions
           - sample/base_samplesheet_check
           - sample/diff_samplesheet_check
-          - ultraplex/samplesheet_to_bardcode
+          - ultraplex/samplesheet_to_barcode
           - ultraplex/ultraplex
           - xlsxtocsv
           - clipseq/filter_gtf

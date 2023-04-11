@@ -36,3 +36,10 @@
     - path: "output/ultraplex/ultraplex_demux_Sample1_Rev.fastq.gz"
     - path: "output/ultraplex/ultraplex_demux_Sample2_Fwd.fastq.gz"
     - path: "output/ultraplex/ultraplex_demux_Sample2_Rev.fastq.gz"
+
+- name: "test_sw_demultiplex_adapter_mismatch"
+  command: nextflow run ./tests/subworkflows/demultiplex -entry test_clip_adapter_mismatch -c ./tests/config/nextflow.config
+  tags:
+    - "subworkflows"
+    - "demultiplex"
+  exit_code: 1

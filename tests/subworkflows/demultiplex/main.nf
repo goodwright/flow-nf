@@ -42,3 +42,13 @@ workflow test_multi_sample_paired_end {
 
     DEMULTIPLEX.out.fastq | view
 }
+
+workflow test_clip_adapter_mismatch {
+
+    samplesheet = file(params.goodwright_test_data['samplesheets']['clip_samplesheet_adapter_mis'], checkIfExists: true)
+    fastq       = file(params.goodwright_test_data['ultraplex']['multiplexed_fastq'], checkIfExists: true)
+
+    DEMULTIPLEX ( samplesheet, fastq )
+
+    DEMULTIPLEX.out.fastq | view
+}

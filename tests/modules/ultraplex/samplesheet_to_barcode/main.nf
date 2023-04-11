@@ -8,3 +8,10 @@ workflow test_samplesheettobardcode_two_samples {
 
     SAMPLESHEET_TO_BARCODE ( input )
 }
+
+workflow test_samplesheettobardcode_adapter_mismatch {
+
+    input = file(params.goodwright_test_data['samplesheets']['clip_samplesheet_adapter_mis'], checkIfExists: true)
+
+    SAMPLESHEET_TO_BARCODE ( input )
+}

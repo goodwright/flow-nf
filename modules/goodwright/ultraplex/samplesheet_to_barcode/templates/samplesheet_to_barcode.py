@@ -22,6 +22,13 @@ def main(process_name, samplesheet, output):
     # Read CSV file into dataframe
     df_samplesheet = pd.read_csv(samplesheet, dtype=str, keep_default_na=False)
 
+    # Check for unique adapter sequences
+    adapters = df_samplesheet["3' Adapter Sequence"].unique()
+    if len(adapters) > 1:
+        print("ERROR: 3' Adapter mismatch in sample sheet. Mixed adapter sequences are not allowed in the sample sheet.")
+        print(adapters)
+        exit(1)
+
     # Init for loop
     five_prime = df_samplesheet["5' Barcode Sequence"]
     three_prime = df_samplesheet["3' Barcode Sequence"]
