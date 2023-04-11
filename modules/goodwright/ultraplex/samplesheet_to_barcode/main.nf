@@ -1,4 +1,4 @@
-process CLIP_SAMPLESHEET_TO_BARCODE {
+process SAMPLESHEET_TO_BARCODE {
     tag "$samplesheet"
     label "process_single"
 
@@ -20,5 +20,5 @@ process CLIP_SAMPLESHEET_TO_BARCODE {
     shell:
     process_name = task.process
     output       = task.ext.output ?: 'barcodes.csv'
-    template 'clip_samplesheet_to_barcode.py'
+    template 'samplesheet_to_barcode.py'
 }

@@ -1,5 +1,5 @@
 - name: "test_ultraplex_samplesheettobardcode_script_twosamples"
-  command: python modules/goodwright/ultraplex/clip_samplesheet_to_barcode/templates/clip_samplesheet_to_barcode.py --process_name test --samplesheet tests/data/samplesheets/clip-samplesheet.csv --output barcodes.csv
+  command: python modules/goodwright/ultraplex/samplesheet_to_barcode/templates/samplesheet_to_barcode.py --process_name test --samplesheet tests/data/samplesheets/clip-samplesheet.csv --output barcodes.csv
   tags:
     - "python"
     # - "ultraplex"
