@@ -3,7 +3,7 @@
   tags:
     - "modules"
     - "ultraplex"
-    - "ultraplex/samplesheettobardcode"
+    - "ultraplex/samplesheet_to_bardcode"
   files:
     - path: "output/samplesheet/barcodes.csv"
       contains:
