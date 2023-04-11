@@ -35,20 +35,25 @@ workflow DEMULTIPLEX {
         ch_csv
     )
     ch_versions = ch_versions.mix(SAMPLESHEET_TO_BARCODE.out.versions)
+    //SAMPLESHEET_TO_BARCODE.out.csv | view
 
-    // /*
-    // * CHANNEL: Pull out params for ultraplex
-    // */
-    // SAMPLESHEET_CHECK.out.csv
-    //     .splitCsv ( header:true, sep:"," )
-    //     .map { get_samplesheet_paths(it) }
+    /*
+    * CHANNEL: Pull out params for ultraplex
+    */
+    ch_adapter = ch_csv
+        .splitCsv(header: ['sample_name', 'barcode_seq_5', 'barcode_seq_3', 'adapter_seq_3'], skip:1, sep:"," )
+        .map { row -> [row.adapter_seq_3] }
+        .collect()
+        .map { it[0] }
+    //ch_adapter | view
 
     /*
     * MODULE: Demultiplex the fastq file
     */
     ULTRAPLEX (
         [ [ id:"fastq" ], fastq ],
-        SAMPLESHEET_TO_BARCODE.out.csv
+        SAMPLESHEET_TO_BARCODE.out.csv,
+        ch_adapter
     )
     ch_versions = ch_versions.mix(ULTRAPLEX.out.versions)
     //ULTRAPLEX.out.fastq | view
