@@ -5,6 +5,7 @@ import sys
 import errno
 import argparse
 import platform
+import distutils
 
 import pandas as pd
 from functools import reduce
@@ -248,12 +249,6 @@ def check_samplesheet(process_name, samplesheet, counts, count_sep, output, is_m
                             new_data.append(item + "_" + suffix)
                         fout.write(",".join(new_data) + "\n")
 
-
-    # # Check that all samples in counts file are present in samplesheet
-    # for sample in count_dict.keys():
-    #     if sample not in sample_dict.keys():
-    #         print_error("Sample {} in counts file not found in samplesheet!".format(sample))
-
 if __name__ == "__main__":
     # Allows switching between nextflow templating and standalone python running using arguments
     parser = argparse.ArgumentParser()
@@ -262,12 +257,19 @@ if __name__ == "__main__":
     parser.add_argument("--counts", default="!{counts}")
     parser.add_argument("--count-sep", default="!{count_sep}")
     parser.add_argument("--output", default="!{output}")
+    parser.add_argument("--add-multi-suffix", default="!{add_multi_suffix}")
     args = parser.parse_args()
 
+    # Check for multiple count files
     is_multi = False
     counts_list = args.counts.split(" ")
     if len(counts_list) > 1:
         is_multi = True
+
+    # Only enable if explicit
+    add_multi_suffix = bool(distutils.util.strtobool(args.add_multi_suffix))
+    if args.add_multi_suffix == False:
+        is_multi = False
 
     counts = merge_counts_file(args.counts)
     check_samplesheet(args.process_name, args.samplesheet, counts, args.count_sep, args.output, is_multi)

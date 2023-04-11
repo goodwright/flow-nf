@@ -30,6 +30,24 @@ workflow test_valid_condition_factor {
 
 workflow test_valid_multicount {
 
+    samplesheet = file(params.goodwright_test_data['samplesheets']['diff_valid_condition_factor'], checkIfExists: true)
+    counts      = [
+        file(params.goodwright_test_data['count_matrix']['s1'], checkIfExists: true),
+        file(params.goodwright_test_data['count_matrix']['s2'], checkIfExists: true),
+        file(params.goodwright_test_data['count_matrix']['s3'], checkIfExists: true),
+        file(params.goodwright_test_data['count_matrix']['s4'], checkIfExists: true),
+        file(params.goodwright_test_data['count_matrix']['s5'], checkIfExists: true)
+    ]
+
+    SAMPLE_DIFF_SAMPLESHEET_CHECK (
+        samplesheet,
+        counts,
+        '\t'
+    )
+}
+
+workflow test_valid_multicount_with_suffix {
+
     samplesheet = file(params.goodwright_test_data['samplesheets']['diff_valid_condition_multi'], checkIfExists: true)
     counts      = [
         file(params.goodwright_test_data['count_matrix']['s1'], checkIfExists: true),
