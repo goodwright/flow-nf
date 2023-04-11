@@ -1,5 +1,5 @@
-name: clip_demultiplex
-description: Converts a CLIP samplesheet into a suitable input for ultraplex and then run the demultiplex operation. Includes support for users submitting an xlsx file instead of csv.
+name: demultiplex
+description: Converts a goodwright samplesheet into a suitable input for ultraplex and then run the demultiplex operation. Includes support for users submitting an xlsx file instead of csv.
 keywords:
   - demultiplex
   - ultraplex

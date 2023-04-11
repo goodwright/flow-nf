@@ -65,7 +65,7 @@ jobs:
           - prepare_genome/prepare_aligner
           - prepare_genome/prepare_clipseq
           - rna_align
-          - clip_demultiplex
+          - demultiplex
           - clip_calc_crosslinks
           - paraclu_analyse
           - icount_analyse
