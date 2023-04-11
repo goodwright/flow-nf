@@ -1,0 +1,42 @@
+name: demultiplex
+description: Converts a samplesheet into a suitable input for ultraplex and then runs a demultiplex operation. Includes support for users submitting an xlsx file instead of csv.
+keywords:
+  - demultiplex
+  - ultraplex
+  - xlsx
+  - csv
+  - fastq
+modules:
+  - goodwright/xlsx_to_csv
+  - goodwright/ultraplex/samplesheet_to_barcode
+  - goodwright/ultraplex/ultraplex
+input:
+  - meta:
+      type: map
+      description: |
+        Groovy Map containing sample information
+        e.g. [ id:'test', single_end:false ]
+  - samplesheet:
+      type: file
+      description: CSV/XLSX file
+      pattern: "*.{csv,xlsx}"
+  - fastq:
+      type: file
+      description: Compressed file containing multiplexed sequence data in FASTQ format
+      pattern: "*.{fastq.gz}"
+output:
+  - meta:
+      type: map
+      description: |
+        Groovy Map containing sample information
+        e.g. [ id:'test', single_end:false ]
+  - fastq:
+      type: file
+      description: Compressed file containing de-multiplexed sequence data in FASTQ format
+      pattern: "*.{fastq.gz}"
+  - versions:
+      type: file
+      description: File containing software versions
+      pattern: "versions.yml"
+authors:
+  - "@chris-cheshire"
