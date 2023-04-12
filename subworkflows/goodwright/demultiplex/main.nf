@@ -1,5 +1,5 @@
 //
-// Convert a CLIP samplesheet into a suitable input for ultraplex and then run the demultiplex operation
+// Convert a goodwright samplesheet into a suitable input for ultraplex and then run the demultiplex operation
 // Support for users submitting an xlsx file instead of csv
 //
 
@@ -9,30 +9,59 @@ include { ULTRAPLEX              } from '../../../modules/goodwright/ultraplex/u
 
 workflow DEMULTIPLEX {
     take:
-    samplesheet // channel: [ [csv/xlsx] ]
-    fastq       // channel: [ fastq ]
+    samplesheet // channel/file: [ [csv/xlsx] ]
+    fastq       // channel/file: [ fastq ]
 
     main:
-    ch_versions = Channel.empty()
+    // Init
+    ch_versions    = Channel.empty()
+    ch_samplesheet = Channel.empty()
+    ch_fastq       = Channel.empty()
 
-    // Convert xlsx to csv if required
-    ch_csv = Channel.from( samplesheet )
-    if (samplesheet.toString().endsWith(".xlsx")) {
-        /*
-        * MODULE: Converts xlsx to csv
-        */
-        XLSX_TO_CSV (
-            ch_csv
-        )
-        ch_versions = ch_versions.mix(XLSX_TO_CSV.out.versions)
-        ch_csv      = XLSX_TO_CSV.out.csv
+    // Resolve inputs
+    if(samplesheet instanceof groovyx.gpars.dataflow.DataflowVariable || 
+       samplesheet instanceof groovyx.gpars.dataflow.DataflowBroadcast) {
+        ch_samplesheet = samplesheet
+    } else {
+        ch_samplesheet = Channel.from(samplesheet)
+    }
+    if(fastq instanceof groovyx.gpars.dataflow.DataflowVariable || 
+       fastq instanceof groovyx.gpars.dataflow.DataflowBroadcast) {
+        ch_fastq = fastq
+    } else {
+        ch_fastq = Channel.from(fastq)
     }
 
     /*
-    * MODULE: Convert the clip samplesheet into ultraplex input
+    * CHANNEL: Split out samplesheets that need to be converted from excel
+    */
+    ch_samplesheet_branch = ch_samplesheet
+        .branch {
+            row ->
+                csv: row.toString().endsWith("csv")
+                xlsx: row.toString().endsWith("xlsx")
+        }
+    //ch_samplesheet_branch.csv | view
+    //ch_samplesheet_branch.xlsx | view
+
+    /*
+    * MODULE: Convert xlsx to csv
+    */
+    XLSX_TO_CSV (
+        ch_samplesheet_branch.xlsx
+    )
+    ch_versions = ch_versions.mix(XLSX_TO_CSV.out.versions)
+
+    /*
+    * CHANNEL: Combine converted / non-converted channels
+    */
+    ch_csv_samplesheet = XLSX_TO_CSV.out.csv.mix( ch_samplesheet_branch.csv )
+
+    /*
+    * MODULE: Convert the samplesheet(s) into ultraplex input
     */
     SAMPLESHEET_TO_BARCODE (
-        ch_csv
+        ch_csv_samplesheet.collect()
     )
     ch_versions = ch_versions.mix(SAMPLESHEET_TO_BARCODE.out.versions)
     //SAMPLESHEET_TO_BARCODE.out.csv | view
@@ -40,7 +69,7 @@ workflow DEMULTIPLEX {
     /*
     * CHANNEL: Pull out params for ultraplex
     */
-    ch_adapter = ch_csv
+    ch_adapter = SAMPLESHEET_TO_BARCODE.out.samplesheet
         .splitCsv(header: ['sample_name', 'barcode_seq_5', 'barcode_seq_3', 'adapter_seq_3'], skip:1, sep:"," )
         .map { row -> [row.adapter_seq_3] }
         .collect()
@@ -52,7 +81,7 @@ workflow DEMULTIPLEX {
     */
     ULTRAPLEX (
         [ [ id:"fastq" ], fastq ],
-        SAMPLESHEET_TO_BARCODE.out.csv,
+        SAMPLESHEET_TO_BARCODE.out.barcodes,
         ch_adapter
     )
     ch_versions = ch_versions.mix(ULTRAPLEX.out.versions)
@@ -61,7 +90,7 @@ workflow DEMULTIPLEX {
     /*
     * CHANNEL: Create meta data using the samplesheet and the outputs from ultraplex
     */
-    ch_meta_fastq = ch_csv
+    ch_meta_fastq = SAMPLESHEET_TO_BARCODE.out.samplesheet
         .splitCsv (header:true, sep:",")
         .combine (ULTRAPLEX.out.fastq)
         .map { row ->
@@ -70,6 +99,7 @@ workflow DEMULTIPLEX {
             [ row[0]['Sample Name'], row[0], match ]
         }
         .unique()
+        .map { [ it[1], it[2] ] }
     //ch_meta_fastq | view
 
     emit:
