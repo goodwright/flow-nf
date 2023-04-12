@@ -16,10 +16,14 @@ input:
       type: file
       description: A samples CSV annotation file.
 output:
-  - csv:
+  - barcodes:
       type: file
       description: Barcodes file.
-      pattern: "*.csv"
+      pattern: "barcodes.csv"
+  - samplesheet:
+      type: file
+      description: Merged samplesheet file of columns relevant to Ultraplex.
+      pattern: "samplesheet.csv"
   - versions:
       type: file
       description: File containing software versions

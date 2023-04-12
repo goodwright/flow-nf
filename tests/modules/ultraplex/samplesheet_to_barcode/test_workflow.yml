@@ -5,6 +5,7 @@
     - "ultraplex"
     - "ultraplex/samplesheet_to_barcode"
   files:
+    - path: "output/samplesheet/samplesheet.csv"
     - path: "output/samplesheet/barcodes.csv"
       contains:
         - "NNNGGCGNN,NNGACNN:sample_clip_1"
@@ -18,6 +19,7 @@
     - "ultraplex"
     - "ultraplex/samplesheet_to_barcode"
   files:
+    - path: "output/samplesheet/samplesheet.csv"
     - path: "output/samplesheet/barcodes.csv"
       contains:
         - "NNNGGCGNN,NNGACNN:sample_clip_1,NNGACNN:sample_clip_3"

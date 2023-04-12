@@ -48,10 +48,14 @@ def main(process_name, samplesheet, output):
         print(adapters)
         exit(1)
 
-    # Init for loop
+    # Extract relevant info from the sample sheets
+    sample_names = df_samplesheet["Sample Name"]
     five_prime = df_samplesheet["5' Barcode Sequence"]
     three_prime = df_samplesheet["3' Barcode Sequence"]
-    sample_names = df_samplesheet["Sample Name"]
+    three_prime_adapter = df_samplesheet["3' Adapter Sequence"]
+    df_samplesheet = pd.concat([sample_names,five_prime,three_prime,three_prime_adapter],axis=1)
+
+    # Init for loop
     barcode_dict = {}
 
     # Create barcode dict of all five prime barcodes with an array in each dict 
@@ -86,6 +90,9 @@ def main(process_name, samplesheet, output):
                     val[0] = "," + val[0]
 
                 out_f.write(key + val[0] + "\n")
+
+    # Write samplesheet to file
+    df_samplesheet.to_csv('samplesheet.csv', index=False)
 
 
 if __name__ == "__main__":

@@ -11,14 +11,15 @@ process SAMPLESHEET_TO_BARCODE {
     path samplesheet
 
     output:
-    path "*.csv"         , emit: csv
-    path  "versions.yml" , emit: versions
+    path "barcodes.csv"    , emit: barcodes
+    path "samplesheet.csv" , emit: samplesheet
+    path  "versions.yml"   , emit: versions
 
     when:
     task.ext.when == null || task.ext.when
 
     shell:
     process_name = task.process
-    output       = task.ext.output ?: 'barcodes.csv'
+    output       = 'barcodes.csv'
     template 'samplesheet_to_barcode.py'
 }
