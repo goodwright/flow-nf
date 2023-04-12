@@ -1,18 +1,33 @@
-- name: "test_ultraplex_samplesheettobardcode_twosamples"
-  command: nextflow run ./tests/modules/ultraplex/samplesheet_to_barcode -entry test_samplesheettobardcode_two_samples -c ./tests/config/nextflow.config
+- name: "test_ultraplex_samplesheettobarcode_twosamples"
+  command: nextflow run ./tests/modules/ultraplex/samplesheet_to_barcode -entry test_samplesheettobarcode_two_samples -c ./tests/config/nextflow.config
   tags:
     - "modules"
     - "ultraplex"
     - "ultraplex/samplesheet_to_barcode"
   files:
+    - path: "output/samplesheet/samplesheet.csv"
     - path: "output/samplesheet/barcodes.csv"
       contains:
-        - "NNNGGCGNN:Sample1"
-        - "NNNTTGTNN:Sample2"
-      md5sum: 0c52fd94ff1773b4138d555fc40739f2
+        - "NNNGGCGNN,NNGACNN:sample_clip_1"
+        - "NNNTTGTNN:sample_clip_2"
+      md5sum: 3166ba31d3d6015e5c784a3f4f3dbd26
 
-- name: "test_ultraplex_samplesheettobardcode_adapter_mismatch"
-  command: nextflow run ./tests/modules/ultraplex/samplesheet_to_barcode -entry test_samplesheettobardcode_adapter_mismatch -c ./tests/config/nextflow.config
+- name: "test_samplesheettobarcode_multisheet"
+  command: nextflow run ./tests/modules/ultraplex/samplesheet_to_barcode -entry test_samplesheettobarcode_multisheet -c ./tests/config/nextflow.config
+  tags:
+    - "modules"
+    - "ultraplex"
+    - "ultraplex/samplesheet_to_barcode"
+  files:
+    - path: "output/samplesheet/samplesheet.csv"
+    - path: "output/samplesheet/barcodes.csv"
+      contains:
+        - "NNNGGCGNN,NNGACNN:sample_clip_1,NNGACNN:sample_clip_3"
+        - "NNNTTGTNN:sample_clip_2"
+      md5sum: 4c5f8b2c29ac0182bf6ce7095c4e5dc0
+
+- name: "test_ultraplex_samplesheettobarcode_adapter_mismatch"
+  command: nextflow run ./tests/modules/ultraplex/samplesheet_to_barcode -entry test_samplesheettobarcode_adapter_mismatch -c ./tests/config/nextflow.config
   tags:
     - "modules"
     - "ultraplex"

@@ -1,0 +1,3 @@
+Sample Name,Project Name,Scientist,PI,Organisation,Experimental Method,Condition,Sequencer,Comments,5' Barcode Sequence,3' Barcode Sequence,3' Adapter Name,3' Adapter Sequence,5' Index Sequence,3' Index Sequence,RT Primer,UMI Barcode Sequence,UMI Separator,Strandedness,RNA selection method,Category,Cell or Tissue,Organism
+sample_rna_1,My New Project,CharlotteC,Jernej Ule,DRI,iCLIP,NSsiRNA,HiSeq 2500,Mild purification,NNNGGTGNN,NNATG,L3-ATG,AGATCGGAAGAGCGGTTCAG,,,5'-X33NNCGCCNNNAGATCGGAAGAGCGTCGTGgatcCTGAACCGC-3',,,reverse,ribominus,RNA-Seq,,Hs
+sample_rna_2,My New Project,CharlotteC,Jernej Ule,DRI,iCLIP,NSsiRNA,HiSeq 2500,Mild purification,NNNGGTGNN,NNATG,L3-ATG,AGATCGGAAGAGCGGTTCAG,,,5'-X33NNCGCCNNNAGATCGGAAGAGCGTCGTGgatcCTGAACCGC-3',,,reverse,ribominus,RNA-Seq,,Hs
