@@ -1,5 +1,12 @@
-- name: "test_wrappers_demultiplex"
+- name: "test_wrappers_demultiplex_single"
   command: nextflow run ./wrappers/subworkflows/demultiplex/main.nf -c ./tests/config/nextflow.config --fastq ./tests/data/ultraplex/multiplexed.fastq.gz --samplesheet ./tests/data/samplesheets/clip-samplesheet.csv
+  tags:
+    - "wrappers"
+    - "wrappers/subworkflows"
+    - "wrappers/subworkflows/demultiplex"
+
+- name: "test_wrappers_demultiplex_multi"
+  command: nextflow run ./wrappers/subworkflows/demultiplex/main.nf -c ./tests/config/nextflow.config --fastq ./tests/data/ultraplex/multiplexed.fastq.gz --samplesheet ./tests/data/samplesheets/clip-samplesheet-small.csv --samplesheet2 ./tests/data/samplesheets/rna-samplesheet.csv --samplesheet3 ./tests/data/samplesheets/clip-samplesheet.xlsx
   tags:
     - "wrappers"
     - "wrappers/subworkflows"
