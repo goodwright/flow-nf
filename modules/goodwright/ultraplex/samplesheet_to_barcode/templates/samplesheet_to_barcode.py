@@ -25,7 +25,9 @@ def main(process_name, samplesheet, output):
     # Check for unique adapter sequences
     adapters = df_samplesheet["3' Adapter Sequence"].unique()
     if len(adapters) > 1:
-        print("ERROR: 3' Adapter mismatch in sample sheet. Mixed adapter sequences are not allowed in the sample sheet.")
+        print(
+            "ERROR: 3' Adapter mismatch in sample sheet. Mixed adapter sequences are not allowed in the sample sheet."
+        )
         print(adapters)
         exit(1)
 

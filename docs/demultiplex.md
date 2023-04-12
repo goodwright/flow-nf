@@ -11,6 +11,6 @@ This pipeline is essentially a wrapper around the [Ultraplex](https://github.com
 Input `.csv.` or `.xlsx` file detailing each sample to be demultiplexed with its 5' and 3' barcoding scheme. The table must be in the following format:
 
 | id       | 5prime_barcode | 3prime_barcode | 3' Adaptor Sequence  |
-| ---------| -------------- | -------------- | -------------------- |
+| -------- | -------------- | -------------- | -------------------- |
 | Sample 1 | NNNGGCGNN      |                | AGATCGGAAGAGCGGTTCAG |
 | Sample 2 | NNNTTGTNN      |                | AGATCGGAAGAGCGGTTCAG |

@@ -55,14 +55,14 @@ def merge_counts_file(counts):
         # Load counts file
         df = pd.read_csv(count_file, sep="\t", index_col=0)
 
-        # Get file name and extract sample suffix
+        # Get file name and extract sample suffix
         count_file_name = os.path.basename(count_file)
         count_file_name = os.path.splitext(count_file_name)[0]
-        split = count_file_name.split('_')
+        split = count_file_name.split("_")
         suffix = split[-1]
 
         # Append suffix
-        df.columns = [str(col) + '_' + suffix for col in df.columns]
+        df.columns = [str(col) + "_" + suffix for col in df.columns]
 
         # Rename gene name if it exists
         df.columns = df.columns.str.replace("gene_name_" + suffix, "gene_name")
@@ -240,7 +240,7 @@ def check_samplesheet(process_name, samplesheet, counts, count_sep, output, is_m
             fout.write(",".join(output_header) + "\n")
             for sample in sample_dict.keys():
                 for count_sample in count_dict.keys():
-                    suffix = count_sample.split('_')[-1]
+                    suffix = count_sample.split("_")[-1]
                     if sample in count_sample:
                         data = sample_dict[sample]
                         new_data = []
@@ -248,6 +248,7 @@ def check_samplesheet(process_name, samplesheet, counts, count_sep, output, is_m
                         for item in data[1:]:
                             new_data.append(item + "_" + suffix)
                         fout.write(",".join(new_data) + "\n")
+
 
 if __name__ == "__main__":
     # Allows switching between nextflow templating and standalone python running using arguments
@@ -260,7 +261,7 @@ if __name__ == "__main__":
     parser.add_argument("--add-multi-suffix", default="!{add_multi_suffix}")
     args = parser.parse_args()
 
-    # Check for multiple count files
+    # Check for multiple count files
     is_multi = False
     counts_list = args.counts.split(" ")
     if len(counts_list) > 1:
