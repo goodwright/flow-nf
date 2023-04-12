@@ -26,9 +26,9 @@
     - "sample/diff_samplesheet_check"
   files:
     - path: "output/sample/samplesheet.valid.csv"
-      md5sum: 09f002c18f40602bd1b7a63dbd3bfab3
+      md5sum: 4020ef4e71ebb50a2608df3482470e47
     - path: "output/sample/merged_counts.tsv"
-      md5sum: b0c539704b1d7bac53428257af8c5411
+      md5sum: 6ca0e6e1ac44f28becdd6f7bb7566b37
 
 - name: "test_diff_samplesheet_valid_multicount_with_suffix"
   command: nextflow run ./tests/modules/sample/diff_samplesheet_check/main.nf -c ./tests/config/nextflow.config -entry test_valid_multicount_with_suffix
