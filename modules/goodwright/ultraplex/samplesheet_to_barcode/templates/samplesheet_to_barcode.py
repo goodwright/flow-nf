@@ -16,7 +16,7 @@ def dump_versions(process_name):
 
 
 def main(process_name, samplesheet, output):
-    # Init
+    # Init
     df_samplesheet = None
 
     # Dump version file
@@ -53,13 +53,13 @@ def main(process_name, samplesheet, output):
     five_prime = df_samplesheet["5' Barcode Sequence"]
     three_prime = df_samplesheet["3' Barcode Sequence"]
     three_prime_adapter = df_samplesheet["3' Adapter Sequence"]
-    df_samplesheet = pd.concat([sample_names,five_prime,three_prime,three_prime_adapter],axis=1)
+    df_samplesheet = pd.concat([sample_names, five_prime, three_prime, three_prime_adapter], axis=1)
 
-    # Init for loop
+    # Init for loop
     barcode_dict = {}
 
-    # Create barcode dict of all five prime barcodes with an array in each dict 
-    # pos with a string comprised of the three prime : sample name
+    # Create barcode dict of all five prime barcodes with an array in each dict
+    # pos with a string comprised of the three prime : sample name
     for idx in range(len(five_prime)):
         barcode_dict.setdefault(five_prime[idx], [])
         barcode_dict[five_prime[idx]].append(three_prime[idx] + ":" + sample_names[idx])
@@ -80,7 +80,9 @@ def main(process_name, samplesheet, output):
                 if any([sample.startswith(":") for sample in val]):
                     print(key)
                     print(val)
-                    print("ERROR: 3' barcodes: length and position of the non-N nucleotides in the barcodes must be consistent for all 3’ barcodes linked to one specific 5’ barcode.")
+                    print(
+                        "ERROR: 3' barcodes: length and position of the non-N nucleotides in the barcodes must be consistent for all 3’ barcodes linked to one specific 5’ barcode."
+                    )
                     exit(1)
 
                 # Write to file
@@ -91,8 +93,8 @@ def main(process_name, samplesheet, output):
 
                 out_f.write(key + val[0] + "\n")
 
-    # Write samplesheet to file
-    df_samplesheet.to_csv('samplesheet.csv', index=False)
+    # Write samplesheet to file
+    df_samplesheet.to_csv("samplesheet.csv", index=False)
 
 
 if __name__ == "__main__":
