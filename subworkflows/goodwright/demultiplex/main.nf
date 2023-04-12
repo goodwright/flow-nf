@@ -3,11 +3,11 @@
 // Support for users submitting an xlsx file instead of csv
 //
 
-include { XLSX_TO_CSV                 } from '../../../modules/goodwright/xlsx_to_csv/main'
-include { SAMPLESHEET_TO_BARCODE      } from '../../../modules/goodwright/ultraplex/samplesheet_to_barcode/main'
-include { ULTRAPLEX                   } from '../../../modules/goodwright/ultraplex/ultraplex/main'
+include { XLSX_TO_CSV            } from '../../../modules/goodwright/xlsx_to_csv/main'
+include { SAMPLESHEET_TO_BARCODE } from '../../../modules/goodwright/ultraplex/samplesheet_to_barcode/main'
+include { ULTRAPLEX              } from '../../../modules/goodwright/ultraplex/ultraplex/main'
 
-workflow CLIP_DEMULTIPLEX {
+workflow DEMULTIPLEX {
     take:
     samplesheet // channel: [ [csv/xlsx] ]
     fastq       // channel: [ fastq ]
@@ -35,13 +35,25 @@ workflow CLIP_DEMULTIPLEX {
         ch_csv
     )
     ch_versions = ch_versions.mix(SAMPLESHEET_TO_BARCODE.out.versions)
+    //SAMPLESHEET_TO_BARCODE.out.csv | view
+
+    /*
+    * CHANNEL: Pull out params for ultraplex
+    */
+    ch_adapter = ch_csv
+        .splitCsv(header: ['sample_name', 'barcode_seq_5', 'barcode_seq_3', 'adapter_seq_3'], skip:1, sep:"," )
+        .map { row -> [row.adapter_seq_3] }
+        .collect()
+        .map { it[0] }
+    //ch_adapter | view
 
     /*
     * MODULE: Demultiplex the fastq file
     */
     ULTRAPLEX (
         [ [ id:"fastq" ], fastq ],
-        SAMPLESHEET_TO_BARCODE.out.csv
+        SAMPLESHEET_TO_BARCODE.out.csv,
+        ch_adapter
     )
     ch_versions = ch_versions.mix(ULTRAPLEX.out.versions)
     //ULTRAPLEX.out.fastq | view

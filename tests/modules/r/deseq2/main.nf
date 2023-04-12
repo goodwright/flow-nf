@@ -47,3 +47,18 @@ workflow test_multi_factor_with_config {
         "method"
     )
 }
+
+workflow test_single_with_weird_count_table {
+
+    sample = [ [id:'test'], file(params.goodwright_test_data['deseq2']['sample_no_gene_name'], checkIfExists: true) ]
+    counts = file(params.goodwright_test_data['deseq2']['counts_no_gene_name'], checkIfExists: true)
+
+    R_DESEQ2_CONFIG(
+        sample,
+        counts,
+        "condition",
+        "SHAM",
+        "SPE",
+        []
+    )
+}

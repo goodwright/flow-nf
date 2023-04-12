@@ -35,7 +35,7 @@ jobs:
           - dump_software_versions
           - sample/base_samplesheet_check
           - sample/diff_samplesheet_check
-          - ultraplex/samplesheettobardcode
+          - ultraplex/samplesheet_to_barcode
           - ultraplex/ultraplex
           - xlsxtocsv
           - clipseq/filter_gtf
@@ -65,7 +65,7 @@ jobs:
           - prepare_genome/prepare_aligner
           - prepare_genome/prepare_clipseq
           - rna_align
-          - clip_demultiplex
+          - demultiplex
           - clip_calc_crosslinks
           - paraclu_analyse
           - icount_analyse

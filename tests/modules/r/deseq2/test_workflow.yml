@@ -33,3 +33,15 @@
     - path: "output/r/condition-A-B-method.deseq2.results.tsv"
     - path: "output/r/deseq2.sizefactors.tsv"
     - path: "output/r/normalised_counts.tsv"
+
+- name: "test_r_deseq2_test_single_with_weird_count_table"
+  command: nextflow run ./tests/modules/r/deseq2/main.nf -c ./tests/config/nextflow.config -c ./tests/modules/r/deseq2/nextflow.config -entry test_single_with_weird_count_table
+  tags:
+    - "modules"
+    - "r"
+    - "r/deseq2"
+  files:
+    - path: "output/r/condition-SHAM-SPE.dds.rld.rds"
+    - path: "output/r/condition-SHAM-SPE.deseq2.results.tsv"
+    - path: "output/r/deseq2.sizefactors.tsv"
+    - path: "output/r/normalised_counts.tsv"
