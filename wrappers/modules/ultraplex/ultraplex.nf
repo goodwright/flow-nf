@@ -8,7 +8,7 @@ workflow  {
     barcodes = file(params.barcodes, checkIfExists: true)
     fastq    = [ meta, file(params.reads, checkIfExists: true)]
 
-    ULTRAPLEX ( 
+    ULTRAPLEX (
         fastq,
         barcodes,
         params.three_prime_adapter
