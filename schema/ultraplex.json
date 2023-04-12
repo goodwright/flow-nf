@@ -17,6 +17,12 @@
                     "pattern": "csv",
                     "required": true,
                     "description": "A file describing the barcodes of the samples to demultiplex"
+                },
+                "three_prime_adapter": {
+                    "name": "THREE_PRIME_ADAPTER",
+                    "type": "string",
+                    "required": false,
+                    "description": "The 3’ adapter sequence to be removed. By default this is the Illumina universal sequencing adapter 'AGATCGGAAGAGCGGTTCAG'. For paired-end demultiplexing, this adapter only applies to the forward read"
                 }
             }
         }
