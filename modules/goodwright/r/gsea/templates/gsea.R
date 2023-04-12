@@ -49,10 +49,11 @@ read_delim_flexible <- function(file, header = TRUE, row.names = NULL){
     )
 }
 
+#' Stop script without error
 stop_quietly <- function() {
-  opt <- options(show.error.messages = FALSE)
-  on.exit(options(opt))
-  quit()
+    opt <- options(show.error.messages = FALSE)
+    on.exit(options(opt))
+    quit()
 }
 
 #####################################################
@@ -214,7 +215,7 @@ if (nrow(results) == 0) {
 gs <- geneset::getGO(org=opt$organism, ont=opt$ontology)
 
 genGSEA_TC <- tryCatch (
-    { 
+    {
         gse <- genGSEA(
             genelist=gene_list,
             geneset=gs,
@@ -228,7 +229,7 @@ genGSEA_TC <- tryCatch (
     error=function(cond) {
             message(cond)
             stop_quietly()
-    } 
+    }
 )
 genGSEA_TC
 
