@@ -16,11 +16,28 @@ def dump_versions(process_name):
 
 
 def main(process_name, samplesheet, output):
+    # Init
+    df_samplesheet = None
+
     # Dump version file
     dump_versions(process_name)
 
-    # Read CSV file into dataframe
-    df_samplesheet = pd.read_csv(samplesheet, dtype=str, keep_default_na=False)
+    # Check for multiple samplesheets and merge them together
+    samplesheet_list = args.samplesheet.split(" ")
+    if len(samplesheet_list) > 1:
+        print("Multiple samplesheets detected")
+        df_samplesheets = []
+        for samplesheet in samplesheet_list:
+            df_samplesheets.append(pd.read_csv(samplesheet, dtype=str, keep_default_na=False))
+
+        for idx, df in enumerate(df_samplesheets):
+            if idx == 0:
+                df_samplesheet = df
+            else:
+                df_samplesheet = pd.concat([df_samplesheet, df], ignore_index=True)
+    else:
+        # Read CSV file into dataframe
+        df_samplesheet = pd.read_csv(samplesheet, dtype=str, keep_default_na=False)
 
     # Check for unique adapter sequences
     adapters = df_samplesheet["3' Adapter Sequence"].unique()
@@ -37,25 +54,38 @@ def main(process_name, samplesheet, output):
     sample_names = df_samplesheet["Sample Name"]
     barcode_dict = {}
 
-    # Create barcode dict
+    # Create barcode dict of all five prime barcodes with an array in each dict 
+    # pos with a string comprised of the three prime : sample name
     for idx in range(len(five_prime)):
         barcode_dict.setdefault(five_prime[idx], [])
         barcode_dict[five_prime[idx]].append(three_prime[idx] + ":" + sample_names[idx])
 
     # Write to file with error checking
     with open(output, "w") as out_f:
-        for five, threes in barcode_dict.items():
-            if len(threes) > 1:
-                if any([three.startswith(":") for three in threes]):
-                    print("ERROR: 5' barcode ambiguity between samples")
+        for key, val in barcode_dict.items():
+            # Do we have more than one sample assigned to the five prime barcode
+            if len(val) > 1:
+                # Check if more than one sample assigned to barcode without a 3 prime bc
+                if all([sample.startswith(":") for sample in val]):
+                    print(key)
+                    print(val)
+                    print("ERROR: More than one sample assigned to 5' barcode without a 3' bc to seperate them")
                     exit(1)
 
-                out_f.write(",".join([five] + threes) + "\n")
-            else:
-                if not threes[0].startswith(":"):
-                    threes[0] = "," + threes[0]
+                # Check if more than one sample assigned to barcode but with a mixed assignment of barcodes
+                if any([sample.startswith(":") for sample in val]):
+                    print(key)
+                    print(val)
+                    print("ERROR: 3' barcodes: length and position of the non-N nucleotides in the barcodes must be consistent for all 3’ barcodes linked to one specific 5’ barcode.")
+                    exit(1)
 
-                out_f.write(five + threes[0] + "\n")
+                # Write to file
+                out_f.write(",".join([key] + val) + "\n")
+            else:
+                if not val[0].startswith(":"):
+                    val[0] = "," + val[0]
+
+                out_f.write(key + val[0] + "\n")
 
 
 if __name__ == "__main__":

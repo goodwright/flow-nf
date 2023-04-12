@@ -1,2 +1,2 @@
 Sample Name,5' Barcode Sequence,3' Barcode Sequence,3' Adapter Sequence
-Sample1,NNNGGCGNN,,AGATCGGAAGAGCGGTTCAG
+sample_clip_3,NNNGGCGNN,NNGACNN,AGATCGGAAGAGCGGTTCAG
