@@ -5,22 +5,27 @@
             "description": "Files needed to run the module",
             "properties": {
                 "bed": {
-                    "name": "UNKNOWN",
-                    "type": "UNKNOWN",
-                    "pattern": "UNKNOWN",
-                    "required": true,
-                    "description": "UNKNOWN"
+                    "name": "BED",
+                    "type": "file",
+                    "pattern": "bed$",
+                    "required": "true",
+                    "description": "A BED regions file"
                 },
                 "fai": {
-                    "name": "UNKNOWN",
-                    "type": "UNKNOWN",
-                    "pattern": "UNKNOWN",
-                    "required": true,
-                    "description": "UNKNOWN"
+                    "name": "FAI",
+                    "type": "file",
+                    "pattern": "fai$|fai\\.gz$",
+                    "required": "true",
+                    "description": "A genome index file"
                 }
             }
         }
     },
     "outputs": [
+        {
+            "name": "Output BED",
+            "description": "The shifted bed file",
+            "filetype": ".bed"
+        }
     ]
 }

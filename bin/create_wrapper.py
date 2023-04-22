@@ -24,11 +24,11 @@ WRAPPERS_DIR = "./wrappers/modules"
 TESTS_DIR = "./tests/wrappers/modules"
 
 test_data_paths = {
+    "fasta": "https://raw.githubusercontent.com/nf-core/test-datasets/modules/data/genomics/homo_sapiens/genome/genome.fasta",
+    "reads": "https://raw.githubusercontent.com/nf-core/test-datasets/modules/data/genomics/homo_sapiens/illumina/fastq/test_1.fastq.gz",
+    "gtf": "https://raw.githubusercontent.com/nf-core/test-datasets/modules/data/genomics/homo_sapiens/genome/genome.gtf",
     "bed": "https://raw.githubusercontent.com/nf-core/test-datasets/modules/data/genomics/sarscov2/genome/bed/test.bed",
-    "fai": "https://raw.githubusercontent.com/nf-core/test-datasets/modules/data/genomics/sarscov2/genome/genome.fasta.fai"
-    # "fasta": "./tests/data/genome/homosapien-hg37-chr21.fa.gz",
-    # "reads": "https://raw.githubusercontent.com/nf-core/test-datasets/modules/data/genomics/homo_sapiens/illumina/fastq/test_1.fastq.gz",
-    # "gtf": "https://raw.githubusercontent.com/nf-core/test-datasets/modules/data/genomics/homo_sapiens/genome/genome.gtf",
+    "fai": "https://raw.githubusercontent.com/nf-core/test-datasets/modules/data/genomics/sarscov2/genome/genome.fasta.fai",
 }
 
 file_type_info = {
@@ -49,6 +49,18 @@ file_type_info = {
         "type": "file",
         "pattern": "gtf$|gtf\\\.gz$|gff$|gff\\\.gz$",
         "desc": "A GTF annotation file",
+    },
+    "bed": {
+        "name": "BED",
+        "type": "file",
+        "pattern": "bed$",
+        "desc": "A BED regions file",
+    },
+    "fai": {
+        "name": "FAI",
+        "type": "file",
+        "pattern": "fai$|fai\\\.gz$",
+        "desc": "A genome index file",
     },
 }
 
@@ -209,7 +221,7 @@ def main(target):
 
     with open(Path(test_path), "w") as fh:
         fh.write(f'- name: "test_wrappers_{module_name.lower()}"\n')
-        fh.write(f"  {command_str}\n")
+        fh.write(f"  {command_str[:-1]}\n")
         fh.write("  tags:\n")
         fh.write('    - "wrappers"\n')
         fh.write('    - "wrappers/modules"\n')
