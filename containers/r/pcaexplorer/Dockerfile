@@ -57,12 +57,15 @@ RUN mamba install -y --name packages -c conda-forge r-devtools=2.4.*
 RUN mamba install -y --name packages -c conda-forge r-biocmanager=1.30.*
 RUN mamba install -y --name packages -c conda-forge r-catools=1.18.*
 RUN mamba install -y --name packages -c conda-forge r-doparallel=1.0.*
+RUN mamba install -y --name packages -c conda-forge r-nmf=0.21.*
 
 # Install bioconductor packages from mamba
-RUN mamba install -y --name packages -c bioconda bioconductor-gseabase=1.60.0
+RUN mamba install -y --name packages -c bioconda bioconductor-gseabase=1.60.*
+RUN mamba install -y --name packages -c bioconda bioconductor-biomart=2.54.*
 
-# Install bioconductor native for broken mamba packages
-RUN R -e 'BiocManager::install("pcaExplorer")'
+# Install native for broken mamba packages
+RUN R -e 'install.packages("stringi", repos = "https://cran.ma.imperial.ac.uk/")'
+RUN R -e 'BiocManager::install("pcaExplorer", version = "3.16")'
 
 # Terminate Docker build if key packages fail to load
 RUN R -e 'library("pcaExplorer")'
