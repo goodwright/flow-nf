@@ -75,6 +75,7 @@ jobs:
           - wrappers/subworkflows/demultiplex
           - wrappers/subworkflows/prepare_clipseq
           - wrappers/modules/bedtools_shift
+          - wrappers/modules/clippy
     steps:
       - name: Checkout Code
         uses: actions/checkout@v3

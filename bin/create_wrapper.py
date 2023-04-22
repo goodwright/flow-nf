@@ -97,13 +97,14 @@ def resolve_input(input):
     return output
 
 
-def main(target):
+def main(target, suffix):
     log.info("Create Wrapper")
     log.info(f"Target: {target}")
+    log.info(f"Suffix: {suffix}")
 
     # Build module paths and check the files exist
-    main_path = path.join(MODULES_DIR, target, "main.nf")
-    meta_path = path.join(MODULES_DIR, target, "meta.yml")
+    main_path = path.join(MODULES_DIR, suffix + target, "main.nf")
+    meta_path = path.join(MODULES_DIR, suffix + target, "meta.yml")
 
     if os.path.isfile(main_path) == False:
         log.error(f"Path does not exist {main_path}")
@@ -275,6 +276,7 @@ if __name__ == "__main__":
     # Parse args
     parser = argparse.ArgumentParser()
     parser.add_argument("--target", required=True)
+    parser.add_argument("--suffix", required=False, default='')
     args = parser.parse_args()
 
     # Setup logging
@@ -290,4 +292,4 @@ if __name__ == "__main__":
     )
 
     # Run main
-    main(args.target)
+    main(args.target, args.suffix)
