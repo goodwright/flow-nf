@@ -24,6 +24,8 @@ WRAPPERS_DIR = "./wrappers/modules"
 TESTS_DIR = "./tests/wrappers/modules"
 
 test_data_paths = {
+    "bed": "https://raw.githubusercontent.com/nf-core/test-datasets/modules/data/genomics/sarscov2/genome/bed/test.bed",
+    "fai": "https://raw.githubusercontent.com/nf-core/test-datasets/modules/data/genomics/sarscov2/genome/genome.fasta.fai"
     # "fasta": "./tests/data/genome/homosapien-hg37-chr21.fa.gz",
     # "reads": "https://raw.githubusercontent.com/nf-core/test-datasets/modules/data/genomics/homo_sapiens/illumina/fastq/test_1.fastq.gz",
     # "gtf": "https://raw.githubusercontent.com/nf-core/test-datasets/modules/data/genomics/homo_sapiens/genome/genome.gtf",
@@ -175,7 +177,7 @@ def main(target):
     with open(Path(wrapper_path), "w") as fh:
         fh.write("#!/usr/bin/env nextflow\n\n")
         fh.write(
-            f'include {{ {module_name} }} from "../modules/goodwright/{target}/main"\n\n'
+            f'include {{ {module_name} }} from "../../../modules/goodwright/{target}/main"\n\n'
         )
         fh.write("workflow {\n\n")
 
@@ -197,13 +199,13 @@ def main(target):
     log.info(f"Creating test for {module_name}")
     test_path = path.join(TESTS_DIR, module_name.lower(), "test.yml")
     os.makedirs(os.path.dirname(test_path), exist_ok=True)
-    command_str = f"command: nextflow run ./wrappers/modules/{module_name.lower()}.nf -c ./tests/config/nextflow.config "
+    command_str = f"command: nextflow run ./wrappers/modules/{module_name.lower()}/main.nf -c ./tests/config/nextflow.config "
     for param in param_list:
         command_str = command_str + f"--{param} "
         if param in test_data_paths:
             command_str = command_str + f"{test_data_paths[param]} "
         else:
-            command_str = command_str + "{PARAM-TODO}"
+            command_str = command_str + "{PARAM-TODO} "
 
     with open(Path(test_path), "w") as fh:
         fh.write(f'- name: "test_wrappers_{module_name.lower()}"\n')

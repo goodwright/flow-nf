@@ -1,0 +1,26 @@
+{
+    "inputs": {
+        "file_options": {
+            "name": "File options",
+            "description": "Files needed to run the module",
+            "properties": {
+                "bed": {
+                    "name": "UNKNOWN",
+                    "type": "UNKNOWN",
+                    "pattern": "UNKNOWN",
+                    "required": true,
+                    "description": "UNKNOWN"
+                },
+                "fai": {
+                    "name": "UNKNOWN",
+                    "type": "UNKNOWN",
+                    "pattern": "UNKNOWN",
+                    "required": true,
+                    "description": "UNKNOWN"
+                }
+            }
+        }
+    },
+    "outputs": [
+    ]
+}
