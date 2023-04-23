@@ -1,0 +1,6 @@
+- name: "test_wrappers_paraclu_paraclu"
+  command: nextflow run ./wrappers/modules/paraclu_paraclu/main.nf -c ./tests/config/nextflow.config --bed ./tests/data/paraclu/paraclu.bed --min_ue 30
+  tags:
+    - "wrappers"
+    - "wrappers/modules"
+    - "wrappers/modules/paraclu_paraclu"
