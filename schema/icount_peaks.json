@@ -1,0 +1,32 @@
+{
+    "inputs": {
+        "file_options": {
+            "name": "File options",
+            "description": "Files needed to run the module",
+            "properties": {
+                "bed": {
+                    "name": "BED",
+                    "type": "file",
+                    "pattern": "bed",
+                    "required": true,
+                    "description": "A BED regions file"
+                },
+                "sigxls": {
+                    "name": "BED",
+                    "type": "file",
+                    "pattern": "bed",
+                    "required": true,
+                    "description": "BED file of sigxls from iCount sigxls."
+                }
+            }
+        }
+    },
+    "outputs": [
+        {
+            "name": "Peaks",
+            "description": "Called iCount peaks.",
+            "filetype": "bed.gz",
+            "process": "ICOUNT_PEAKS"
+        }
+    ]
+}

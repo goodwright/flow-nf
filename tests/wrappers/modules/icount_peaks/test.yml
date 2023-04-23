@@ -1,0 +1,6 @@
+- name: "test_wrappers_icount_peaks"
+  command: nextflow run ./wrappers/modules/icount_peaks/main.nf -c ./tests/config/nextflow.config --bed ./tests/data/clippy/clippy.bed --sigxls ./tests/data/icount/test.sigxls.bed.gz
+  tags:
+    - "wrappers"
+    - "wrappers/modules"
+    - "wrappers/modules/icount_peaks"

@@ -248,7 +248,7 @@ def main(target, suffix):
                 fh.write(f"                    \"name\": \"{info['name']}\",\n")
                 fh.write(f"                    \"type\": \"{info['type']}\",\n")
                 fh.write(f"                    \"pattern\": \"{info['pattern']}\",\n")
-                fh.write(f'                    "required": "true",\n')
+                fh.write(f'                    "required": true,\n')
                 fh.write(f"                    \"description\": \"{info['desc']}\"\n")
             else:
                 fh.write(f'                    "name": "UNKNOWN",\n')
