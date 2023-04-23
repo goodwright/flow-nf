@@ -81,6 +81,7 @@ jobs:
           - wrappers/modules/icount_segment
           - wrappers/modules/icount_sigxls
           - wrappers/modules/icount_summary
+          - wrappers/modules/paraclu_cut
     steps:
       - name: Checkout Code
         uses: actions/checkout@v3
