@@ -7,16 +7,17 @@
                 "bed": {
                     "name": "BED",
                     "type": "file",
-                    "pattern": "bed$",
-                    "required": "true",
+                    "pattern": "bed",
+                    "required": true,
                     "description": "A BED regions file"
                 },
                 "fai": {
                     "name": "FAI",
                     "type": "file",
                     "pattern": "fai$|fai\\.gz$",
-                    "required": "true",
-                    "description": "A genome index file"
+                    "required": true,
+                    "description": "A genome index file",
+                    "genome_file": "fai$|fai\\.gz$"
                 }
             }
         }
