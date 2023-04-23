@@ -1,0 +1,6 @@
+- name: "test_wrappers_icount_sigxls"
+  command: nextflow run ./wrappers/modules/icount_sigxls/main.nf -c ./tests/config/nextflow.config --bed ./tests/data/clippy/clippy.bed --segmentation ./tests/data/clippy/clippy.gtf
+  tags:
+    - "wrappers"
+    - "wrappers/modules"
+    - "wrappers/modules/icount_sigxls"
