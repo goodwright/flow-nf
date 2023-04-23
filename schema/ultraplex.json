@@ -27,5 +27,12 @@
             }
         }
     },
-    "outputs": []
+    "outputs": [
+        {
+            "name": "Demultiplexed FASTQ files",
+            "description": "Output demultiplexed files.",
+            "filetype": "fastq.gz",
+            "process": "ULTRAPLEX"
+        }
+    ]
 }
