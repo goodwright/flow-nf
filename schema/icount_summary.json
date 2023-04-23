@@ -1,0 +1,44 @@
+{
+    "inputs": {
+        "file_options": {
+            "name": "File options",
+            "description": "Files needed to run the module",
+            "properties": {
+                "bed": {
+                    "name": "BED",
+                    "type": "file",
+                    "pattern": "bed",
+                    "required": true,
+                    "description": "A BED regions file"
+                },
+                "segmentation": {
+                    "name": "Segmented GTF",
+                    "type": "file",
+                    "pattern": "gtf",
+                    "required": true,
+                    "description": "A resolved iCount segmented GTF."
+                }
+            }
+        }
+    },
+    "outputs": [
+        {
+            "name": "Summary gene",
+            "description": "Output iCount summary stats.",
+            "filetype": "gene.tsv",
+            "process": "ICOUNT_SUMMARY"
+        },
+        {
+            "name": "Summary subtype",
+            "description": "Output iCount summary stats.",
+            "filetype": "subtype.tsv",
+            "process": "ICOUNT_SUMMARY"
+        },
+        {
+            "name": "Summary type",
+            "description": "Output iCount summary stats.",
+            "filetype": "type.tsv",
+            "process": "ICOUNT_SUMMARY"
+        }
+    ]
+}
