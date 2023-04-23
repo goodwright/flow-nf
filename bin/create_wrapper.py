@@ -83,15 +83,11 @@ def resolve_input(input):
 
         if "val" in arg_st:
             arg_info["type"] = "val"
-            arg_info["name"] = (
-                arg_st.replace("val", "").replace("(", "").replace(")", "").strip()
-            )
+            arg_info["name"] = arg_st.replace("val", "").replace("(", "").replace(")", "").strip()
             output["vars"].append(arg_info)
         if "path" in arg_st:
             arg_info["type"] = "path"
-            arg_info["name"] = (
-                arg_st.replace("path", "").replace("(", "").replace(")", "").strip()
-            )
+            arg_info["name"] = arg_st.replace("path", "").replace("(", "").replace(")", "").strip()
             output["vars"].append(arg_info)
 
     return output
@@ -161,9 +157,7 @@ def main(target, suffix):
             else:
                 file_str = file_str + "["
                 for var in input["vars"]:
-                    file_str = (
-                        file_str + f"file(params.{var['name']}, checkIfExists: true), "
-                    )
+                    file_str = file_str + f"file(params.{var['name']}, checkIfExists: true), "
                 file_str = file_str[:-2]
                 file_str = file_str + "]"
         else:
@@ -174,9 +168,7 @@ def main(target, suffix):
                 param_list.append(input_name)
             else:
                 for var in input["vars"]:
-                    file_str = (
-                        file_str + f"file(params.{var['name']}, checkIfExists: true), "
-                    )
+                    file_str = file_str + f"file(params.{var['name']}, checkIfExists: true), "
                     param_list.append(var["name"])
                 file_str = file_str[:-2]
 
@@ -189,9 +181,7 @@ def main(target, suffix):
     os.makedirs(os.path.dirname(wrapper_path), exist_ok=True)
     with open(Path(wrapper_path), "w") as fh:
         fh.write("#!/usr/bin/env nextflow\n\n")
-        fh.write(
-            f'include {{ {module_name} }} from "../../../modules/goodwright/{target}/main"\n\n'
-        )
+        fh.write(f'include {{ {module_name} }} from "../../../modules/goodwright/{target}/main"\n\n')
         fh.write("workflow {\n\n")
 
         for file_str in file_list:
@@ -212,7 +202,9 @@ def main(target, suffix):
     log.info(f"Creating test for {module_name}")
     test_path = path.join(TESTS_DIR, module_name.lower(), "test.yml")
     os.makedirs(os.path.dirname(test_path), exist_ok=True)
-    command_str = f"command: nextflow run ./wrappers/modules/{module_name.lower()}/main.nf -c ./tests/config/nextflow.config "
+    command_str = (
+        f"command: nextflow run ./wrappers/modules/{module_name.lower()}/main.nf -c ./tests/config/nextflow.config "
+    )
     for param in param_list:
         command_str = command_str + f"--{param} "
         if param in test_data_paths:
@@ -276,7 +268,7 @@ if __name__ == "__main__":
     # Parse args
     parser = argparse.ArgumentParser()
     parser.add_argument("--target", required=True)
-    parser.add_argument("--suffix", required=False, default='')
+    parser.add_argument("--suffix", required=False, default="")
     args = parser.parse_args()
 
     # Setup logging
