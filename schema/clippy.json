@@ -29,5 +29,17 @@
         }
     },
     "outputs": [
+        {
+            "name": "Peaks",
+            "description": "Generated peaks in BED format.",
+            "filetype": "Peaks.bed",
+            "process": "CLIPPY"
+        },
+        {
+            "name": "Summits",
+            "description": "Summits of generated peaks in BED format.",
+            "filetype": "Summits.bed",
+            "process": "CLIPPY"
+        }
     ]
 }

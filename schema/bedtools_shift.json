@@ -25,7 +25,8 @@
         {
             "name": "Output BED",
             "description": "The shifted bed file",
-            "filetype": ".bed"
+            "filetype": "bed",
+            "process": "BEDTOOLS_SHIFT"
         }
     ]
 }
