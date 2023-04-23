@@ -53,7 +53,7 @@ file_type_info = {
     "bed": {
         "name": "BED",
         "type": "file",
-        "pattern": "bed$",
+        "pattern": "bed",
         "desc": "A BED regions file",
     },
     "fai": {

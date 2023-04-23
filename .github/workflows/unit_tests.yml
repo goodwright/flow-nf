@@ -76,7 +76,9 @@ jobs:
           - wrappers/subworkflows/prepare_clipseq
           - wrappers/modules/bedtools_shift
           - wrappers/modules/clippy
-          - "wrappers/modules/icount_peaks"
+          - wrappers/modules/icount_peaks
+          - wrappers/modules/icount_rnamaps
+          - wrappers/modules/icount_segment
     steps:
       - name: Checkout Code
         uses: actions/checkout@v3
