@@ -1,0 +1,33 @@
+{
+    "inputs": {
+        "file_options": {
+            "name": "File options",
+            "description": "Files needed to run the module",
+            "properties": {
+                "bed": {
+                    "name": "BED",
+                    "type": "file",
+                    "pattern": "bed",
+                    "required": true,
+                    "description": "A BED regions file"
+                },
+                "fai": {
+                    "name": "FAI",
+                    "type": "file",
+                    "pattern": "fai$|fai\\.gz$",
+                    "required": true,
+                    "description": "A genome index file",
+                    "genome_file": "fai$|fai\\.gz$"
+                }
+            }
+        }
+    },
+    "outputs": [
+        {
+            "name": "Output BED",
+            "description": "The shifted bed file",
+            "filetype": "bed",
+            "process": "BEDTOOLS_SHIFT"
+        }
+    ]
+}

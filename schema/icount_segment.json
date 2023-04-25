@@ -7,14 +7,14 @@
                 "gtf": {
                     "name": "GTF",
                     "type": "file",
-                    "pattern": "gtf$",
+                    "pattern": "gtf",
                     "required": true,
                     "description": "A genome annotation file."
                 },
                 "fai": {
                     "name": "FAI",
                     "type": "file",
-                    "pattern": "fai$",
+                    "pattern": "fai",
                     "required": true,
                     "description": "A faidx genome index."
                 }

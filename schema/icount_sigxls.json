@@ -1,0 +1,38 @@
+{
+    "inputs": {
+        "file_options": {
+            "name": "File options",
+            "description": "Files needed to run the module",
+            "properties": {
+                "bed": {
+                    "name": "BED",
+                    "type": "file",
+                    "pattern": "bed",
+                    "required": true,
+                    "description": "A BED regions file"
+                },
+                "segmentation": {
+                    "name": "Segmented GTF",
+                    "type": "file",
+                    "pattern": "gtf",
+                    "required": true,
+                    "description": "GTF file segmented by iCount segment."
+                }
+            }
+        }
+    },
+    "outputs": [
+        {
+            "name": "Scores",
+            "description": "Output signal scores.",
+            "filetype": "tsv",
+            "process": "ICOUNT_SIGXLS"
+        },
+        {
+            "name": "Crosslinks",
+            "description": "Crosslinks deemed significant by iCount.",
+            "filetype": "bed.gz",
+            "process": "ICOUNT_SIGXLS"
+        }
+    ]
+}

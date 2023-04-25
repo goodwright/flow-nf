@@ -1,0 +1,31 @@
+{
+    "inputs": {
+        "file_options": {
+            "name": "File options",
+            "description": "Files needed to run the module",
+            "properties": {
+                "bed": {
+                    "name": "BED",
+                    "type": "file",
+                    "pattern": "bed",
+                    "required": true,
+                    "description": "A BED file of crosslinks"
+                },
+                "min_ue": {
+                    "name": "Min Value",
+                    "type": "integer",
+                    "required": true,
+                    "description": "Parclu minimum threshold value"
+                }
+            }
+        }
+    },
+    "outputs": [
+        {
+            "name": "Signals",
+            "description": "Output TSV of significant signals.",
+            "filetype": "tsv",
+            "process": "PARACLU_PARACLU"
+        }
+    ]
+}

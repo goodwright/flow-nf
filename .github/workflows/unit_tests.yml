@@ -74,6 +74,15 @@ jobs:
           - wrappers/modules/ultraplex
           - wrappers/subworkflows/demultiplex
           - wrappers/subworkflows/prepare_clipseq
+          - wrappers/modules/bedtools_shift
+          - wrappers/modules/clippy
+          - wrappers/modules/icount_peaks
+          - wrappers/modules/icount_rnamaps
+          - wrappers/modules/icount_segment
+          - wrappers/modules/icount_sigxls
+          - wrappers/modules/icount_summary
+          - wrappers/modules/paraclu_cut
+          - wrappers/modules/paraclu_paraclu
     steps:
       - name: Checkout Code
         uses: actions/checkout@v3

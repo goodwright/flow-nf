@@ -1,0 +1,6 @@
+- name: "test_wrappers_paraclu_cut"
+  command: nextflow run ./wrappers/modules/paraclu_cut/main.nf -c ./tests/config/nextflow.config --tsv ./tests/data/paraclu/paraclu.sigxls.tsv
+  tags:
+    - "wrappers"
+    - "wrappers/modules"
+    - "wrappers/modules/paraclu_cut"

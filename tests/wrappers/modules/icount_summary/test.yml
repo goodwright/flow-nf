@@ -1,0 +1,6 @@
+- name: "test_wrappers_icount_summary"
+  command: nextflow run ./wrappers/modules/icount_summary/main.nf -c ./tests/config/nextflow.config --bed ./tests/data/clippy/clippy.bed --segmentation ./tests/data/icount/icount_gencode.resolved.gtf.gz
+  tags:
+    - "wrappers"
+    - "wrappers/modules"
+    - "wrappers/modules/icount_summary"

@@ -1,0 +1,6 @@
+- name: "test_wrappers_clippy"
+  command: nextflow run ./wrappers/modules/clippy/main.nf -c ./tests/config/nextflow.config --bed ./tests/data/clippy/clippy.bed --gtf ./tests/data/clippy/clippy.gtf --fai ./tests/data/clippy/clippy.fai
+  tags:
+    - "wrappers"
+    - "wrappers/modules"
+    - "wrappers/modules/clippy"

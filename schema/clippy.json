@@ -1,0 +1,47 @@
+{
+    "inputs": {
+        "file_options": {
+            "name": "File options",
+            "description": "Files needed to run the module",
+            "properties": {
+                "bed": {
+                    "name": "BED",
+                    "type": "file",
+                    "pattern": "bed",
+                    "required": true,
+                    "description": "A BED regions file"
+                },
+                "gtf": {
+                    "name": "GTF",
+                    "type": "file",
+                    "pattern": "gtf$|gtf\\.gz$|gff$|gff\\.gz$",
+                    "required": true,
+                    "description": "A GTF annotation file",
+                    "genome_file": "gtf$|gtf\\.gz$|gff$|gff\\.gz$"
+                },
+                "fai": {
+                    "name": "FAI",
+                    "type": "file",
+                    "pattern": "fai$|fai\\.gz$",
+                    "required": true,
+                    "description": "A genome index file",
+                    "genome_file": "fai$|fai\\.gz$"
+                }
+            }
+        }
+    },
+    "outputs": [
+        {
+            "name": "Peaks",
+            "description": "Generated peaks in BED format.",
+            "filetype": "Peaks.bed",
+            "process": "CLIPPY"
+        },
+        {
+            "name": "Summits",
+            "description": "Summits of generated peaks in BED format.",
+            "filetype": "Summits.bed",
+            "process": "CLIPPY"
+        }
+    ]
+}

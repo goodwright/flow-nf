@@ -1,0 +1,25 @@
+{
+    "inputs": {
+        "file_options": {
+            "name": "File options",
+            "description": "Files needed to run the module",
+            "properties": {
+                "tsv": {
+                    "name": "Signals",
+                    "type": "file",
+                    "pattern": "tsv",
+                    "required": true,
+                    "description": "TSV file of sigxls from paraclu"
+                }
+            }
+        }
+    },
+    "outputs": [
+        {
+            "name": "Peaks",
+            "description": "Formatted output peaks from paraclu.",
+            "filetype": "tsv",
+            "process": "PARACLU_CUT"
+        }
+    ]
+}
