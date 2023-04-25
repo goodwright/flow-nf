@@ -1,5 +1,5 @@
 - name: "test_wrappers_icount_segment"
-  command: nextflow run ./wrappers/modules/icount_segment/main.nf -c ./tests/config/nextflow.config --gtf ./tests/data/genome/homosapien-hg37-chr21.fa.gz --fai ./tests/data/genome/homosapien-hg37-chr21.fa.fai
+  command: nextflow run ./wrappers/modules/icount_segment/main.nf -c ./tests/config/nextflow.config --gtf ./tests/data/genome/gencode.v35.chr21.gtf --fai ./tests/data/genome/homosapien-hg37-chr21.fa.fai
   tags:
     - "wrappers"
     - "wrappers/modules"
