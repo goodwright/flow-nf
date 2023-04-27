@@ -25,3 +25,15 @@ workflow test_ultraplex_adaptor {
         "AGATCGGAAGAGCGGTTCAG"
     )
 }
+
+workflow test_ultraplex_pairedend {
+
+    barcodes = file(params.goodwright_test_data['ultraplex']['barcodes'], checkIfExists: true)
+    input = [[id: "test"], [file(params.goodwright_test_data['ultraplex']['multiplexed_fastq'], checkIfExists: true), file(params.goodwright_test_data['ultraplex']['multiplexed_fastq2'], checkIfExists: true)]]
+
+    ULTRAPLEX (
+        input,
+        barcodes,
+        ""
+    )
+}
