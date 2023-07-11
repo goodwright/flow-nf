@@ -166,6 +166,13 @@
                             "modules"
                         ]
                     },
+                    "sample/scmultiome": {
+                        "branch": "dev",
+                        "git_sha": "9a1f226020441bf54861b20a2775c5b916564005",
+                        "installed_by": [
+                            "modules"
+                        ]
+                    },
                     "samtools/simple_view": {
                         "branch": "master",
                         "git_sha": "0f34640182b26bf0b09f193ebf18f7bafc70d0ab",
@@ -280,6 +287,13 @@
                     "gunzip": {
                         "branch": "master",
                         "git_sha": "e06548bfa36ee31869b81041879dd6b3a83b1d57",
+                        "installed_by": [
+                            "modules"
+                        ]
+                    },
+                    "kallistobustools/ref": {
+                        "branch": "master",
+                        "git_sha": "911696ea0b62df80e900ef244d7867d177971f73",
                         "installed_by": [
                             "modules"
                         ]

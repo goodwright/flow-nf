@@ -6,11 +6,14 @@ include { GUNZIP as GUNZIP_FASTA } from '../../../../modules/nf-core/gunzip/main
 include { GUNZIP as GUNZIP_GTF   } from '../../../../modules/nf-core/gunzip/main.nf'
 include { CELLRANGER_MKGTF       } from '../../../../modules/nf-core/cellranger/mkgtf/main'
 include { CELLRANGER_MKREF       } from '../../../../modules/nf-core/cellranger/mkref/main'
+include { KALLISTOBUSTOOLS_REF   } from '../../../../modules/nf-core/kallistobustools/ref/main'
+include { STAR_GENOMEGENERATE    } from '../../../../modules/nf-core/star/genomegenerate/main'
 
 workflow PREPARE_SCRNASEQ {
     take:
-    fasta                //      file: /path/to/genome.fasta
-    gtf                  //      file: /path/to/genome.gtf
+    fasta       // file: /path/to/genome.fasta
+    gtf         // file: /path/to/genome.gtf
+    kb_workflow // string: should default to standard
 
     main:
     ch_versions = Channel.empty()
@@ -25,7 +28,6 @@ workflow PREPARE_SCRNASEQ {
     } else {
         ch_fasta = Channel.of([ [id:fasta.baseName], fasta ])
     }
-    // EXAMPLE CHANNEL STRUCT: [[meta], fasta]
     //ch_fasta | view
 
     //
@@ -38,65 +40,58 @@ workflow PREPARE_SCRNASEQ {
     } else {
         ch_gtf = Channel.of([ [id:gtf.baseName], gtf ])
     }
-    // EXAMPLE CHANNEL STRUCT: [[meta], gtf]
     //ch_gtf | view
 
     //
     // MODULE: Create Cell ranger compatable GTF file - Filter GTF based on gene biotypes passed in params.modules
     //
-    // 
-    CELLRANGER_MKGTF( gtf )
+    CELLRANGER_MKGTF(
+        ch_gtf.collect{ it[1] }
+    )
     ch_versions = ch_versions.mix(CELLRANGER_MKGTF.out.versions)
 
-    // Make reference genome
-    CELLRANGER_MKREF( fasta, CELLRANGER_MKGTF.out.gtf, "cellranger_reference" )
-    ch_versions = ch_versions.mix(CELLRANGER_MKREF.out.versions)
-    cellranger_index = CELLRANGER_MKREF.out.reference
+    //
+    // MODULE: Make cell range reference genome
+    //
+    CELLRANGER_MKREF(
+        ch_fasta.collect{ it[1] },
+        CELLRANGER_MKGTF.out.gtf,
+        "cellranger_reference"
+    )
+    ch_versions         = ch_versions.mix(CELLRANGER_MKREF.out.versions)
+    ch_cellranger_index = CELLRANGER_MKREF.out.reference
+    //ch_cellranger_index | view
 
+    //
+    // MODULE: Make bustools ref
+    //
+    KALLISTOBUSTOOLS_REF (
+        ch_fasta.collect{ it[1] },
+        ch_gtf.collect{ it[1] },
+        kb_workflow
+    )
+    ch_versions       = ch_versions.mix(KALLISTOBUSTOOLS_REF.out.versions)
+    ch_kallisto_index = KALLISTOBUSTOOLS_REF.out.index.collect()
+    //ch_kallisto_index | view
 
+    //
+    // MODULE: Build star index
+    //
+    STAR_GENOMEGENERATE(
+        ch_fasta.collect{ it[1] },
+        ch_gtf.collect{ it[1] }
+    )
+    ch_versions   = ch_versions.mix(STAR_GENOMEGENERATE.out.versions)
+    ch_star_index = STAR_GENOMEGENERATE.out.index.collect()
 
-    // /*
-    // * Build salmon index
-    // */
-    // if (!salmon_index) {
-    //     SIMPLEAF_INDEX( genome_fasta, transcript_fasta, gtf )
-    //     salmon_index = SIMPLEAF_INDEX.out.index.collect()
-    //     transcript_tsv = SIMPLEAF_INDEX.out.transcript_tsv.collect()
-    //     ch_versions = ch_versions.mix(SIMPLEAF_INDEX.out.versions)
-
-    //     if (!txp2gene) { 
-    //         txp2gene = SIMPLEAF_INDEX.out.transcript_tsv 
-    //     }
-    // }
-    // /*
-    // * Generate Kallisto Gene Map if not supplied and index is given
-    // * If no index is given, the gene map will be generated in the 'kb ref' step
-    // */
-    // if (!txp2gene && kallisto_index) {
-    //     GENE_MAP( gtf )
-    //     txp2gene = GENE_MAP.out.gene_map
-    //     ch_versions = ch_versions.mix(GENE_MAP.out.versions)
-    // }
-
-    // /*
-    // * Generate kallisto index
-    // */
-    // if (!kallisto_index) {
-    //     KALLISTOBUSTOOLS_REF( genome_fasta, gtf, kb_workflow )
-    //     txp2gene = KALLISTOBUSTOOLS_REF.out.t2g.collect()
-    //     kallisto_index = KALLISTOBUSTOOLS_REF.out.index.collect()
-    //     ch_versions = ch_versions.mix(KALLISTOBUSTOOLS_REF.out.versions)
-    //     t1c = KALLISTOBUSTOOLS_REF.out.cdna_t2c.ifEmpty{ [] }
-    //     t2c = KALLISTOBUSTOOLS_REF.out.intron_t2c.ifEmpty{ [] }
-    // }
-
-    //     if (!star_index) {
-    //     STAR_GENOMEGENERATE( genome_fasta, gtf )
-    //     star_index = STAR_GENOMEGENERATE.out.index.collect()
-    //     ch_versions = ch_versions.mix(STAR_GENOMEGENERATE.out.versions)
-    // }
-
+    //
+    // MODULE: Build salmon index
+    //
+    //TODO: SIMPLEAF is not on nf-core/modules yet
 
     emit:
-    versions   = ch_versions // channel: [ versions.yml ]
+    cellranger_index = ch_cellranger_index // channel: [ val(meta), [ index ] ]
+    kallisto_index   = ch_kallisto_index   // channel: [ val(meta), [ index ] ]
+    star_index       = ch_star_index       // channel: [ val(meta), [ index ] ]
+    versions         = ch_versions         // channel: [ versions.yml ]
 }
