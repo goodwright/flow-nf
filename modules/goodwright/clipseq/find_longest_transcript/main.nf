@@ -2,7 +2,7 @@ process CLIPSEQ_FIND_LONGEST_TRANSCRIPT {
     tag "$gtf"
     label "process_single"
 
-    conda     (params.enable_conda ? "conda-forge::python=3.10.4"
+    conda "conda-forge::python=3.10.4"
     container "biocontainers/python:3.10.4"
 
     input:
