@@ -2,7 +2,7 @@ process R_VOLCANO_PLOT {
     tag "${contrast}:${reference}_${treatment}"
     label 'process_medium'
 
-    conda (params.enable_conda ? "bioconda::bioconductor-degreport=1.34.0" : null)
+    conda "bioconda::bioconductor-degreport=1.34.0"
     container "${ workflow.containerEngine == 'singularity' && !task.ext.singularity_pull_docker_container ?
         'https://depot.galaxyproject.org/singularity/bioconductor-degreport:1.34.0--r42hdfd78af_0' :
         'quay.io/biocontainers/bioconductor-degreport:1.34.0--r42hdfd78af_0' }"

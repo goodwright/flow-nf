@@ -2,7 +2,7 @@ process SAMPLE_BASE_SAMPLESHEET_CHECK {
     tag "$samplesheet"
     label 'process_single'
 
-    conda     (params.enable_conda ? "conda-forge::python=3.10.4" : null)
+    conda     (params.enable_conda ? "conda-forge::python=3.10.4"
     container "quay.io/biocontainers/python:3.10.4"
 
     input:

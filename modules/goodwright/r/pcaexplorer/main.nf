@@ -1,7 +1,7 @@
 process R_PCAEXPLORER {
     label 'process_medium'
 
-    conda (params.enable_conda ? "bioconda::bioconductor-pcaexplorer=2.24.0" : null)
+    conda "bioconda::bioconductor-pcaexplorer=2.24.0"
     container 'chrischeshire/pcaexplorer:latest'
 
     input:

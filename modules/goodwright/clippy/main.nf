@@ -2,7 +2,7 @@ process CLIPPY {
     tag "$meta.id"
     label "process_high"
 
-    conda (params.enable_conda ? "bioconda::clippy=1.5.0" : null)
+    conda "bioconda::clippy=1.5.0"
     container "${ workflow.containerEngine == 'singularity' && !task.ext.singularity_pull_docker_container ?
         'https://depot.galaxyproject.org/singularity/clippy:1.5.0--pyhdfd78af_0' :
         'quay.io/biocontainers/clippy:1.5.0--pyhdfd78af_0' }"

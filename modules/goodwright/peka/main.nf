@@ -2,7 +2,7 @@ process PEKA {
     tag "$meta.id"
     label "process_low"
 
-    conda (params.enable_conda ? "bioconda::peka=1.0.0" : null)
+    conda "bioconda::peka=1.0.0"
     container "quay.io/biocontainers/peka:1.0.0--pyhdfd78af_0"
 
     input:
