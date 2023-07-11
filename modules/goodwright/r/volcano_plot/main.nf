@@ -5,7 +5,7 @@ process R_VOLCANO_PLOT {
     conda "bioconda::bioconductor-degreport=1.34.0"
     container "${ workflow.containerEngine == 'singularity' && !task.ext.singularity_pull_docker_container ?
         'https://depot.galaxyproject.org/singularity/bioconductor-degreport:1.34.0--r42hdfd78af_0' :
-        'quay.io/biocontainers/bioconductor-degreport:1.34.0--r42hdfd78af_0' }"
+        'biocontainers/bioconductor-degreport:1.34.0--r42hdfd78af_0' }"
 
     input:
     tuple val(meta), path(deseq_results)

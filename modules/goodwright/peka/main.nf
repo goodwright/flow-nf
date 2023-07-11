@@ -3,7 +3,7 @@ process PEKA {
     label "process_low"
 
     conda "bioconda::peka=1.0.0"
-    container "quay.io/biocontainers/peka:1.0.0--pyhdfd78af_0"
+    container "biocontainers/peka:1.0.0--pyhdfd78af_0"
 
     input:
     tuple val(meta), path(peaks)

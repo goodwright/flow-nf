@@ -3,7 +3,7 @@ process CLIPSEQ_FIND_LONGEST_TRANSCRIPT {
     label "process_single"
 
     conda     (params.enable_conda ? "conda-forge::python=3.10.4"
-    container "quay.io/biocontainers/python:3.10.4"
+    container "biocontainers/python:3.10.4"
 
     input:
     tuple val(meta), path(gtf)
