@@ -2,7 +2,7 @@ process R_GSEA {
     tag "${meta.id}"
     label 'process_medium'
 
-    container 'chrischeshire/gsea:latest'
+    container 'docker.io/chrischeshire/gsea:latest'
 
     input:
     tuple val(meta), path(deseq2_results)

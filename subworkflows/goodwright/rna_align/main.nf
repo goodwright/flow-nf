@@ -75,7 +75,7 @@ workflow RNA_ALIGN {
     */
     BAM_STATS_SAMTOOLS_GENOME (
         ch_bam_bai,
-        fasta
+        [ [:], [fasta] ]
     )
     ch_versions = ch_versions.mix(BAM_STATS_SAMTOOLS_GENOME.out.versions)
 
@@ -84,7 +84,7 @@ workflow RNA_ALIGN {
     */
     BAM_SORT_STATS_SAMTOOLS_TRANSCRIPT (
         STAR_ALIGN.out.bam_transcript,
-        fasta
+        [ [:], [fasta] ]
     )
 
     emit:
