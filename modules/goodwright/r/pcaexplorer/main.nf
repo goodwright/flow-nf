@@ -2,7 +2,7 @@ process R_PCAEXPLORER {
     label 'process_medium'
 
     conda "bioconda::bioconductor-pcaexplorer=2.24.0"
-    container 'chrischeshire/pcaexplorer:latest'
+    container 'docker.io/chrischeshire/pcaexplorer:latest'
 
     input:
     tuple val(meta), path(rds)
