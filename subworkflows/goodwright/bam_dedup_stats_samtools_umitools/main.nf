@@ -46,7 +46,7 @@ workflow BAM_DEDUP_STATS_SAMTOOLS_UMITOOLS {
     * SUBWORKFLOW: Calc stats on new bam
     */
     BAM_STATS_SAMTOOLS ( 
-        ch_bam_bai, [] 
+        ch_bam_bai, [[:],[]] 
     )
     ch_versions = ch_versions.mix(BAM_STATS_SAMTOOLS.out.versions)
 
