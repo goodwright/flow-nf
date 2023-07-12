@@ -23,7 +23,7 @@
       should_exist: false
     - path: "output/gunzip/homosapien.gtf"
       should_exist: false
-    - path: "output/cellranger/homosapien.filtered.gtf"
+    - path: "output/cellranger/genome.filtered.gtf"
     - path: "output/cellranger/cellranger_reference/fasta/genome.fa"
     - path: "output/star/star/Log.out"
     - path: "output/kallistobustools/cdna.fa"
