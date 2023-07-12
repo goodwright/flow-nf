@@ -3,7 +3,7 @@ process SAMPLE_BASE_SAMPLESHEET_CHECK {
     label 'process_single'
 
     conda "conda-forge::python=3.10.4"
-    container "biocontainers/python:3.10.4"
+    container "docker.io/python:3.10.4"
 
     input:
     path samplesheet

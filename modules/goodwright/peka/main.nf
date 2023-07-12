@@ -3,7 +3,10 @@ process PEKA {
     label "process_low"
 
     conda "bioconda::peka=1.0.0"
-    container "biocontainers/peka:1.0.0--pyhdfd78af_0"
+    container ""
+    container "${ workflow.containerEngine == 'singularity' && !task.ext.singularity_pull_docker_container ?
+    'https://depot.galaxyproject.org/singularity/peka:1.0.0--pyhdfd78af_0' :
+    'biocontainers/peka:1.0.0--pyhdfd78af_0' }"
 
     input:
     tuple val(meta), path(peaks)
