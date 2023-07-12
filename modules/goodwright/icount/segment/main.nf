@@ -12,10 +12,10 @@ process ICOUNT_SEGMENT {
     File "/usr/local/lib/python3.9/site-packages/iCount/genomes/segment.py", line 1015, in get_segments
         for gene_content in _get_gene_content(annotation, chromosomes, report_progress):
     */
-    conda (params.enable_conda ? "bioconda::icount-mini=2.0.3" : null)
+    conda "bioconda::icount-mini=2.0.3"
     container "${ workflow.containerEngine == 'singularity' && !task.ext.singularity_pull_docker_container ?
         'https://depot.galaxyproject.org/singularity/icount-mini:2.0.3--pyh5e36f6f_0' :
-        'quay.io/biocontainers/icount-mini:2.0.3--pyh5e36f6f_0' }"
+        'biocontainers/icount-mini:2.0.3--pyh5e36f6f_0' }"
 
     input:
     tuple val(meta), path(gtf)

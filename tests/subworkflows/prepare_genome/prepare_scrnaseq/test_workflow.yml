@@ -1,0 +1,29 @@
+- name: "test_sw_prepare_scrnaseq_testcompressed"
+  command: nextflow run ./tests/subworkflows/prepare_genome/prepare_scrnaseq -entry test_compressed -c ./tests/config/nextflow.config -c ./tests/subworkflows/prepare_genome/prepare_scrnaseq/nextflow.config
+  tags:
+    - "subworkflows"
+    - "prepare_genome"
+    - "prepare_genome/prepare_scrnaseq"
+  files:
+    - path: "output/gunzip/genome.fasta"
+    - path: "output/gunzip/homosapien.gtf"
+    - path: "output/cellranger/homosapien.filtered.gtf"
+    - path: "output/cellranger/cellranger_reference/fasta/genome.fa"
+    - path: "output/star/star/Log.out"
+    - path: "output/kallistobustools/cdna.fa"
+
+- name: "test_sw_prepare_scrnaseq_testuncompressed"
+  command: nextflow run ./tests/subworkflows/prepare_genome/prepare_scrnaseq -entry test_uncompressed -c ./tests/config/nextflow.config -c ./tests/subworkflows/prepare_genome/prepare_scrnaseq/nextflow.config
+  tags:
+    - "subworkflows"
+    - "prepare_genome"
+    - "prepare_genome/prepare_scrnaseq"
+  files:
+    - path: "output/gunzip/genome.fasta"
+      should_exist: false
+    - path: "output/gunzip/homosapien.gtf"
+      should_exist: false
+    - path: "output/cellranger/genome.filtered.gtf"
+    - path: "output/cellranger/cellranger_reference/fasta/genome.fa"
+    - path: "output/star/star/Log.out"
+    - path: "output/kallistobustools/cdna.fa"
