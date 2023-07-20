@@ -1,0 +1,117 @@
+- name: "test_samplesheet_valid_single_sample_se"
+  command: nextflow run ./tests/modules/sample/scmultiome_samplesheet_check/main.nf -c ./tests/config/nextflow.config -entry valid_single_sample_se
+  tags:
+    - "modules"
+    - "sample"
+    - "sample/scmultiome_samplesheet_check"
+  files:
+    - path: "output/scmultiome/samplesheet.valid.csv"
+      md5sum: 9596f2746d23c19f9e035dbb7b56a914
+
+- name: "test_samplesheet_valid_single_sample_pe"
+  command: nextflow run ./tests/modules/sample/scmultiome_samplesheet_check/main.nf -c ./tests/config/nextflow.config -entry valid_single_sample_pe
+  tags:
+    - "modules"
+    - "sample"
+    - "sample/scmultiome_samplesheet_check"
+  files:
+    - path: "output/scmultiome/samplesheet.valid.csv"
+      md5sum: 05e514ead87b42b4882467dc831a4c35
+
+- name: "test_samplesheet_scmo_valid_pe_se_mixed"
+  command: nextflow run ./tests/modules/sample/scmultiome_samplesheet_check/main.nf -c ./tests/config/nextflow.config -entry scmo_valid_pe_se_mixed
+  tags:
+    - "modules"
+    - "sample"
+    - "sample/scmultiome_samplesheet_check"
+  files:
+    - path: "output/scmultiome/samplesheet.valid.csv"
+      md5sum: 3d41ef01f861720942cbc64e83ee4b1a
+
+- name: "test_samplesheet_scmo_valid_multirep_se"
+  command: nextflow run ./tests/modules/sample/scmultiome_samplesheet_check/main.nf -c ./tests/config/nextflow.config -entry scmo_valid_multirep_se
+  tags:
+    - "modules"
+    - "sample"
+    - "sample/scmultiome_samplesheet_check"
+  files:
+    - path: "output/scmultiome/samplesheet.valid.csv"
+      md5sum: acc9e664423598010573834082feb67a
+
+- name: "test_samplesheet_scmo_valid_multirep_pe"
+  command: nextflow run ./tests/modules/sample/scmultiome_samplesheet_check/main.nf -c ./tests/config/nextflow.config -entry scmo_valid_multirep_pe
+  tags:
+    - "modules"
+    - "sample"
+    - "sample/scmultiome_samplesheet_check"
+  files:
+    - path: "output/scmultiome/samplesheet.valid.csv"
+      md5sum: 01349bc4bc0cd8f1b07dd10948bb1cae
+
+- name: "test_samplesheet_scmo_valid_merge_rep"
+  command: nextflow run ./tests/modules/sample/scmultiome_samplesheet_check/main.nf -c ./tests/config/nextflow.config -entry scmo_valid_merge_rep
+  tags:
+    - "modules"
+    - "sample"
+    - "sample/scmultiome_samplesheet_check"
+  files:
+    - path: "output/scmultiome/samplesheet.valid.csv"
+      md5sum: 1638eb8ba565110f90b32a044dc166ef
+
+- name: "test_samplesheet_scmo_valid_extra_header"
+  command: nextflow run ./tests/modules/sample/scmultiome_samplesheet_check/main.nf -c ./tests/config/nextflow.config -entry scmo_valid_extra_header
+  tags:
+    - "modules"
+    - "sample"
+    - "sample/scmultiome_samplesheet_check"
+  files:
+    - path: "output/scmultiome/samplesheet.valid.csv"
+      md5sum: b72beff6d7f38ad7b8747c01a3eebdf8
+
+- name: "scmo_sample_spaces"
+  command: nextflow run ./tests/modules/sample/scmultiome_samplesheet_check/main.nf -c ./tests/config/nextflow.config -entry scmo_sample_spaces
+  tags:
+    - "modules"
+    - "sample"
+    - "sample/scmultiome_samplesheet_check"
+  exit_code: 1
+
+- name: "scmo_sample_blank"
+  command: nextflow run ./tests/modules/sample/scmultiome_samplesheet_check/main.nf -c ./tests/config/nextflow.config -entry scmo_sample_blank
+  tags:
+    - "modules"
+    - "sample"
+    - "sample/scmultiome_samplesheet_check"
+  exit_code: 1
+
+- name: "scmo_invalid_col_in_row"
+  command: nextflow run ./tests/modules/sample/scmultiome_samplesheet_check/main.nf -c ./tests/config/nextflow.config -entry scmo_invalid_col_in_row
+  tags:
+    - "modules"
+    - "sample"
+    - "sample/scmultiome_samplesheet_check"
+  exit_code: 1
+
+- name: "scmo_fastq_spaces"
+  command: nextflow run ./tests/modules/sample/scmultiome_samplesheet_check/main.nf -c ./tests/config/nextflow.config -entry scmo_fastq_spaces
+  tags:
+    - "modules"
+    - "sample"
+    - "sample/scmultiome_samplesheet_check"
+  exit_code: 1
+
+- name: "scmo_fastq_ext_error"
+  command: nextflow run ./tests/modules/sample/scmultiome_samplesheet_check/main.nf -c ./tests/config/nextflow.config -entry scmo_fastq_ext_error
+  tags:
+    - "modules"
+    - "sample"
+    - "sample/scmultiome_samplesheet_check"
+  exit_code: 1
+
+- name: "scmo_dot_in_sample"
+  command: nextflow run ./tests/modules/sample/scmultiome_samplesheet_check/main.nf -c ./tests/config/nextflow.config -entry scmo_dot_in_sample
+  tags:
+    - "modules"
+    - "sample"
+    - "sample/scmultiome_samplesheet_check"
+  exit_code: 1
