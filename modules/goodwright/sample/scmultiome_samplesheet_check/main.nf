@@ -1,4 +1,4 @@
-process SAMPLE_BASE_SAMPLESHEET_CHECK {
+process SCMULTIOME_SAMPLESHEET_CHECK {
     tag "$samplesheet"
     label 'process_single'
 
