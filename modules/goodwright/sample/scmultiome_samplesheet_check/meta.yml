@@ -1,5 +1,5 @@
-name: sample_base_samplesheet_check
-description: Checks a standard fastq-based samplesheet
+name: scmultiome_samplesheet_check
+description: Checks a scmultiome fastq-based samplesheet
 keywords:
   - samplesheet
 input:
