@@ -1,0 +1,17 @@
+- name: "test_sw_parse_multiome_input_multi_pe"
+  command: nextflow run ./tests/subworkflows/parse_scmultiome_input/main.nf -c ./tests/config/nextflow.config -entry test_multi_pe
+  tags:
+    - "subworkflows"
+    - "parse_scmultiome_input"
+
+- name: "test_sw_parse_scmultiome_input_merge_rep"
+  command: nextflow run ./tests/subworkflows/parse_scmultiome_input/main.nf -c ./tests/config/nextflow.config -entry test_merge_rep
+  tags:
+    - "subworkflows"
+    - "parse_scmultiome_input"
+
+- name: "test_sw_parse_scmultiome_input_multi_pe_merge_true"
+  command: nextflow run ./tests/subworkflows/parse_scmultiome_input/main.nf -c ./tests/config/nextflow.config -entry test_multi_pe_merge_true
+  tags:
+    - "subworkflows"
+    - "parse_scmultiome_input"

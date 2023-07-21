@@ -62,6 +62,7 @@ jobs:
           - r/gsea
           # Subworkflows
           - parse_fastq_input
+          - parse_scmultiome_input
           - prepare_genome/prepare_ref
           - prepare_genome/prepare_aligner
           - prepare_genome/prepare_clipseq
