@@ -5,7 +5,7 @@ process PARACLU_CUT {
     conda "bioconda::paraclu=10"
     container "${ workflow.containerEngine == 'singularity' && !task.ext.singularity_pull_docker_container ?
         'https://depot.galaxyproject.org/singularity/paraclu:10--h9a82719_1' :
-        'quay.io/biocontainers/paraclu:10--h9a82719_1' }"
+        'biocontainers/paraclu:10--h9a82719_1' }"
 
     input:
     tuple val(meta), path(tsv)

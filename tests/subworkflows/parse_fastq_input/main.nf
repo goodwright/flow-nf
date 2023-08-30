@@ -31,4 +31,3 @@ workflow test_merge_rep {
     )
     PARSE_FASTQ_INPUT.out.fastq | view
 }
-
