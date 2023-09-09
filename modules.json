@@ -166,9 +166,9 @@
                             "modules"
                         ]
                     },
-                    "sample/scmultiome": {
-                        "branch": "dev",
-                        "git_sha": "9a1f226020441bf54861b20a2775c5b916564005",
+                    "sample/scmultiome_samplesheet_check": {
+                        "branch": "master",
+                        "git_sha": "bb14bcf2ecfa7ca168d91a71db9bacd988666d7f",
                         "installed_by": [
                             "modules"
                         ]
@@ -347,7 +347,7 @@
                     },
                     "star/genomegenerate": {
                         "branch": "master",
-                        "git_sha": "603ecbd9f45300c9788f197d2a15a005685b4220",
+                        "git_sha": "cc08a888069f67cab8120259bddab8032d4c0fe3",
                         "installed_by": [
                             "modules"
                         ]
@@ -368,7 +368,7 @@
                     },
                     "untar": {
                         "branch": "master",
-                        "git_sha": "5c460c5a4736974abde2843294f35307ee2b0e5e",
+                        "git_sha": "d0b4fc03af52a1cc8c6fb4493b921b57352b1dd8",
                         "installed_by": [
                             "modules"
                         ]
