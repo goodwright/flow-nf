@@ -80,7 +80,7 @@ workflow PREPARE_CLIPSEQ {
         false
      )
     ch_gtf_with_meta = REMOVE_GTF_BRACKETS.out.file
-    ch_gtf = REMOVE_GTF_BRACKETS.out.file.flatten().last()
+    ch_gtf = REMOVE_GTF_BRACKETS.out.file
 
     /*
     * SUBWORKFLOW: Uncompress and prepare smrna genome files
@@ -146,7 +146,7 @@ workflow PREPARE_CLIPSEQ {
     ch_versions     = ch_versions.mix(PREPARE_PRIMARY_INDEX.out.versions)
 
     /*
-    * SUBWORKFLOW: Prepare BT2 index for smrna genome
+    * SUBWORKFLOW: Prepare BT index for smrna genome
     */
     PREPARE_SMRNA_INDEX (
         ["bowtie"],
@@ -155,7 +155,7 @@ workflow PREPARE_CLIPSEQ {
         smrna_index_path,
         []
     )
-    ch_smrna_index = PREPARE_SMRNA_INDEX.out.bt2_index
+    ch_smrna_index = PREPARE_SMRNA_INDEX.out.bt_index
     ch_versions    = ch_versions.mix(PREPARE_SMRNA_INDEX.out.versions)
 
     /*
@@ -198,11 +198,11 @@ workflow PREPARE_CLIPSEQ {
     RESOLVE_UNANNOTATED (
         ICOUNT_SEG_GTF.out.gtf.map{ it[1] },
         ICOUNT_SEG_FILTGTF.out.gtf.map{ it[1] },
-        ch_gtf,
+        ch_gtf.map{ it[1] },
         ch_fasta_fai.map{ it[1] },
         false
     )
-    ch_seg_resolved_gtf = RESOLVE_UNANNOTATED.out.gtf
+    ch_seg_resolved_gtf = RESOLVE_UNANNOTATED.out.gtf.map{ [[id:it.baseName], it]}
     ch_versions         = ch_versions.mix(RESOLVE_UNANNOTATED.out.versions)
     }
 
@@ -215,11 +215,11 @@ workflow PREPARE_CLIPSEQ {
     RESOLVE_UNANNOTATED_REGIONS (
         ICOUNT_SEG_GTF.out.regions.map{ it[1] },
         ICOUNT_SEG_FILTGTF.out.regions.map{ it[1] },
-        ch_gtf,
+        ch_gtf.map{ it[1] },
         ch_fasta_fai.map{ it[1] },
         false
     )
-    ch_regions_resolved_gtf = RESOLVE_UNANNOTATED_REGIONS.out.gtf
+    ch_regions_resolved_gtf = RESOLVE_UNANNOTATED_REGIONS.out.gtf.map{ [[id:it.baseName], it]}
     }
 
     /*
@@ -231,11 +231,11 @@ workflow PREPARE_CLIPSEQ {
     RESOLVE_UNANNOTATED_GENIC_OTHER (
         ICOUNT_SEG_GTF.out.gtf.map{ it[1] },
         ICOUNT_SEG_FILTGTF.out.gtf.map{ it[1] },
-        ch_gtf,
+        ch_gtf.map{ it[1] },
         ch_fasta_fai.map{ it[1] },
         true
     )
-    ch_seg_resolved_gtf_genic = RESOLVE_UNANNOTATED_GENIC_OTHER.out.gtf
+    ch_seg_resolved_gtf_genic = RESOLVE_UNANNOTATED_GENIC_OTHER.out.gtf.map{ [[id:it.baseName], it]}
     }
 
     /*
@@ -247,11 +247,11 @@ workflow PREPARE_CLIPSEQ {
     RESOLVE_UNANNOTATED_GENIC_OTHER_REGIONS (
         ICOUNT_SEG_GTF.out.regions.map{ it[1] },
         ICOUNT_SEG_FILTGTF.out.regions.map{ it[1] },
-        ch_gtf,
+        ch_gtf.map{ it[1] },
         ch_fasta_fai.map{ it[1] },
         true
     )
-    ch_regions_resolved_gtf_genic = RESOLVE_UNANNOTATED_GENIC_OTHER_REGIONS.out.gtf
+    ch_regions_resolved_gtf_genic = RESOLVE_UNANNOTATED_GENIC_OTHER_REGIONS.out.gtf.map{ [[id:it.baseName], it]}
     }
 
 
@@ -276,6 +276,6 @@ workflow PREPARE_CLIPSEQ {
     regions_resolved_gtf       = ch_regions_resolved_gtf       // channel: [ val(meta), [ gtf ] ]
     regions_resolved_gtf_genic = ch_regions_resolved_gtf_genic // channel: [ val(meta), [ gtf ] ]
     genome_index               = ch_genome_index               // channel: [ val(meta), [ star_index ] ]
-    smrna_index                = ch_smrna_index                // channel: [ val(meta), [ bt2_index ] ]
+    smrna_index                = ch_smrna_index                // channel: [ val(meta), [ bt_index ] ]
     versions                   = ch_versions                   // channel: [ versions.yml ]
 }
