@@ -10,6 +10,7 @@ include { CUSTOM_GETCHROMSIZES       } from '../../../../modules/nf-core/custom/
 
 workflow PREPARE_REF {
     take:
+    // MUST TAKE FILES AS INPUT WITH NO CHANNEL STRUCT
     fasta     // channel: [ val(meta), [ fasta/fasta.gz ] ]
     gtf       // channel: [ val(meta), [ gtf/gtf.gz ] ]
     bed       // channel: [ val(meta), [ bed/bed.gz ] ]
