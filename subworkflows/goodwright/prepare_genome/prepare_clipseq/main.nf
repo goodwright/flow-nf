@@ -51,8 +51,6 @@ workflow PREPARE_CLIPSEQ {
     main:
     ch_versions = Channel.empty()
 
-
-    
     /*
     * SUBWORKFLOW: Uncompress and prepare main genome files
     */
@@ -82,9 +80,7 @@ workflow PREPARE_CLIPSEQ {
         false
      )
     ch_gtf_with_meta = REMOVE_GTF_BRACKETS.out.file
-    ch_gtf = REMOVE_GTF_BRACKETS.out.file.flatten().last()
-
-
+    ch_gtf = REMOVE_GTF_BRACKETS.out.file
 
     /*
     * SUBWORKFLOW: Uncompress and prepare smrna genome files
@@ -149,9 +145,8 @@ workflow PREPARE_CLIPSEQ {
     ch_genome_index = PREPARE_PRIMARY_INDEX.out.star_index
     ch_versions     = ch_versions.mix(PREPARE_PRIMARY_INDEX.out.versions)
 
-
     /*
-    * SUBWORKFLOW: Prepare BT2 index for smrna genome
+    * SUBWORKFLOW: Prepare BT index for smrna genome
     */
     PREPARE_SMRNA_INDEX (
         ["bowtie"],
@@ -160,9 +155,8 @@ workflow PREPARE_CLIPSEQ {
         smrna_index_path,
         []
     )
-    ch_smrna_index = PREPARE_SMRNA_INDEX.out.bt2_index
+    ch_smrna_index = PREPARE_SMRNA_INDEX.out.bt_index
     ch_versions    = ch_versions.mix(PREPARE_SMRNA_INDEX.out.versions)
-
 
     /*
     * MODULE: Segment GTF file using icount
@@ -204,11 +198,11 @@ workflow PREPARE_CLIPSEQ {
     RESOLVE_UNANNOTATED (
         ICOUNT_SEG_GTF.out.gtf.map{ it[1] },
         ICOUNT_SEG_FILTGTF.out.gtf.map{ it[1] },
-        ch_gtf,
+        ch_gtf.map{ it[1] },
         ch_fasta_fai.map{ it[1] },
         false
     )
-    ch_seg_resolved_gtf = RESOLVE_UNANNOTATED.out.gtf
+    ch_seg_resolved_gtf = RESOLVE_UNANNOTATED.out.gtf.map{ [[id:it.baseName], it]}
     ch_versions         = ch_versions.mix(RESOLVE_UNANNOTATED.out.versions)
     }
 
@@ -221,11 +215,11 @@ workflow PREPARE_CLIPSEQ {
     RESOLVE_UNANNOTATED_REGIONS (
         ICOUNT_SEG_GTF.out.regions.map{ it[1] },
         ICOUNT_SEG_FILTGTF.out.regions.map{ it[1] },
-        ch_gtf,
+        ch_gtf.map{ it[1] },
         ch_fasta_fai.map{ it[1] },
         false
     )
-    ch_regions_resolved_gtf = RESOLVE_UNANNOTATED_REGIONS.out.gtf
+    ch_regions_resolved_gtf = RESOLVE_UNANNOTATED_REGIONS.out.gtf.map{ [[id:it.baseName], it]}
     }
 
     /*
@@ -237,11 +231,11 @@ workflow PREPARE_CLIPSEQ {
     RESOLVE_UNANNOTATED_GENIC_OTHER (
         ICOUNT_SEG_GTF.out.gtf.map{ it[1] },
         ICOUNT_SEG_FILTGTF.out.gtf.map{ it[1] },
-        ch_gtf,
+        ch_gtf.map{ it[1] },
         ch_fasta_fai.map{ it[1] },
         true
     )
-    ch_seg_resolved_gtf_genic = RESOLVE_UNANNOTATED_GENIC_OTHER.out.gtf
+    ch_seg_resolved_gtf_genic = RESOLVE_UNANNOTATED_GENIC_OTHER.out.gtf.map{ [[id:it.baseName], it]}
     }
 
     /*
@@ -253,35 +247,35 @@ workflow PREPARE_CLIPSEQ {
     RESOLVE_UNANNOTATED_GENIC_OTHER_REGIONS (
         ICOUNT_SEG_GTF.out.regions.map{ it[1] },
         ICOUNT_SEG_FILTGTF.out.regions.map{ it[1] },
-        ch_gtf,
+        ch_gtf.map{ it[1] },
         ch_fasta_fai.map{ it[1] },
         true
     )
-    ch_regions_resolved_gtf_genic = RESOLVE_UNANNOTATED_GENIC_OTHER_REGIONS.out.gtf
+    ch_regions_resolved_gtf_genic = RESOLVE_UNANNOTATED_GENIC_OTHER_REGIONS.out.gtf.map{ [[id:it.baseName], it]}
     }
 
 
     emit:
-    fasta                      = ch_fasta                  // channel: [ val(meta), [ fasta ] ]
-    fasta_fai                  = ch_fasta_fai              // channel: [ val(meta), [ fai ] ]
-    gtf                        = ch_gtf                    // channel: [ val(meta), [ gtf ] ]
-    filtered_gtf               = ch_filt_gtf               // channel: [ val(meta), [ gtf ] ]
-    chrom_sizes                = ch_chrom_sizes            // channel: [ val(meta), [ txt ] ]
-    smrna_fasta                = ch_smrna_fasta            // channel: [ val(meta), [ fasta ] ]
-    smrna_fasta_fai            = ch_smrna_fasta_fai        // channel: [ val(meta), [ fai ] ]
-    smrna_chrom_sizes          = ch_smrna_chrom_sizes      // channel: [ val(meta), [ txt ] ]
-    longest_transcript         = ch_longest_transcript     // channel: [ val(meta), [ txt ] ]
-    longest_transcript_fai     = ch_longest_transcript_fai  // channel: [ val(meta), [ fai ] ]
-    longest_transcript_gtf     = ch_longest_transcript_gtf  // channel: [ val(meta), [ fai ] ]
-    seg_gtf                    = ch_seg_gtf                // channel: [ val(meta), [ gtf ] ]
-    seg_filt_gtf               = ch_seg_filt_gtf           // channel: [ val(meta), [ gtf ] ]
-    seg_resolved_gtf           = ch_seg_resolved_gtf       // channel: [ val(meta), [ gtf ] ]
-    seg_resolved_gtf_genic     = ch_seg_resolved_gtf_genic // channel: [ val(meta), [ gtf ] ]
+    fasta                      = ch_fasta                      // channel: [ val(meta), [ fasta ] ]
+    fasta_fai                  = ch_fasta_fai                  // channel: [ val(meta), [ fai ] ]
+    gtf                        = ch_gtf                        // channel: [ val(meta), [ gtf ] ]
+    filtered_gtf               = ch_filt_gtf                   // channel: [ val(meta), [ gtf ] ]
+    chrom_sizes                = ch_chrom_sizes                // channel: [ val(meta), [ txt ] ]
+    smrna_fasta                = ch_smrna_fasta                // channel: [ val(meta), [ fasta ] ]
+    smrna_fasta_fai            = ch_smrna_fasta_fai            // channel: [ val(meta), [ fai ] ]
+    smrna_chrom_sizes          = ch_smrna_chrom_sizes          // channel: [ val(meta), [ txt ] ]
+    longest_transcript         = ch_longest_transcript         // channel: [ val(meta), [ txt ] ]
+    longest_transcript_fai     = ch_longest_transcript_fai     // channel: [ val(meta), [ fai ] ]
+    longest_transcript_gtf     = ch_longest_transcript_gtf     // channel: [ val(meta), [ fai ] ]
+    seg_gtf                    = ch_seg_gtf                    // channel: [ val(meta), [ gtf ] ]
+    seg_filt_gtf               = ch_seg_filt_gtf               // channel: [ val(meta), [ gtf ] ]
+    seg_resolved_gtf           = ch_seg_resolved_gtf           // channel: [ val(meta), [ gtf ] ]
+    seg_resolved_gtf_genic     = ch_seg_resolved_gtf_genic     // channel: [ val(meta), [ gtf ] ]
     regions_gtf                = ch_regions_gtf                // channel: [ val(meta), [ gtf ] ]
     regions_filt_gtf           = ch_regions_filt_gtf           // channel: [ val(meta), [ gtf ] ]
     regions_resolved_gtf       = ch_regions_resolved_gtf       // channel: [ val(meta), [ gtf ] ]
     regions_resolved_gtf_genic = ch_regions_resolved_gtf_genic // channel: [ val(meta), [ gtf ] ]
-    genome_index               = ch_genome_index           // channel: [ val(meta), [ star_index ] ]
-    smrna_index                = ch_smrna_index            // channel: [ val(meta), [ bt2_index ] ]
-    versions                   = ch_versions               // channel: [ versions.yml ]
+    genome_index               = ch_genome_index               // channel: [ val(meta), [ star_index ] ]
+    smrna_index                = ch_smrna_index                // channel: [ val(meta), [ bt_index ] ]
+    versions                   = ch_versions                   // channel: [ versions.yml ]
 }
