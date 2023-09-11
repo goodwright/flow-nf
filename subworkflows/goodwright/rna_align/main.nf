@@ -19,10 +19,10 @@ include { BAM_SORT_STATS_SAMTOOLS as BAM_SORT_STATS_SAMTOOLS_TRANSCRIPT } from '
 workflow RNA_ALIGN {
     take:
     fastq      // channel: [ val(meta), [ fastq ] ]
-    bt2_index  // channel: [ index ]
-    star_index // channel: [ index ]
-    gtf        // channel: [ gtf ]
-    fasta      // channel: [ fasta/fa ]
+    bt_index   // channel: [ val(meta), index ]
+    star_index // channel: [ val(meta), index ]
+    gtf        // channel: [ val(meta), gtf ]
+    fasta      // channel: [ val(meta), fasta/fa ]
 
     main:
     ch_versions = Channel.empty()
@@ -32,7 +32,7 @@ workflow RNA_ALIGN {
     */
     BOWTIE_ALIGN (
         fastq,
-        bt2_index
+        bt_index.collect{it[1]}
     )
     ch_versions = ch_versions.mix(BOWTIE_ALIGN.out.versions)
 
@@ -75,7 +75,7 @@ workflow RNA_ALIGN {
     */
     BAM_STATS_SAMTOOLS_GENOME (
         ch_bam_bai,
-        [ [:], [fasta] ]
+        fasta
     )
     ch_versions = ch_versions.mix(BAM_STATS_SAMTOOLS_GENOME.out.versions)
 
@@ -84,7 +84,7 @@ workflow RNA_ALIGN {
     */
     BAM_SORT_STATS_SAMTOOLS_TRANSCRIPT (
         STAR_ALIGN.out.bam_transcript,
-        [ [:], [fasta] ]
+        fasta
     )
 
     emit:
