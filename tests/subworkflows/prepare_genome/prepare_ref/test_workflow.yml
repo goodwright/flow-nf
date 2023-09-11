@@ -69,4 +69,3 @@
       should_exist: false
     - path: "output/custom/genome.fasta.gz.sizes"
       should_exist: false
-
