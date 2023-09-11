@@ -49,3 +49,23 @@
       should_exist: false
     - path: "output/custom/genome.fasta.gz.sizes"
       should_exist: false
+
+- name: "test_sw_prepare_ref_chromsizes"
+  command: nextflow run ./tests/subworkflows/prepare_genome/prepare_ref/main.nf -entry test_chromsizes -c ./tests/config/nextflow.config
+  tags:
+    - "subworkflows"
+    - "prepare_genome"
+    - "prepare_genome/prepare_ref"
+  files:
+    - path: "output/gunzip/genome.fasta"
+      should_exist: false
+    - path: "output/gunzip/genome.gff3"
+      should_exist: false
+    - path: "output/gunzip/mm10-blacklist.bed"
+      should_exist: false
+    - path: "output/gunzip/test.bed"
+      should_exist: false
+    - path: "output/custom/genome.fasta.gz.fai"
+      should_exist: false
+    - path: "output/custom/genome.fasta.gz.sizes"
+      should_exist: false
