@@ -11,3 +11,10 @@
     - "wrappers"
     - "wrappers/subworkflows"
     - "wrappers/subworkflows/demultiplex"
+
+- name: "test_wrappers_demultiplex_paired"
+  command: nextflow run ./wrappers/subworkflows/demultiplex/main.nf -c ./tests/config/nextflow.config --fastq ./tests/data/ultraplex/multiplexed.fastq.gz --fastq2 ./tests/data/ultraplex/multiplexed2.fastq.gz --samplesheet ./tests/data/samplesheets/clip-samplesheet.csv
+  tags:
+    - "wrappers"
+    - "wrappers/subworkflows"
+    - "wrappers/subworkflows/demultiplex"
