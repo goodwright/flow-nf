@@ -45,6 +45,12 @@
                     "type": "number",
                     "required": false
                 },
+                "adapter2": {
+                    "name": "Adapter sequence 2",
+                    "description": "The 3’ adapter to be removed for the reverse read (option -i2) for paired-end demultiplexing. By default this is 'AGATCGGAAGAGCGTCGTG'.",
+                    "type": "string",
+                    "required": false
+                },
                 "phredquality": {
                     "name": "Minimum quality score",
                     "description": "The minimum quality score for 3’ end trimming (this uses the Cutadapt functionality). By default this is set to 30 (0.1% error rate). However, in some circumstances (especially when 3’ adaptors are used) it may be desirable to reduce the stringency of this.",
