@@ -1,6 +1,6 @@
 {
     "inputs": {
-        "genome_options": {
+        "file_options": {
             "name": "File options",
             "description": "The files needed for demultiplexing.",
             "takes_lane": true,
@@ -25,6 +25,67 @@
                     "pattern": "fq\\.gz$|fastq\\.gz$|fq$|fastq$",
                     "required": false,
                     "description": "A multiplexed read 2 paired-end fastq file."
+                }
+            }
+        },
+        "ultraplex_options": {
+            "name": "Ultraplex options",
+            "description": "Advanced options for Ultraplex.",
+            "advanced": true,
+            "properties": {
+                "fiveprimemismatches": {
+                    "name": "5’ mismatches",
+                    "description": "This option allows the user to specify how many mismatches are permitted when detecting which 5’ barcode a read contains. If set to zero, then the 5’ barcode must match the expected barcode perfectly. By default, this value is set to one mismatch.",
+                    "type": "number",
+                    "required": false
+                },
+                "threeprimemismatches": {
+                    "name": "3’ mismatches",
+                    "description": "This option allows the user to specify how many mismatches are permitted when detecting which 3’ barcode a read contains. If set to zero, then the 3’ barcode must match the expected barcode perfectly. By default, this value is set to zero mismatches.",
+                    "type": "number",
+                    "required": false
+                },
+                "adapter2": {
+                    "name": "Adapter sequence 2",
+                    "description": "The 3’ adapter to be removed for the reverse read (option -i2) for paired-end demultiplexing. By default this is 'AGATCGGAAGAGCGTCGTG'.",
+                    "type": "string",
+                    "required": false
+                },
+                "phredquality": {
+                    "name": "Minimum quality score",
+                    "description": "The minimum quality score for 3’ end trimming (this uses the Cutadapt functionality). By default this is set to 30 (0.1% error rate). However, in some circumstances (especially when 3’ adaptors are used) it may be desirable to reduce the stringency of this.",
+                    "type": "number",
+                    "required": false
+                },
+                "min_trim": {
+                    "name": "Minimum trim for 3'",
+                    "description": "When demultiplexing using 3’ adapters using the forward read (i.e. when single-end sequencing has been used), it is possible to obtain spurious barcode matches from the sequence at the 3’ end of the read if this is not the true end of the insert (i.e. it is not adjacent to the sequencing adaptor). To prevent this, this option ensures that at least N bases of the sequencing adapter (specified by option -a) have been detected and trimmed. By default its value is 3.",
+                    "type": "number",
+                    "required": false
+                },
+                "phred_quality_5_prime": {
+                    "name": "Minimum 5’ quality score",
+                    "description": "The minimum quality score used for 5’ end trimming. By default this is set to zero. It is strongly recommended that this is kept at 0, as 5’ end trimming will result in incorrect detection of 5’ barcodes.",
+                    "type": "number",
+                    "required": false
+                },
+                "final_min_length": {
+                    "name": "Minimum length",
+                    "description": "This option gives the minimum length of the read after the barcode(s) and UMI(s) have been removed. For paired end, both must be at least this length for the pair of reads to be written. It is no longer necessary to specify a minimum length of at least the length of your longest adaptor.",
+                    "type": "number",
+                    "required": false
+                },
+                "keep_barcodes": {
+                    "name": "Keep Barcodes",
+                    "description": "This option keeps barcodes and UMIs in the read after demultiplexing - note that UMIs will still be added to the read header.",
+                    "type": "boolean",
+                    "required": false
+                },
+                "ignore_no_match": {
+                    "name": "Ignore no match",
+                    "description": "This option does not write out reads for which there was no barcode match, which may save time.",
+                    "type": "boolean",
+                    "required": false
                 }
             }
         }
