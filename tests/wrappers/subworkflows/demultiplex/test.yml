@@ -13,7 +13,8 @@
     - "wrappers/subworkflows/demultiplex"
 
 - name: "test_wrappers_demultiplex_multi_se"
-  command: nextflow run ./wrappers/subworkflows/demultiplex/main.nf -c ./tests/config/nextflow.config --samplesheet ./tests/data/samplesheets/clip-samplesheet.csv --fastqs ./tests/data/fastq_list/multi_se_fastq.csv
+  command:
+    nextflow run ./wrappers/subworkflows/demultiplex/main.nf -c ./tests/config/nextflow.config --samplesheet ./tests/data/samplesheets/clip-samplesheet.csv --fastqs ./tests/data/fastq_list/multi_se_fastq.csv
     - "wrappers"
     - "wrappers/subworkflows"
     - "wrappers/subworkflows/demultiplex"
