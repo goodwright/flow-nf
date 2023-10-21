@@ -35,6 +35,15 @@
     - path: "output/ultraplex/ultraplex_demux_sample_clip_2_Fwd.fastq.gz"
     - path: "output/ultraplex/ultraplex_demux_sample_clip_2_Rev.fastq.gz"
 
+- name: "test_sw_demultiplex_multisample_multi_pairedend"
+  command: nextflow run ./tests/subworkflows/demultiplex -c ./tests/config/nextflow.config -entry test_multi_sample_multi_paired_end
+  tags:
+    - "subworkflows"
+    - "demultiplex"
+  files:
+    - path: "output/ultraplex/ultraplex_demux_sample_clip_2_Fwd.fastq.gz"
+    - path: "output/ultraplex/ultraplex_demux_sample_clip_2_Rev.fastq.gz"
+
 - name: "test_sw_demultiplex_adapter_mismatch"
   command: nextflow run ./tests/subworkflows/demultiplex -c ./tests/config/nextflow.config -entry test_adapter_mismatch
   tags:
@@ -48,14 +57,3 @@
     - "subworkflows"
     - "demultiplex"
 
-- name: "test_sw_demultiplex_channel_samplesheet_multi"
-  command: nextflow run ./tests/subworkflows/demultiplex -c ./tests/config/nextflow.config -entry test_channel_samplesheet_multi
-  tags:
-    - "subworkflows"
-    - "demultiplex"
-
-- name: "test_sw_demultiplex_channel_samplesheet_multi_mixed"
-  command: nextflow run ./tests/subworkflows/demultiplex -c ./tests/config/nextflow.config -entry test_channel_samplesheet_multi_mixed
-  tags:
-    - "subworkflows"
-    - "demultiplex"
