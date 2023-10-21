@@ -18,5 +18,5 @@ workflow  {
 
     // Execute
     DEMULTIPLEX ( ch_samplesheet, ch_fastqs )
-    DEMULTIPLEX.out.fastq | view
+    //DEMULTIPLEX.out.fastq | view
 }
