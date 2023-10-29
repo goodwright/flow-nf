@@ -3,28 +3,21 @@
         "file_options": {
             "name": "File options",
             "description": "The files needed for demultiplexing.",
-            "takes_lane": true,
             "properties": {
                 "samplesheet": {
                     "name": "Annotation",
                     "type": "file",
                     "pattern": "xlsx|csv",
+                    "category": 2,
                     "required": true,
                     "description": "Sample annotation sheet."
                 },
-                "fastq": {
-                    "name": "FASTQ 1",
-                    "type": "file",
+                "fastqs": {
+                    "name": "FASTQ",
+                    "type": "lane",
                     "pattern": "fq\\.gz$|fastq\\.gz$|fq$|fastq$",
                     "required": true,
-                    "description": "A multiplexed FASTQ single-end file to demultiplex, or a multiplexed read 1 paired-end fastq file."
-                },
-                "fastq2": {
-                    "name": "FASTQ 2",
-                    "type": "file",
-                    "pattern": "fq\\.gz$|fastq\\.gz$|fq$|fastq$",
-                    "required": false,
-                    "description": "A multiplexed read 2 paired-end fastq file."
+                    "description": "The multiplexed FASTQ file(s) to demultiplex. You can provide one or multiple files to be concatenated, for both single and paired end data. At least one file must be provided."
                 }
             }
         },
