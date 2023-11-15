@@ -188,11 +188,7 @@ ggplot(data=de, aes(x=log2FoldChange, y=-log10(padj), label=delabel)) +
         theme_bw()
 
 ggsave(
-    file = paste(output_prefix, 'deseq2.volcano.png', sep = '.'),
-    width = opt$plot_width,
-    height = opt$plot_height,
-    dpi = opt$plot_res,
-    units = "px"
+    file = paste(output_prefix, 'deseq2.volcano.pdf', sep = '.')
 )
 
 
