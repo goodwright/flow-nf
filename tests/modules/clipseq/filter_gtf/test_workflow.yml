@@ -6,4 +6,3 @@
     - "clipseq/filter_gtf"
   files:
     - path: "output/clipseq/genome_filtered.gtf"
-
