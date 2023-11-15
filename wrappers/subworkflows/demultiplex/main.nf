@@ -3,20 +3,20 @@
 include { DEMULTIPLEX } from '../../../subworkflows/goodwright/demultiplex/main.nf'
 
 workflow  {
-    fastq    = file(params.fastq, checkIfExists: true)
 
-    // Find all samplesheet parameters and build them into a list
-    def List files = []
-    Set params_key_set = params.keySet()
-    params_key_set.each {
-       if(it.contains("samplesheet")) {
-            files.add(file(params[it], checkIfExists: true))
-       }
-    }
+    // Create channels from input files
+    ch_samplesheet = file(params.samplesheet, checkIfExists: true)
+    fastqs         = Channel.of(file(params.fastqs, checkIfExists: true))
 
-    // Create channel from list and execute
-    ch_samplesheet = Channel.from(files)
-    //ch_samplesheet | view
+    // Get list of files from fastqs
+    ch_fastqs = fastqs
+        .splitCsv(sep:",")
+        .map { list ->
+            list.collect { file(it, checkIfExists: true) }
+        }
+    //ch_fastqs | view
 
-    DEMULTIPLEX ( ch_samplesheet, fastq )
+    // Execute
+    DEMULTIPLEX ( ch_samplesheet, ch_fastqs )
+    //DEMULTIPLEX.out.fastq | view
 }

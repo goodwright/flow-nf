@@ -13,7 +13,7 @@ process SAMPLESHEET_TO_BARCODE {
     output:
     path "barcodes.csv"    , emit: barcodes
     path "samplesheet.csv" , emit: samplesheet
-    path  "versions.yml"   , emit: versions
+    path "versions.yml"    , emit: versions
 
     when:
     task.ext.when == null || task.ext.when
