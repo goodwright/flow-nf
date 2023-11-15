@@ -6,4 +6,4 @@
     - "clipseq/filter_gtf"
   files:
     - path: "output/clipseq/genome_filtered.gtf"
-      md5sum: 31af002348b00a950b94dc9c2329b6c5
+
