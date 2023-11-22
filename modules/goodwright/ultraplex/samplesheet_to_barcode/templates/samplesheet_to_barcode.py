@@ -64,6 +64,8 @@ def main(process_name, samplesheet, output):
         )
         five_prime = three_prime
         three_prime = pd.Series([""] * len(five_prime))
+        five_prime.name = "5' Barcode Sequence"
+        three_prime.name = "3' Barcode Sequence"
 
     df_samplesheet = pd.concat([sample_names, five_prime, three_prime, three_prime_adapter], axis=1)
 
