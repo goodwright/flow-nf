@@ -56,7 +56,7 @@ def main(process_name, samplesheet, output):
 
     # If only three prime barcodes are present, treat them as five prime barcodes, print a message to
     # the user so they know this is happening and to remind them to use the correct ultraplex settings
-    if five_prime.empty:
+    if (five_prime.str.len() == 0).all():
         print(
             "NOTE: No 5' barcode sequence found in sample sheet, 3' barcodes will be formatted as 5' barcodes \
             for Ultraplex input, ensure that Ultraplex is run with --three_prime_only flag. If using TSOs, \
