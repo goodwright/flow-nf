@@ -58,7 +58,7 @@
     - "demultiplex"
 
 - name: "test_sw_demultiplex_3bc_only"
-  command: nextflow run ./tests/subworkflows/demultiplex -ultraplex-3prime-only.config -c ./tests/config/nextflow.config -entry test_threeprimebarcode_only
+  command: nextflow run ./tests/subworkflows/demultiplex -c ./tests/config/ultraplex-3prime-only.config -c ./tests/config/nextflow.config -entry test_threeprimebarcode_only
   tags:
     - "subworkflows"
     - "demultiplex"
