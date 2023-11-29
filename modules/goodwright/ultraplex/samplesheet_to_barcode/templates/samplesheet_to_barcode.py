@@ -53,6 +53,20 @@ def main(process_name, samplesheet, output):
     five_prime = df_samplesheet["5' Barcode Sequence"]
     three_prime = df_samplesheet["3' Barcode Sequence"]
     three_prime_adapter = df_samplesheet["3' Adapter Sequence"]
+
+    # If only three prime barcodes are present, treat them as five prime barcodes, print a message to
+    # the user so they know this is happening and to remind them to use the correct ultraplex settings
+    if (five_prime.str.len() == 0).all():
+        print(
+            "NOTE: No 5' barcode sequence found in sample sheet, 3' barcodes will be formatted as 5' barcodes \
+            for Ultraplex input, ensure that Ultraplex is run with --three_prime_only flag. If using TSOs, \
+            ensure that --tso_seq flag is also used and set to the correct sequence."
+        )
+        five_prime = three_prime
+        three_prime = pd.Series([""] * len(five_prime))
+        five_prime.name = "5' Barcode Sequence"
+        three_prime.name = "3' Barcode Sequence"
+
     df_samplesheet = pd.concat([sample_names, five_prime, three_prime, three_prime_adapter], axis=1)
 
     # Init for loop

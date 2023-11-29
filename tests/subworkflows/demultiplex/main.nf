@@ -70,3 +70,12 @@ workflow test_channel_samplesheet {
     DEMULTIPLEX ( samplesheet, fastq )
     DEMULTIPLEX.out.fastq | view
 }
+
+workflow test_threeprimebarcode_only {
+
+    samplesheet = file(params.goodwright_test_data['samplesheets']['clip_3bc_only'], checkIfExists: true)
+    fastq       = file(params.goodwright_test_data['ultraplex']['multiplexed_fastq'], checkIfExists: true)
+
+    DEMULTIPLEX ( samplesheet, fastq )
+    DEMULTIPLEX.out.fastq | view
+}
