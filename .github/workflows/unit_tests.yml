@@ -27,7 +27,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        NXF_VER: ["23.04.0", ""]
+        NXF_VER: ["24.04.0", ""]
         profile: ["docker", "singularity"]
         tags:
           # Modules
@@ -93,7 +93,7 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
-          python-version: "3.x"
+          python-version: "3.11"
 
       - name: Setup Pip Cache
         uses: actions/cache@v4
@@ -176,7 +176,7 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
-          python-version: "3.x"
+          python-version: "3.11"
 
       - name: Setup Pip Cache
         uses: actions/cache@v4
@@ -194,7 +194,7 @@ jobs:
         with:
           auto-update-conda: true
           channels: conda-forge,bioconda,defaults
-          python-version: "3.9"
+          python-version: "3.11"
 
       - name: Install Conda dependencies
         run: conda install --name test bedtools
