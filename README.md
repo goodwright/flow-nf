@@ -11,4 +11,3 @@ Links to documentation for specific modules and subworkflows can be found in the
 ## Wrappers
 
 - [Demultiplex](https://github.com/goodwright/flow-nf/blob/master/docs/demultiplex.md)
-
