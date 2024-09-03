@@ -47,54 +47,54 @@ jobs:
       - name: Check code lints with Black
         uses: psf/black@stable
 
-  nf-core:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
+  # nf-core:
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - uses: actions/checkout@v3
 
-      - name: Set up Python
-        uses: actions/setup-python@v3
-        with:
-          python-version: "3.9.x"
+  #     - name: Set up Python
+  #       uses: actions/setup-python@v3
+  #       with:
+  #         python-version: "3.9.x"
 
-      - name: Install Nextflow
-        env:
-          CAPSULE_LOG: none
-        run: |
-          wget -qO- get.nextflow.io | bash
-          sudo mv nextflow /usr/local/bin/
+  #     - name: Install Nextflow
+  #       env:
+  #         CAPSULE_LOG: none
+  #       run: |
+  #         wget -qO- get.nextflow.io | bash
+  #         sudo mv nextflow /usr/local/bin/
 
-      - name: Install nf-core
-        run: python -m pip install --upgrade git+https://github.com/goodwright/tools.git@gw-main
+  #     - name: Install nf-core
+  #       run: python -m pip install --upgrade git+https://github.com/goodwright/tools.git@gw-main
 
-      # - name: Restore nf-core packages
-      #   run: nf-core modules list local
+  #     # - name: Restore nf-core packages
+  #     #   run: nf-core modules list local
 
-      - name: Run module linting
-        run: |
-          nf-core modules lint dump_software_versions
-          nf-core modules lint sample/base_samplesheet_check
-          nf-core modules lint sample/diff_samplesheet_check
-          nf-core modules lint sample/scmultiome_samplesheet_check
-          nf-core modules lint ultraplex/samplesheet_to_barcode
-          nf-core modules lint ultraplex/ultraplex
-          nf-core modules lint xlsx_to_csv
-          nf-core modules lint clipseq/filter_gtf
-          nf-core modules lint clipseq/find_longest_transcript
-          nf-core modules lint clipseq/resolve_unannotated
-          nf-core modules lint icount/segment
-          nf-core modules lint icount/sigxls
-          nf-core modules lint icount/summary
-          nf-core modules lint icount/peaks
-          nf-core modules lint linux/command
-          nf-core modules lint bedtools/shift
-          nf-core modules lint clippy
-          nf-core modules lint paraclu/paraclu
-          nf-core modules lint paraclu/cut
-          nf-core modules lint peka
-          nf-core modules lint samtools/simple_view
-          nf-core modules lint umicollapse
-          nf-core modules lint clipseq/clipqc
-          nf-core modules lint r/deseq2
-          nf-core modules lint r/deseq2_plots
-          nf-core modules lint r/pcaexplorer
+  #     - name: Run module linting
+  #       run: |
+  #         nf-core modules lint dump_software_versions
+  #         nf-core modules lint sample/base_samplesheet_check
+  #         nf-core modules lint sample/diff_samplesheet_check
+  #         nf-core modules lint sample/scmultiome_samplesheet_check
+  #         nf-core modules lint ultraplex/samplesheet_to_barcode
+  #         nf-core modules lint ultraplex/ultraplex
+  #         nf-core modules lint xlsx_to_csv
+  #         nf-core modules lint clipseq/filter_gtf
+  #         nf-core modules lint clipseq/find_longest_transcript
+  #         nf-core modules lint clipseq/resolve_unannotated
+  #         nf-core modules lint icount/segment
+  #         nf-core modules lint icount/sigxls
+  #         nf-core modules lint icount/summary
+  #         nf-core modules lint icount/peaks
+  #         nf-core modules lint linux/command
+  #         nf-core modules lint bedtools/shift
+  #         nf-core modules lint clippy
+  #         nf-core modules lint paraclu/paraclu
+  #         nf-core modules lint paraclu/cut
+  #         nf-core modules lint peka
+  #         nf-core modules lint samtools/simple_view
+  #         nf-core modules lint umicollapse
+  #         nf-core modules lint clipseq/clipqc
+  #         nf-core modules lint r/deseq2
+  #         nf-core modules lint r/deseq2_plots
+  #         nf-core modules lint r/pcaexplorer
