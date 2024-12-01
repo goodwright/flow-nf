@@ -1,31 +1,74 @@
 {
-    "inputs": {
-        "file_options": {
+    "inputs": [
+        {
             "name": "File options",
             "description": "The files needed for demultiplexing.",
-            "properties": {
+            "modes": ["Single-end", "Paired-end"],
+            "params": {
                 "samplesheet": {
                     "name": "Annotation",
-                    "type": "file",
+                    "type": "data",
                     "pattern": "xlsx|csv",
                     "category": 2,
                     "required": true,
+                    "modes": ["Single-end", "Paired-end"],
                     "description": "Sample annotation sheet."
                 },
                 "fastqs": {
                     "name": "FASTQ",
-                    "type": "lane",
-                    "pattern": "fq\\.gz$|fastq\\.gz$|fq$|fastq$",
+                    "description": "The multiplexed FASTQ file(s) to demultiplex. You can provide one or multiple files to be concatenated, for both single and paired end data. At least one file must be provided.",
                     "required": true,
-                    "description": "The multiplexed FASTQ file(s) to demultiplex. You can provide one or multiple files to be concatenated, for both single and paired end data. At least one file must be provided."
+                    "type": "csv",
+                    "output_headers": false,
+                    "takes_filesets": true,
+                    "fileset_category": 3,
+                    "fileset_size": 1,
+                    "modes": ["Single-end"],
+                    "columns": [
+                        {
+                            "name": "fastq_1",
+                            "type": "data",
+                            "required": true,
+                            "render": false,
+                            "from_fileset": 1
+                        }
+                    ]
+                },
+                "fastqs_": {
+                    "param": "fastqs",
+                    "name": "FASTQ",
+                    "description": "The multiplexed FASTQ file(s) to demultiplex. You can provide one or multiple files to be concatenated, for both single and paired end data. At least one file must be provided.",
+                    "required": true,
+                    "type": "csv",
+                    "output_headers": false,
+                    "takes_filesets": true,
+                    "fileset_category": 3,
+                    "fileset_size": 2,
+                    "modes": ["Paired-end"],
+                    "columns": [
+                        {
+                            "name": "fastq_1",
+                            "type": "data",
+                            "required": true,
+                            "render": false,
+                            "from_fileset": 1
+                        },
+                        {
+                            "name": "fastq_2",
+                            "type": "data",
+                            "required": true,
+                            "render": false,
+                            "from_fileset": 2
+                        }
+                    ]
                 }
             }
         },
-        "ultraplex_options": {
+        {
             "name": "Ultraplex options",
             "description": "Advanced options for Ultraplex.",
             "advanced": true,
-            "properties": {
+            "params": {
                 "fiveprimemismatches": {
                     "name": "5’ mismatches",
                     "description": "This option allows the user to specify how many mismatches are permitted when detecting which 5’ barcode a read contains. If set to zero, then the 5’ barcode must match the expected barcode perfectly. By default, this value is set to one mismatch.",
@@ -82,7 +125,7 @@
                 }
             }
         }
-    },
+    ],
     "outputs": [
         {
             "name": "FASTQ Files",
