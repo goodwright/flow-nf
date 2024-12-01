@@ -25,3 +25,10 @@
     - "wrappers"
     - "wrappers/subworkflows"
     - "wrappers/subworkflows/demultiplex"
+
+- name: "test_wrappers_demultiplex_single_se_threeprimeonly"
+  command: nextflow run ./wrappers/subworkflows/demultiplex/main.nf -c tests/config/ultraplex-3prime-only.config -c ./tests/config/nextflow.config --samplesheet ./tests/data/samplesheets/clip-samplesheet-3prime-barcode-only.csv --fastqs ./tests/data/fastq_list/single_se_fastq.csv
+  tags:
+    - "wrappers"
+    - "wrappers/subworkflows"
+    - "wrappers/subworkflows/demultiplex"

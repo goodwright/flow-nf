@@ -2,10 +2,10 @@ process ULTRAPLEX {
     tag "${meta.id}"
     label "process_high"
 
-    conda "bioconda::ultraplex=1.2.5"
+    conda "bioconda::ultraplex=1.2.9"
     container "${ workflow.containerEngine == 'singularity' && !task.ext.singularity_pull_docker_container ?
-        'https://depot.galaxyproject.org/singularity/ultraplex:1.2.5--py38h4a8c8d9_0' :
-        'biocontainers/ultraplex:1.2.5--py38h4a8c8d9_0' }"
+        'https://depot.galaxyproject.org/singularity/ultraplex:1.2.9--py39hf95cd2a_0' :
+        'biocontainers/ultraplex:1.2.9--py39hf95cd2a_0' }"
 
     input:
     tuple val(meta), path(reads)
@@ -22,7 +22,7 @@ process ULTRAPLEX {
     task.ext.when == null || task.ext.when
 
     script:
-    def VERSION = "1.2.5" // WARN: Version information not provided by tool on CLI. Please update this string when bumping container versions.
+    def VERSION = "1.2.9" // WARN: Version information not provided by tool on CLI. Please update this string when bumping container versions.
     def args = task.ext.args ?: ''
     prefix   = task.ext.prefix ?: "${meta.id}"
 
