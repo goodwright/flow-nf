@@ -1,26 +1,26 @@
 {
-    "inputs": {
-        "genome_options": {
+    "inputs": [
+        {
             "name": "File options",
             "description": "The files needed for running.",
-            "properties": {
+            "params": {
                 "gtf": {
                     "name": "GTF",
-                    "type": "file",
-                    "pattern": "gtf",
+                    "type": "data",
+                    "pattern": "\\.gtf$",
                     "required": true,
                     "description": "A genome annotation file."
                 },
                 "fai": {
                     "name": "FAI",
-                    "type": "file",
-                    "pattern": "fai",
+                    "type": "data",
+                    "pattern": "\\.fai$",
                     "required": true,
                     "description": "A faidx genome index."
                 }
             }
         }
-    },
+    ],
     "outputs": [
         {
             "name": "Segmentation GTF",
